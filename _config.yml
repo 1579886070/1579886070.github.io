@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 周信的个人博客
+title: 周信的博客
 subtitle: 静心也
-description: 专注于文章以及各种编程语言,java,golang,前端后端相关。了解我的学习经历与生活琐事吧！
-keywords: 周信的个人博客,编程,生活,学习,java,golang,html,js
+description: 记录Java,Golang,算法等内容。
+keywords: 周信的博客,编程,生活,学习,算法,java,golang,html,js。
 author: 周信
 language: en
 timezone:
