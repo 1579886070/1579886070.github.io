@@ -1,6 +1,6 @@
 ---
-title: '[JAVA]SpringBoot整合thymeleaf详解语法'
-date: 2019-10-24 00:45:10
+title: '[JAVA]SpringBoot整合thymeleaf'
+date: 2019-10-24 00:55:08
 categories: JAVA
 tags: java
 ---
@@ -114,6 +114,7 @@ public class SutdentController {
 通过上面的controller，发现返回到index页面。
 
 代码看上去或许比较乱，演示thymeleaf中对文本、字符串、日期、条件判断、迭代遍历的语法。
+```
 <pre class="lang:default decode:true " title="index.html">&lt;!DOCTYPE html&gt;
 &lt;html xmlns:th="http://www.thymeleaf.org"&gt;
 
@@ -203,7 +204,7 @@ map迭代:
 &lt;/body&gt;
 &lt;/html&gt;</pre>
 &nbsp;
-
+```
 ## 四.启动类
 
 <pre class="lang:java decode:true ">package xyz.xioaxin12.springboot;
@@ -248,6 +249,7 @@ public String show2(Model model, HttpServletRequest request){
 返回到show.html页面
 
 该页面举出了thymeleaf对域对象、路径等语法
+```
 <pre class="lang:default decode:true" title="show2.html">&lt;!DOCTYPE html&gt;
 &lt;html xmlns:th="http://www.thymeleaf.org"&gt;
 &lt;html lang="en"&gt;
@@ -271,7 +273,7 @@ th:attr设置属性值：&lt;img th:attr="src=@{https://www.baidu.com/img/baidu_
 &lt;/body&gt;
 &lt;/html&gt;</pre>
 &nbsp;
-
+```
 浏览器访问该路径
 
 [![](http://image.xiaoxinyes.club/2019-01-10_103722.png)](http://image.xiaoxinyes.club/2019-01-10_103722.png)
@@ -285,3 +287,4 @@ th:attr设置属性值：&lt;img th:attr="src=@{https://www.baidu.com/img/baidu_
 关于上面的thymeleaf语法，我弄了一张图，详细如下图。
 
 [![](http://image.xiaoxinyes.club/thymeleaf.png)](http://image.xiaoxinyes.club/thymeleaf.png)
+
