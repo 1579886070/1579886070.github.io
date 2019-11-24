@@ -1,11 +1,11 @@
 ---
-title: Mybatis注解方式操作表数据
-date: 2019-11-17 12:00:07
+title: '[JAVA]Mybatis注解操作表数据'
+date: 2019-11-21 22:24:04
 categories: JAVA
 tags: mybatis
 ---
 
-# springboot+mybaits演示
+# springboot+mybatis演示
 @Insert/@Delete/@Select/@Update
 
 ---
@@ -202,3 +202,4 @@ public class StudentController {
     }
 }
 ```
+
