@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>[Ohter]重装系统后恢复Hexo博客</title>
+      <link href="/2019/12/20/Ohter-%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E6%81%A2%E5%A4%8DHexo%E5%8D%9A%E5%AE%A2/"/>
+      <url>/2019/12/20/Ohter-%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E6%81%A2%E5%A4%8DHexo%E5%8D%9A%E5%AE%A2/</url>
+      
+        <content type="html"><![CDATA[<p>电脑加了个固态，重装了下，所以有些资料需要迁移一下。</p><h2 id="git和nodo安装"><a href="#git和nodo安装" class="headerlink" title="git和nodo安装"></a>git和nodo安装</h2><p>先安装git和nodo.js,git生成密钥添加到自己的git账户</p><hr><h2 id="处理备份的blog文件"><a href="#处理备份的blog文件" class="headerlink" title="处理备份的blog文件"></a>处理备份的blog文件</h2><p>删除不必要的文件，保留如下：<br><img src="http://image.xiaoxinyes.club/201912202.png" alt></p><hr><h2 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h2><pre><code>git initgit remote add origin git@github.com:XXX/XXX.github.io.git</code></pre><p><img src="http://image.xiaoxinyes.club/201912201.png" alt></p><hr><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install hexo --save</code></pre><h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code>npm install  </code></pre><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><pre><code>hexo ghexo shexo d</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Ohter </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> github </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[MySql]关于查询的一次异常排查</title>
       <link href="/2019/12/05/MySql-%E5%85%B3%E4%BA%8E%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%B8%80%E6%AC%A1%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/"/>
       <url>/2019/12/05/MySql-%E5%85%B3%E4%BA%8E%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%B8%80%E6%AC%A1%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/</url>

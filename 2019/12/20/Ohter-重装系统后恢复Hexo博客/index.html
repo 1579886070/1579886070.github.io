@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]SpringBoot整合Servlet | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]SpringBoot整合Servlet | 周信的博客">
+  <title>[Ohter]重装系统后恢复Hexo博客 | 周信的博客</title>
+  <meta name="keywords" content=" github ">
+  <meta name="description" content="[Ohter]重装系统后恢复Hexo博客 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -770,9 +770,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-SpringBoot整合Servlet" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Ohter-重装系统后恢复Hexo博客" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]SpringBoot整合Servlet</h1>
+        <h1 class="article-title">[Ohter]重装系统后恢复Hexo博客</h1>
     
     <div class="article-meta">
         
@@ -780,26 +780,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="JAVA">JAVA</a>
+                <a href="javascript:" data-rel="Ohter">Ohter</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color2">github</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-22 22:35:20'>2019-10-22 22:34</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-20 11:32:33'>2019-12-20 11:15</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:477</span>
+        <span>字数:100</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -829,7 +829,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-注解扫描"><span class="toc-text">1.注解扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-通过编写一个方法"><span class="toc-text">2.通过编写一个方法</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#git和nodo安装"><span class="toc-text">git和nodo安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#处理备份的blog文件"><span class="toc-text">处理备份的blog文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关联"><span class="toc-text">关联</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装hexo"><span class="toc-text">安装hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装依赖"><span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-text">其他</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -845,123 +845,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Spring Boot整合Servlet有两种方式。<a id="more"></a></p>
-<p>1.通过注解扫描.</p>
-<p>2.通过编写一个方法.</p>
-<p>&nbsp;</p>
-<h2 id="1-注解扫描"><a href="#1-注解扫描" class="headerlink" title="1.注解扫描"></a>1.注解扫描</h2><p>以前我们在web写select，需要在web.xml配置&lt;servlet&gt;&lt;/servlet&gt;和&lt;servlet-mapping&gt;&lt;/servlet-mapping&gt;等信息。那么使用springboot不必了。</p>
-<p><span style="font-size: 10pt;">AnnotationServlet.java</span></p>
-<p>这里我们设置的路径是/hello</p>
-<pre class="lang:java decode:true" title="AnnotationServlet">package xyz.xioaxin12.springboot01servlet.servlet;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-@WebServlet(name="AnnotationServlet",urlPatterns = "/hello")
-public class AnnotationServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=utf-8");
-        resp.getWriter().append("这是springboot整合servlet注解的方式!");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
-}
-</pre>
-<p>&nbsp;</p>
-<p><span style="font-size: 10pt;">SpringBoot01ServletApplication.java</span></p>
-<p>启动类，这里能看到加了@ServletComponentScan注解，它会自动注册带有@WebServlet的注解。</p>
-<pre class="lang:default decode:true">package xyz.xioaxin12.springboot01servlet;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
-
-@SpringBootApplication
-@ServletComponentScan
-public class SpringBoot01ServletApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBoot01ServletApplication.class, args);
-    }
-
-}
-
-</pre>
-<p>&nbsp;</p>
-<p>由于我的8080被占用了，我在application.properties修改成8081端口。</p>
-<pre class="lang:default decode:true ">server.port=8081</pre>
-<p>&nbsp;</p>
-<p>启动访问localhost:8081/hello</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-06_112731.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-06_112731.png" alt></a></p>
+        <p>电脑加了个固态，重装了下，所以有些资料需要迁移一下。</p>
+<h2 id="git和nodo安装"><a href="#git和nodo安装" class="headerlink" title="git和nodo安装"></a>git和nodo安装</h2><p>先安装git和nodo.js,git生成密钥添加到自己的git账户</p>
 <hr>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2 id="2-通过编写一个方法"><a href="#2-通过编写一个方法" class="headerlink" title="2.通过编写一个方法"></a>2.通过编写一个方法</h2><p>为了测试明显，不在原类上修改，重写一个servlet与启动类。</p>
-<p><span style="font-size: 10pt;">DeployServlet.java </span></p>
-<p>去除了注解。</p>
-<pre class="lang:java decode:true">package xyz.xioaxin12.springboot01servlet.servlet;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-public class DeployServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=utf-8");
-        resp.getWriter().append("这是springboot整合servlet另一种方式!");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
-}
-</pre>
-<p>&nbsp;</p>
-<p><span style="font-size: 10pt;">SpringBoot01ServletApplication2.java</span></p>
-<p>一定要添加@Bean</p>
-<pre class="lang:java decode:true " title="SpringBoot01ServletApplication2 ">package xyz.xioaxin12.springboot01servlet;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import xyz.xioaxin12.springboot01servlet.servlet.DeployServlet;
-
-@SpringBootApplication
-public class SpringBoot01ServletApplication2 {
-
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBoot01ServletApplication2.class, args);
-    }
-
-    @Bean
-    public ServletRegistrationBean getRegistrationBean(){
-        ServletRegistrationBean bean = new ServletRegistrationBean(new DeployServlet());
-        bean.addUrlMappings("/hello2");
-        return bean;
-    }
-
-}
-
-</pre>
-<p>&nbsp;</p>
-<p>启动访问localhost:8081/hello2</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-06_113424.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-06_113424.png" alt></a></p>
-
+<h2 id="处理备份的blog文件"><a href="#处理备份的blog文件" class="headerlink" title="处理备份的blog文件"></a>处理备份的blog文件</h2><p>删除不必要的文件，保留如下：<br><img src="http://image.xiaoxinyes.club/201912202.png" alt></p>
+<hr>
+<h2 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h2><pre><code>git init
+git remote add origin git@github.com:XXX/XXX.github.io.git</code></pre><p><img src="http://image.xiaoxinyes.club/201912201.png" alt></p>
+<hr>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install hexo --save</code></pre><h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code>npm install  </code></pre><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><pre><code>hexo g
+hexo s
+hexo d</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -974,12 +868,12 @@ public class SpringBoot01ServletApplication2 {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]SpringBoot整合Servlet</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">477</span></p>
+    <p><span class="copy-title">文章标题:</span>[Ohter]重装系统后恢复Hexo博客</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">100</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-22, 22:34:48</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-22, 22:35:20</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/22/JAVA-SpringBoot整合Servlet/" title="[JAVA]SpringBoot整合Servlet">http://zx21.xyz/2019/10/22/JAVA-SpringBoot整合Servlet/</a>
+    <p><span class="copy-title">发布时间:</span>2019-12-20, 11:15:25</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-20, 11:32:33</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/20/Ohter-重装系统后恢复Hexo博客/" title="[Ohter]重装系统后恢复Hexo博客">http://zx21.xyz/2019/12/20/Ohter-重装系统后恢复Hexo博客/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2019-12-04T16:39:10.965Z</updated>
+  <updated>2019-12-20T03:32:33.672Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Ohter]重装系统后恢复Hexo博客</title>
+    <link href="http://zx21.xyz/2019/12/20/Ohter-%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E6%81%A2%E5%A4%8DHexo%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://zx21.xyz/2019/12/20/Ohter-重装系统后恢复Hexo博客/</id>
+    <published>2019-12-20T03:15:25.000Z</published>
+    <updated>2019-12-20T03:32:33.672Z</updated>
+    
+    <content type="html"><![CDATA[<p>电脑加了个固态，重装了下，所以有些资料需要迁移一下。</p><h2 id="git和nodo安装"><a href="#git和nodo安装" class="headerlink" title="git和nodo安装"></a>git和nodo安装</h2><p>先安装git和nodo.js,git生成密钥添加到自己的git账户</p><hr><h2 id="处理备份的blog文件"><a href="#处理备份的blog文件" class="headerlink" title="处理备份的blog文件"></a>处理备份的blog文件</h2><p>删除不必要的文件，保留如下：<br><img src="http://image.xiaoxinyes.club/201912202.png" alt></p><hr><h2 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h2><pre><code>git initgit remote add origin git@github.com:XXX/XXX.github.io.git</code></pre><p><img src="http://image.xiaoxinyes.club/201912201.png" alt></p><hr><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><pre><code>npm install hexo --save</code></pre><h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><pre><code>npm install  </code></pre><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><pre><code>hexo ghexo shexo d</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;电脑加了个固态，重装了下，所以有些资料需要迁移一下。&lt;/p&gt;
+&lt;h2 id=&quot;git和nodo安装&quot;&gt;&lt;a href=&quot;#git和nodo安装&quot; class=&quot;headerlink&quot; title=&quot;git和nodo安装&quot;&gt;&lt;/a&gt;git和nodo安装&lt;/h2&gt;&lt;p&gt;先安装g
+      
+    
+    </summary>
+    
+    
+      <category term="Ohter" scheme="http://zx21.xyz/categories/Ohter/"/>
+    
+    
+      <category term="github" scheme="http://zx21.xyz/tags/github/"/>
+    
+  </entry>
   
   <entry>
     <title>[MySql]关于查询的一次异常排查</title>
@@ -503,29 +530,6 @@ s
     <summary type="html">
     
       &lt;p&gt;还是两种方式，注解与方法注册。
-    
-    </summary>
-    
-    
-      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
-    
-    
-      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JAVA]SpringBoot整合Filter</title>
-    <link href="http://zx21.xyz/2019/10/22/JAVA-SpringBoot%E6%95%B4%E5%90%88Filter/"/>
-    <id>http://zx21.xyz/2019/10/22/JAVA-SpringBoot整合Filter/</id>
-    <published>2019-10-22T14:35:41.000Z</published>
-    <updated>2019-10-22T14:36:47.276Z</updated>
-    
-    <content type="html"><![CDATA[<p>同样有注解扫描与方法注册两种方式。<a id="more"></a></p><h2 id="1-注解扫描"><a href="#1-注解扫描" class="headerlink" title="1.注解扫描"></a>1.注解扫描</h2><p>编写filter类</p><pre class="lang:java decode:true ">package xyz.xioaxin12.springboot.filter;import javax.servlet.*;import javax.servlet.annotation.WebFilter;import java.io.IOException;@WebFilter(filterName = "MyFilter",urlPatterns = "/hello")public class MyFilter implements Filter {    public void destroy() {    }    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {        System.out.println("进入doFilter...");        chain.doFilter(req, resp);        System.out.println("退出doFilter...");    }    public void init(FilterConfig config) throws ServletException {    }}</pre><p>&nbsp;</p><p>拦截MyServlet</p><pre class="lang:java decode:true">package xyz.xioaxin12.springboot.servlet;import javax.servlet.ServletException;import javax.servlet.annotation.WebServlet;import javax.servlet.http.HttpServlet;import javax.servlet.http.HttpServletRequest;import javax.servlet.http.HttpServletResponse;import java.io.IOException;@WebServlet(name = "MyServlet",urlPatterns = "/hello")public class MyServlet extends HttpServlet {    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {       doGet(request,response);    }    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {        System.out.println("MyServlet...");    }}</pre><p>&nbsp;</p><p>启动类</p><pre class="lang:java decode:true ">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.web.servlet.ServletComponentScan;@SpringBootApplication@ServletComponentScanpublic class SpringBoot02FilterApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot02FilterApplication.class, args);    }}</pre><p>&nbsp;</p><p>启动运行</p><p><img src="http://image.xiaoxinyes.club/2019-01-06_144153.png" alt></p><hr><p>&nbsp;</p><h2 id="2-方法注册"><a href="#2-方法注册" class="headerlink" title="2.方法注册"></a>2.方法注册</h2><p>1).删除原filter类上的注解。</p><p>2).将原Servlet类修改成方法注册形式。</p><p>3).修改启动类，如下</p><pre class="lang:java decode:true ">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.web.servlet.FilterRegistrationBean;import org.springframework.boot.web.servlet.ServletRegistrationBean;import org.springframework.context.annotation.Bean;import xyz.xioaxin12.springboot.filter.MyFilter;import xyz.xioaxin12.springboot.servlet.MyServlet;@SpringBootApplicationpublic class SpringBoot02FilterApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot02FilterApplication.class, args);    }    @Bean    public ServletRegistrationBean getregistrationBean(){        ServletRegistrationBean bean = new ServletRegistrationBean(new MyServlet());        bean.addUrlMappings("/hello");        return bean;    }    @Bean    public FilterRegistrationBean getfilterRegistrationBean(){        FilterRegistrationBean bean = new FilterRegistrationBean(new MyFilter());        bean.addUrlPatterns("/hello");        return bean;    }}</pre><p>&nbsp;</p><p>还可以拦截多个请求：</p><pre class="lang:default decode:true ">@WebFilter(filterName = "MyFilter",urlPatterns = {"*.do","*.jsp","/hello"})</pre><p>&nbsp;</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;同样有注解扫描与方法注册两种方式。
     
     </summary>
     
