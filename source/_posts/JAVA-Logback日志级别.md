@@ -5,8 +5,9 @@ categories: JAVA
 tags: java
 ---
 
-<pre class="lang:default decode:true">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!--
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 scan:
 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
 scanPeriod:
@@ -14,140 +15,140 @@ scanPeriod:
 debug:
 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
 例如：
- --&gt;
-&lt;configuration scan="true" scanPeriod="60 seconds" debug="true"&gt;
-    &lt;!-- 项目名称 --&gt;
-    &lt;property name="PROJECT_NAME" value="XXXXX" /&gt;
+ -->
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+    <!-- 项目名称 -->
+    <property name="PROJECT_NAME" value="XXXXX" />
 
-    &lt;!-- 文件输出格式 --&gt;
-    &lt;property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/&gt;
-    &lt;!-- 输出文件路径 --&gt;
-    &lt;property name="OPEN_FILE_PATH" value="./logs/"/&gt;
+    <!-- 文件输出格式 -->
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+    <!-- 输出文件路径 -->
+    <property name="OPEN_FILE_PATH" value="./logs/"/>
 
-    &lt;appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;${PATTERN}&lt;/pattern&gt;
-            &lt;charset&gt;UTF-8&lt;/charset&gt;
-        &lt;/encoder&gt;
-    &lt;/appender&gt;
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
 
-    &lt;!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 --&gt;
-    &lt;appender name="OPEN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-        &lt;!--不能有这项配置！！！！！--&gt;
-        &lt;!--&lt;Encoding&gt;UTF-8&lt;/Encoding&gt;--&gt;
-        &lt;!--&lt;File&gt;${OPEN_FILE_PATH}/zqread.log&lt;/File&gt;--&gt;
-        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;
-            &lt;!--日志文件输出的文件名--&gt;
-            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/all/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;
-            &lt;!--日志文件保留天数--&gt;
-            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;
-            &lt;TimeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;
-                &lt;!--日志文件最大的大小--&gt;
-                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;
-            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;
-        &lt;/rollingPolicy&gt;
+    <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
+    <appender name="OPEN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--不能有这项配置！！！！！-->
+        <!--<Encoding>UTF-8</Encoding>-->
+        <!--<File>${OPEN_FILE_PATH}/zqread.log</File>-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${OPEN_FILE_PATH}/all/%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--日志文件最大的大小-->
+                <MaxFileSize>10MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
 
-        &lt;layout class="ch.qos.logback.classic.PatternLayout"&gt;
-            &lt;pattern&gt;${PATTERN}&lt;/pattern&gt;
-        &lt;/layout&gt;
-    &lt;/appender&gt;
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>
 
-    &lt;!--输出到debug--&gt;
-    &lt;appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;
-            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/debug/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;
-            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;
-            &lt;TimeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;
-                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;
-            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;
-        &lt;/rollingPolicy&gt;
-        &lt;append&gt;true&lt;/append&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
-            &lt;charset&gt;utf-8&lt;/charset&gt;
-        &lt;/encoder&gt;
-        &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;&lt;!-- 只打印DEBUG日志 --&gt;
-            &lt;level&gt;DEBUG&lt;/level&gt;
-            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;
-            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;
-        &lt;/filter&gt;
-    &lt;/appender&gt;
+    <!--输出到debug-->
+    <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${OPEN_FILE_PATH}/debug/%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>10MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印DEBUG日志 -->
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
-    &lt;!--输出到info--&gt;
-    &lt;appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;
-            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/info/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;
-            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;
-            &lt;TimeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;
-                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;
-            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;
-        &lt;/rollingPolicy&gt;
-        &lt;append&gt;true&lt;/append&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
-            &lt;charset&gt;utf-8&lt;/charset&gt;
-        &lt;/encoder&gt;
-        &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;&lt;!-- 只打印INFO日志 --&gt;
-            &lt;level&gt;INFO&lt;/level&gt;
-            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;
-            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;
-        &lt;/filter&gt;
-    &lt;/appender&gt;
+    <!--输出到info-->
+    <appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${OPEN_FILE_PATH}/info/%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>10MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印INFO日志 -->
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
-    &lt;!--输出到error--&gt;
-    &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;
-            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/error/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;
-            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;
-            &lt;TimeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;
-                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;
-            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;
-        &lt;/rollingPolicy&gt;
-        &lt;append&gt;true&lt;/append&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
-            &lt;charset&gt;utf-8&lt;/charset&gt;
-        &lt;/encoder&gt;
-        &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;&lt;!-- 只打印ERROR日志 --&gt;
-            &lt;level&gt;ERROR&lt;/level&gt;
-            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;
-            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;
-        &lt;/filter&gt;
-    &lt;/appender&gt;
+    <!--输出到error-->
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${OPEN_FILE_PATH}/error/%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>10MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印ERROR日志 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
-    &lt;!--输出到warn--&gt;
-    &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;
-        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;
-            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/warn/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;
-            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;
-            &lt;TimeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;
-                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;
-            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;
-        &lt;/rollingPolicy&gt;
-        &lt;append&gt;true&lt;/append&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
-            &lt;charset&gt;utf-8&lt;/charset&gt;
-        &lt;/encoder&gt;
-        &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;&lt;!-- 只打印WARN日志 --&gt;
-            &lt;level&gt;WARN&lt;/level&gt;
-            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;
-            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;
-        &lt;/filter&gt;
-    &lt;/appender&gt;
+    <!--输出到warn-->
+    <appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${OPEN_FILE_PATH}/warn/%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>10MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印WARN日志 -->
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
-    &lt;root level="info"&gt;
-        &lt;appender-ref ref="STDOUT"/&gt;
-        &lt;appender-ref ref="OPEN-FILE"/&gt;
-        &lt;appender-ref ref="debug" /&gt;
-        &lt;appender-ref ref="info" /&gt;
-        &lt;appender-ref ref="error" /&gt;
-        &lt;appender-ref ref="warn" /&gt;
-    &lt;/root&gt;
-&lt;/configuration&gt;</pre>
-&nbsp;
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="OPEN-FILE"/>
+        <appender-ref ref="debug" />
+        <appender-ref ref="info" />
+        <appender-ref ref="error" />
+        <appender-ref ref="warn" />
+    </root>
+</configuration>
+```

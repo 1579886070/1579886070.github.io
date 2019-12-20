@@ -6,7 +6,9 @@ tags: java
 ---
 
 有些jar中央仓库没得，那么可以自己把jar添加到本地maven仓库使用。<!--more-->
-<pre class="lang:default decode:true">mvn install:install-file -DgroupId=signalr-client-sdk -DartifactId=signalr-client-sdk -Dversion=1.0.0 -Dfile=G:\signalr-client-sdk-1.0.0.jar -Dpackaging=jar</pre>
+```
+mvn install:install-file -DgroupId=signalr-client-sdk -DartifactId=signalr-client-sdk -Dversion=1.0.0 -Dfile=G:\signalr-client-sdk-1.0.0.jar -Dpackaging=jar
+```
 &nbsp;
 
 -DgroupId：组织名

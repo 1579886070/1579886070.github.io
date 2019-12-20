@@ -9,12 +9,14 @@ tags: java
 
 ## sql
 
-<pre class="lang:default decode:true">CREATE TABLE `student_`  (
+```
+CREATE TABLE `student_`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `age` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-)</pre>
+)
+```
 
 * * *
 
@@ -22,7 +24,8 @@ tags: java
 
 ## 定义实体类Student.java
 
-<pre class="lang:java decode:true">package xyz.xioaxin12.bean;
+```
+package xyz.xioaxin12.bean;
 
 /**
  * @author 小信
@@ -64,7 +67,7 @@ public class Student {
         this.age = age;
     }
 }
-</pre>
+```
 
 * * *
 
@@ -72,7 +75,8 @@ public class Student {
 
 ## 定义StudentDao接口，含增删改查方法
 
-<pre class="lang:java decode:true">package xyz.xioaxin12.dao;
+```
+package xyz.xioaxin12.dao;
 
 import xyz.xioaxin12.bean.Student;
 
@@ -89,7 +93,7 @@ public interface StudentDao {
 
     List&lt;Student&gt; selectStudent();
 }
-</pre>
+```
 
 * * *
 
@@ -97,7 +101,8 @@ public interface StudentDao {
 
 ## StudentDao的实现类StudentDaoImpl
 
-<pre class="lang:java decode:true">package xyz.xioaxin12.dao;
+```
+package xyz.xioaxin12.dao;
 
 /**
  * @author 小信
@@ -176,7 +181,7 @@ public class StudentDaoImpl implements StudentDao {
         return students;
     }
 }
-</pre>
+```
 
 * * *
 
@@ -184,27 +189,29 @@ public class StudentDaoImpl implements StudentDao {
 
 ## 映射文件mapper.xml,放在dao包下
 
-<pre class="lang:default decode:true">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;!DOCTYPE mapper
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;
-&lt;mapper namespace="xyz.xioaxin12.dao.StudentDao"&gt;
-    &lt;insert id="insertStudent" parameterType="Student"&gt;
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xioaxin12.dao.StudentDao">
+    <insert id="insertStudent" parameterType="Student">
         insert into student_(name,age) values (#{name},#{age})
-    &lt;/insert&gt;
-    &lt;delete id="deleteStudent"&gt;
+    </insert>
+    <delete id="deleteStudent">
         delete from student_ where id=#{id}
-    &lt;/delete&gt;
-    &lt;update id="updateStudent"&gt;
+    </delete>
+    <update id="updateStudent">
         update student_ set name=#{name},age=#{age} where id=#{id}
-    &lt;/update&gt;
-    &lt;select id="selectStudentId" resultType="Student"&gt;
+    </update>
+    <select id="selectStudentId" resultType="Student">
         select id,name,age from student_ where id=#{id}
-    &lt;/select&gt;
-    &lt;select id="selectStudent" resultType="Student"&gt;
+    </select>
+    <select id="selectStudent" resultType="Student">
         select * from student_
-    &lt;/select&gt;
-&lt;/mapper&gt;</pre>
+    </select>
+</mapper>
+```
 **<span style="font-size: 10pt;">id跟StudentDaoImpl中的参数一致</span>**
 
 * * *
@@ -213,32 +220,29 @@ public class StudentDaoImpl implements StudentDao {
 
 ## 主配置文件mybatis.xml
 
-<pre class="lang:default decode:true">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
-&lt;!DOCTYPE configuration
-        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;
-&lt;configuration&gt;
-    &lt;!--定义类型别名--&gt;
-    &lt;typeAliases&gt;
-        &lt;package name="xyz.xioaxin12.bean"/&gt;
-    &lt;/typeAliases&gt;
-
-    &lt;!--配置运行环境--&gt;
-    &lt;environments default="test"&gt;
-        &lt;environment id="test"&gt;
-            &lt;transactionManager type="JDBC"&gt;&lt;/transactionManager&gt;
-            &lt;dataSource type="POOLED"&gt;
-                &lt;property name="driver" value="com.mysql.jdbc.Driver"/&gt;
-                &lt;property name="url" value="jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8"/&gt;
-                &lt;property name="username" value="root"/&gt;
-                &lt;property name="password" value="1579886070"/&gt;
-            &lt;/dataSource&gt;
-        &lt;/environment&gt;
-    &lt;/environments&gt;
-    &lt;mappers&gt;
-        &lt;mapper resource="xyz/xioaxin12/dao/mapper.xml"/&gt;
-    &lt;/mappers&gt;
-&lt;/configuration&gt;</pre>
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.xioaxin12.dao.StudentDao">
+    <insert id="insertStudent" parameterType="Student">
+        insert into student_(name,age) values (#{name},#{age})
+    </insert>
+    <delete id="deleteStudent">
+        delete from student_ where id=#{id}
+    </delete>
+    <update id="updateStudent">
+        update student_ set name=#{name},age=#{age} where id=#{id}
+    </update>
+    <select id="selectStudentId" resultType="Student">
+        select id,name,age from student_ where id=#{id}
+    </select>
+    <select id="selectStudent" resultType="Student">
+        select * from student_
+    </select>
+</mapper>
+```
 **<span style="font-size: 10pt;">&lt;package name="xyz.xioaxin12.bean"/&gt; ：定义别名，该包中的实体类简单类名作为别名</span>**
 
 **<span style="font-size: 10pt;">&lt;environments&gt;...&lt;/environments&gt;：运行环境，提供驱动，账号，密码，数据库信息。</span>**
@@ -251,7 +255,8 @@ public class StudentDaoImpl implements StudentDao {
 
 ## logo4j.properties日志文件
 
-<pre class="lang:default decode:true">log4j.logger.xyz.xioaxin12.dao.StudentDao=DEBUG, stdout  
+```
+log4j.logger.xyz.xioaxin12.dao.StudentDao=DEBUG, stdout  
 
 log4j.appender.stdout=org.apache.log4j.ConsoleAppender  
 log4j.appender.stdout.layout=org.apache.log4j.PatternLayout  
@@ -261,7 +266,8 @@ log4j.logger.java.sql.ResultSet=INFO
 log4j.logger.org.apache=INFO   
 log4j.logger.java.sql.Connection=DEBUG   
 log4j.logger.java.sql.Statement=DEBUG   
-log4j.logger.java.sql.PreparedStatement=DEBUG</pre>
+log4j.logger.java.sql.PreparedStatement=DEBUG
+```
 
 * * *
 
@@ -269,7 +275,8 @@ log4j.logger.java.sql.PreparedStatement=DEBUG</pre>
 
 ## 测试类TestMybaties.java
 
-<pre class="lang:default decode:true ">package xyz.xioaxin12.test;
+```
+package xyz.xioaxin12.test;
 
 import xyz.xioaxin12.bean.Student;
 import xyz.xioaxin12.dao.StudentDao;
@@ -317,12 +324,8 @@ public class TestMybatis {
 
     }
 }
-</pre>
-&nbsp;
+```
 
-&nbsp;
-
-&nbsp;
 
 &nbsp;
 

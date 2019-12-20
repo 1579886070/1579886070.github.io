@@ -7,7 +7,8 @@ tags: java
 
 executeQuery 执行SQL语句
 
-<pre class="lang:java decode:true">public class JdbcDemo {
+```
+public class JdbcDemo {
     public static void main(String[] args) {
         Connection connection = null;
         Statement Statement = null;
@@ -55,7 +56,7 @@ executeQuery 执行SQL语句
         }
     }
 }
-</pre>
+```
 &nbsp;
 
 遍历时可以使用字段名或者字段的顺序。
