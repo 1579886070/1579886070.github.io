@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2019-12-20T03:32:54.732Z</updated>
+  <updated>2019-12-20T11:28:25.751Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[ERROR]关于下划线引发的错误</title>
+    <link href="http://zx21.xyz/2019/12/20/ERROR-%E5%85%B3%E4%BA%8E%E4%B8%8B%E5%88%92%E7%BA%BF%E5%BC%95%E5%8F%91%E7%9A%84%E9%94%99%E8%AF%AF/"/>
+    <id>http://zx21.xyz/2019/12/20/ERROR-关于下划线引发的错误/</id>
+    <published>2019-12-20T11:10:47.000Z</published>
+    <updated>2019-12-20T11:28:25.751Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录一次关于使用下划线出现的问题。前后端通信，自定义一些请求头参数，但是在调用过程中发现了异常。</p><pre><code>requet.getHeader(&quot;XXX_XXX&quot;);</code></pre><p>发现后端接收到的参数为空，而其他所有参数都可以获取到，唯独这个不行。联调之后，我们试着修改参数名称，改成XXX-XXX，这个时候可以获取到。</p><p>我们是nginx做负载均衡，经过查询一番相关资料，发现请求头中名称包含下划线时，nginx会被标记成无效。而这个也是可以通过nginx配置修改的。</p><pre><code>underscores_in_headers on</code></pre><hr><p>有些东西是规范，因为不规划引起的问题，有时会需要很长时间去寻找处理，就像之前域名解析包含下划线，nginx有些也无法识别。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;记录一次关于使用下划线出现的问题。前后端通信，自定义一些请求头参数，但是在调用过程中发现了异常。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;requet.getHeader(&amp;quot;XXX_XXX&amp;quot;);&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;发现后端接收到的参数为空，而其他所有参
+      
+    
+    </summary>
+    
+    
+      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
+    
+    
+      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
+    
+  </entry>
   
   <entry>
     <title>[Ohter]重装系统后恢复Hexo博客</title>
@@ -507,29 +534,6 @@ scanPeri
     <summary type="html">
     
       &lt;p&gt;关于文件上传有几个需要注意的地方！
-    
-    </summary>
-    
-    
-      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
-    
-    
-      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JAVA]SpringBoot整合Listener</title>
-    <link href="http://zx21.xyz/2019/10/22/JAVA-SpringBoot%E6%95%B4%E5%90%88Listener/"/>
-    <id>http://zx21.xyz/2019/10/22/JAVA-SpringBoot整合Listener/</id>
-    <published>2019-10-22T14:39:00.000Z</published>
-    <updated>2019-10-22T14:39:18.493Z</updated>
-    
-    <content type="html"><![CDATA[<p>还是两种方式，注解与方法注册。<a id="more"></a></p><h2 id="1-注解形式"><a href="#1-注解形式" class="headerlink" title="1.注解形式"></a>1.注解形式</h2><p>很简单，添加@WebListener()即可。</p><pre class="lang:java decode:true">package xyz.xioaxin12.springboot.listener;import javax.servlet.ServletContextEvent;import javax.servlet.ServletContextListener;import javax.servlet.annotation.WebListener;@WebListener()public class MyListener implements ServletContextListener{    @Override    public void contextDestroyed(ServletContextEvent sce) {    }    @Override    public void contextInitialized(ServletContextEvent sce) {        System.out.println("listener...init......");    }}</pre><p>&nbsp;</p><p>启动类</p><p>添加@ServletComponentScan就行了。</p><pre class="lang:java decode:true">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.web.servlet.ServletComponentScan;import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;import org.springframework.context.annotation.Bean;import xyz.xioaxin12.springboot.listener.MyListener;@SpringBootApplication@ServletComponentScanpublic class SpringBoot02FilterApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot02FilterApplication.class, args);    }}</pre><p>这样在项目启动的时候就会打印listener…init……</p><hr><p>&nbsp;</p><h2 id="2-方法注册"><a href="#2-方法注册" class="headerlink" title="2.方法注册"></a>2.方法注册</h2><p>1).删除MyListener上的注解。</p><p>2).修改启动类。</p><p>在原启动类上添加如下代码即可!</p><pre class="lang:java decode:true">@Bean                                                                                                                      public ServletListenerRegistrationBean&lt;MyListener&gt; getListenerServletListenerRegistrationBean(){                               ServletListenerRegistrationBean&lt;MyListener&gt; bean = new ServletListenerRegistrationBean&lt;MyListener&gt;(new MyListener());     return bean;                                                                                                            }</pre><p>&nbsp;</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;还是两种方式，注解与方法注册。
     
     </summary>
     

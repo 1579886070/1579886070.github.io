@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]第一个JFinal例子 | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]第一个JFinal例子 | 周信的博客">
+  <title>[ERROR]关于下划线引发的错误 | 周信的博客</title>
+  <meta name="keywords" content=" error ">
+  <meta name="description" content="[ERROR]关于下划线引发的错误 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -778,9 +778,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-第一个JFinal例子" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-ERROR-关于下划线引发的错误" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]第一个JFinal例子</h1>
+        <h1 class="article-title">[ERROR]关于下划线引发的错误</h1>
     
     <div class="article-meta">
         
@@ -788,26 +788,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="JAVA">JAVA</a>
+                <a href="javascript:" data-rel="ERROR">ERROR</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color1">error</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-21 19:29:33'>2019-10-21 19:28</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-20 19:28:25'>2019-12-20 19:10</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:307</span>
+        <span>字数:217</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -853,93 +853,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>通过IDEA+Maven下搭建。<a id="more"></a></p>
-<p>首先创建一个maven项目。</p>
-<p><img src="http://image.xiaoxinyes.club/2018-12-02_162449.png" alt="爱生活爱技术"></p>
-<hr>
-<p>&nbsp;</p>
-<p>下一步下一步，环境搭建好之后，开始添加maven依赖。</p>
-<pre class="lang:default decode:true">&lt;dependency&gt;
-    &lt;groupId&gt;com.jfinal&lt;/groupId&gt;
-    &lt;artifactId&gt;jfinal-undertow&lt;/artifactId&gt;
-    &lt;version&gt;1.1&lt;/version&gt;
-&lt;/dependency&gt;</pre>
-
-<hr>
-<p>&nbsp;</p>
-<p>创建DemoConfig类继承JFinalConfig。</p>
-<pre class="lang:default decode:true" title="DemoConfig">package xyz.xioaxin12.demo;
-
-import com.jfinal.config.*;
-import com.jfinal.server.undertow.UndertowServer;
-import com.jfinal.template.Engine;
-import xyz.xioaxin12.controller.HelloController;
-
-public class DemoConfig extends JFinalConfig {
-    public static void main(String[] args) {
-        UndertowServer.start(DemoConfig.class,80,true);
-    }
-    @Override
-    public void configConstant(Constants me) {
-        me.setDevMode(true);
-    }
-
-    @Override
-    public void configRoute(Routes me) {
-        me.add("/hello",HelloController.class);
-    }
-
-    @Override
-    public void configEngine(Engine me) {
-
-    }
-
-    @Override
-    public void configPlugin(Plugins me) {
-
-    }
-
-    @Override
-    public void configInterceptor(Interceptors me) {
-
-    }
-
-    @Override
-    public void configHandler(Handlers me) {
-
-    }
-}
-</pre>
-<p>&nbsp;</p>
-<p>HelloController类</p>
-<pre class="lang:default decode:true " title="HelloController ">package xyz.xioaxin12.controller;
-
-import com.jfinal.core.Controller;
-
-public class HelloController extends Controller {
-    public void index(){
-        renderText("hello JFinal!");
-    }
-}
-</pre>
-<p>&nbsp;</p>
-<p>启动访问localhost/hello即可，如下：</p>
-<p><a href="http://image.xiaoxinyes.club/2018-12-02_165651.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-12-02_165651.png" alt></a></p>
-<p>通过阅读官方文档，HelloController类可以使用注解，如下：</p>
-<pre class="lang:default decode:true ">public class HelloController extends Controller {
-    @ActionKey("/test")
-    public void index(){
-        renderText("hello JFinal!");
-    }
-}</pre>
-<p>&nbsp;</p>
-<p>访问的路径则是localhost/test，但是发现配置了注解，configRoute下的映射路径即失效了，但是又不能不写，所以感觉注解并没有多大的用处。</p>
-<pre class="lang:default decode:true ">public void configRoute(Routes me) {
-    me.add("/hello",HelloController.class);
-}</pre>
-<p>&nbsp;</p>
-<p>发现该框架配置起来的确很简便。</p>
-<p>JFinal官网：<a href="http://www.jfinal.com/" target="_blank" rel="noopener">http://www.jfinal.com/</a></p>
+        <p>记录一次关于使用下划线出现的问题。前后端通信，自定义一些请求头参数，但是在调用过程中发现了异常。</p>
+<pre><code>requet.getHeader(&quot;XXX_XXX&quot;);</code></pre><p>发现后端接收到的参数为空，而其他所有参数都可以获取到，唯独这个不行。联调之后，我们试着修改参数名称，改成XXX-XXX，这个时候可以获取到。</p>
+<p>我们是nginx做负载均衡，经过查询一番相关资料，发现请求头中名称包含下划线时，nginx会被标记成无效。而这个也是可以通过nginx配置修改的。</p>
+<pre><code>underscores_in_headers on</code></pre><hr>
+<p>有些东西是规范，因为不规划引起的问题，有时会需要很长时间去寻找处理，就像之前域名解析包含下划线，nginx有些也无法识别。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
@@ -953,12 +871,12 @@ public class HelloController extends Controller {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]第一个JFinal例子</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">307</span></p>
+    <p><span class="copy-title">文章标题:</span>[ERROR]关于下划线引发的错误</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">217</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-21, 19:28:54</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-21, 19:29:33</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/21/JAVA-第一个JFinal例子/" title="[JAVA]第一个JFinal例子">http://zx21.xyz/2019/10/21/JAVA-第一个JFinal例子/</a>
+    <p><span class="copy-title">发布时间:</span>2019-12-20, 19:10:47</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-20, 19:28:25</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/20/ERROR-关于下划线引发的错误/" title="[ERROR]关于下划线引发的错误">http://zx21.xyz/2019/12/20/ERROR-关于下划线引发的错误/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
