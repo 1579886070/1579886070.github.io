@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>周信的博客</title>
+  
+  <subtitle>静心也</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://zx21.xyz/"/>
+  <updated>2019-12-04T16:39:10.965Z</updated>
+  <id>http://zx21.xyz/</id>
+  
+  <author>
+    <name>周信</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[MySql]关于查询的一次异常排查</title>
+    <link href="http://zx21.xyz/2019/12/05/MySql-%E5%85%B3%E4%BA%8E%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%B8%80%E6%AC%A1%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/"/>
+    <id>http://zx21.xyz/2019/12/05/MySql-关于查询的一次异常排查/</id>
+    <published>2019-12-04T16:20:04.000Z</published>
+    <updated>2019-12-04T16:39:10.965Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近因为一个java项目，其中查询一组数据响应十分慢。后面发现对一张表有40万条左右的数据，单表每次查询速度1S以上。事有蹊跷，开始研究!</p><h2 id="数据40万条"><a href="#数据40万条" class="headerlink" title="数据40万条"></a>数据40万条</h2><pre><code>SELECT count(*) FROM `lz_commodity_info`--条数 350000万左右</code></pre><hr><h2 id="一、SQL查询测试"><a href="#一、SQL查询测试" class="headerlink" title="一、SQL查询测试"></a>一、SQL查询测试</h2><h3 id="执行sql查看执行时间"><a href="#执行sql查看执行时间" class="headerlink" title="执行sql查看执行时间"></a>执行sql查看执行时间</h3><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=544844787596</code></pre><p>** 响应信息如下,发现竟然查询需要1秒以上。虽然不是主键id,但是也不应该这么慢。**</p><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=544844787596OK时间: 1.13s</code></pre><hr><h3 id="添加索引"><a href="#添加索引" class="headerlink" title="添加索引"></a>添加索引</h3><p>查看没有添加索引，先加个索引看看。</p><pre><code>alter table `lz_commodity_info` add INDEX(commodity_id)</code></pre><h3 id="再次查询"><a href="#再次查询" class="headerlink" title="再次查询"></a>再次查询</h3><p>** 响应信息如下,竟然还是这么慢，事情没我想得那么简单。**</p><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=544844787596OK时间: 1.107s</code></pre><hr><h3 id="查看sql"><a href="#查看sql" class="headerlink" title="查看sql"></a>查看sql</h3><p>** 而后查看sql发现，定义的类型是varchar。那么尝试修改下sql语句，加上单引号查询试试。**</p><p><code>`commodity_id` varchar(50)</code></p><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=&#39;544844787596&#39;</code></pre><p>** 响应信息如下，发现从蜗牛直接到火箭了，直接起飞，那么导致慢的原因也浮现出来了。 **</p><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=&#39;544844787596&#39;OK时间: 0.002s</code></pre><hr><h2 id="二、疑问开始"><a href="#二、疑问开始" class="headerlink" title="二、疑问开始"></a>二、疑问开始</h2><h3 id="删除索引再测试"><a href="#删除索引再测试" class="headerlink" title="删除索引再测试"></a>删除索引再测试</h3><pre><code>alter table `lz_commodity_info` drop INDEX `commodity_id`</code></pre><h3 id="再次查看速度"><a href="#再次查看速度" class="headerlink" title="再次查看速度"></a>再次查看速度</h3><p>** 发现速度竟然基本差不多，都长达1s以上了 **</p><pre><code>时间: 1.099s------------时间: 1.077s------------</code></pre><hr><h3 id="explain测试"><a href="#explain测试" class="headerlink" title="explain测试"></a>explain测试</h3><p>sql前+explain 查询sql的执行情况。</p><ul><li>1、没加索引<br>不管是加上单引号还是不加。返回如下：</li></ul><p><img src="http://image.xiaoxinyes.club/20191205000538.png" alt="查询结果"></p><hr><ul><li>2、加上索引<br>不加单引号，返回结果跟上面的一样。</li></ul><p>加单引号，可以看到这才走了索引。返回结果如下：<br><img src="http://image.xiaoxinyes.club/20191205001000.png" alt="查询结果"></p><h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><blockquote><p>1、查询时添加索引可以极大的优化查询速度；</p><p>2、定义的是varchar类型的字段，添加索引，查询切记要加上单引号；</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近因为一个java项目，其中查询一组数据响应十分慢。后面发现对一张表有40万条左右的数据，单表每次查询速度1S以上。事有蹊跷，开始研究!&lt;/p&gt;
+&lt;h2 id=&quot;数据40万条&quot;&gt;&lt;a href=&quot;#数据40万条&quot; class=&quot;headerlink&quot; title=&quot;数据4
+      
+    
+    </summary>
+    
+    
+      <category term="Sql" scheme="http://zx21.xyz/categories/Sql/"/>
+    
+    
+      <category term="mysql" scheme="http://zx21.xyz/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]缓存之ConcurrentMapCacheManager</title>
+    <link href="http://zx21.xyz/2019/11/27/JAVA-%E7%BC%93%E5%AD%98%E4%B9%8BConcurrentMapCacheManager/"/>
+    <id>http://zx21.xyz/2019/11/27/JAVA-缓存之ConcurrentMapCacheManager/</id>
+    <published>2019-11-27T14:04:23.000Z</published>
+    <updated>2019-11-27T15:04:02.118Z</updated>
+    
+    <content type="html"><![CDATA[<p>我用mybatis+springboot默认的ConcurrentMapCacheManager缓存演示。maven依赖导入mybatis和web相关即可。</p><h2 id="一、配置文件"><a href="#一、配置文件" class="headerlink" title="一、配置文件"></a>一、配置文件</h2><p>这里显示打印sql,是方便查看调用方法时是不是走缓存拿去数据，如果是的则不会打印sql日志。</p><pre><code>spring:  datasource:    password: 1579886070    username: root    driver-class-name: com.mysql.jdbc.Driver    url: jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=falsemybatis:  configuration:    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql</code></pre><hr><h2 id="二、sql"><a href="#二、sql" class="headerlink" title="二、sql"></a>二、sql</h2><pre><code>CREATE TABLE `student` (  `id` int(11) NOT NULL,  `name` varchar(255) DEFAULT NULL,  `age` int(11) DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;</code></pre><hr><h2 id="三、service和实现类"><a href="#三、service和实现类" class="headerlink" title="三、service和实现类"></a>三、service和实现类</h2><h3 id="service"><a href="#service" class="headerlink" title="service"></a>service</h3><pre><code>package xyz.zx21.demo.service;import xyz.zx21.demo.vo.Student;import java.util.List;public interface StudentService {    Student add(Student student);    boolean deleteById(int id);    Student selectById(Student student);}</code></pre><h3 id="Impl"><a href="#Impl" class="headerlink" title="Impl"></a>Impl</h3><p><strong>@CachePut:新增或者将更新的数据存到缓存，名称为student,key为student的id。</strong></p><p><strong>@CacheEvic:删除key为id的缓存</strong></p><p><strong>@Cacheable:将student的id作为Key缓存到student中</strong></p><p>没有指定key的话，方法参数作为key存储到缓存中。</p><pre><code>package xyz.zx21.demo.service.impl;import org.springframework.beans.factory.annotation.Autowired;import org.springframework.cache.annotation.CacheEvict;import org.springframework.cache.annotation.CachePut;import org.springframework.cache.annotation.Cacheable;import org.springframework.stereotype.Service;import xyz.zx21.demo.mapper.StudentMapper;import xyz.zx21.demo.service.StudentService;import xyz.zx21.demo.vo.Student;import java.util.List;@Servicepublic class StudentServiceImlp implements StudentService {    @Autowired    private StudentMapper studentMapper;    @Override    @CachePut(value = &quot;student&quot;, key = &quot;#student.id&quot;)    public Student add(Student student) {        if(studentMapper.insertStudent(student)&gt;0){            return student;        }        return null;    }    @Override    @CacheEvict(value = &quot;student&quot;)    public boolean deleteById(int id) {        return studentMapper.deleteStudent(id);    }    @Override    @Cacheable(value = &quot;student&quot;, key = &quot;#student.id&quot;)    public Student selectById(Student student) {        return studentMapper.selectById(student);    }}</code></pre><h2 id="四、controller"><a href="#四、controller" class="headerlink" title="四、controller"></a>四、controller</h2><pre><code>package xyz.zx21.demo.controller;import org.apache.ibatis.annotations.Param;import org.springframework.beans.factory.annotation.Autowired;import org.springframework.cache.annotation.CacheEvict;import org.springframework.cache.annotation.CachePut;import org.springframework.cache.annotation.Cacheable;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;import xyz.zx21.demo.service.StudentService;import xyz.zx21.demo.vo.Student;import xyz.zx21.demo.vo.StudentVO;@RestController@RequestMappingpublic class StudentController {    @Autowired    private StudentVO studentVO;    @Autowired    private StudentService studentService;    /**     * 添加数据     *     * @return     */    @GetMapping(&quot;addStu&quot;)    public Object insertStudent(Student student) {        return studentService.add(student);    }    /**     * 根据id删除数据     *     * @param id     * @return     */    @GetMapping(&quot;delete&quot;)    public Object delete(@Param(&quot;id&quot;) int id) {        return studentService.deleteById(id);    }    /**     * 根据id查找     *     * @param student     * @return     */    @GetMapping(&quot;selectOne&quot;)    public Object selectOne(Student student) {        return studentService.selectById(student);    }}</code></pre><h2 id="五、启动类"><a href="#五、启动类" class="headerlink" title="五、启动类"></a>五、启动类</h2><p>注意加上@EnableCaching注解，开启缓存支持。</p><pre><code>package xyz.zx21.demo;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.cache.annotation.EnableCaching;@SpringBootApplication@EnableCachingpublic class DemoApplication {    public static void main(String[] args) {        SpringApplication app = new SpringApplication(DemoApplication.class);        app.run(args);    }}</code></pre><hr><h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><h3 id="1、添加数据存入缓存"><a href="#1、添加数据存入缓存" class="headerlink" title="1、添加数据存入缓存"></a>1、添加数据存入缓存</h3><p>请求：<br><code>http://127.0.0.1:8080/addStu?id=3&amp;name=小信&amp;age=23</code></p><p>返回：</p><pre><code>{    &quot;id&quot;: 3,    &quot;name&quot;: &quot;小信&quot;,    &quot;age&quot;: 23}</code></pre><p>idea日志：</p><pre><code>JDBC Connection [HikariProxyConnection@1383776946 wrapping com.mysql.jdbc.JDBC4Connection@59329e8b] will not be managed by Spring==&gt;  Preparing: insert into student(id,name,age) values (?,?,?) ==&gt; Parameters: 3(Integer), 小信(String), 23(Integer)&lt;==    Updates: 1Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@668ffe2e]</code></pre><h3 id="2、根据id去缓存查数据"><a href="#2、根据id去缓存查数据" class="headerlink" title="2、根据id去缓存查数据"></a>2、根据id去缓存查数据</h3><p>请求：<br><code>http://127.0.0.1:8080/selectOne?id=3</code></p><p>返回：</p><pre><code>{    &quot;id&quot;: 3,    &quot;name&quot;: &quot;小信&quot;,    &quot;age&quot;: 23}</code></pre><p>idea日志：</p><pre><code>2019-11-27 22:45:23.211 DEBUG 10040 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET &quot;/selectOne?id=3&quot;, parameters={masked}2019-11-27 22:45:23.211 DEBUG 10040 --- [nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to xyz.zx21.demo.controller.StudentController#selectOne(Student)2019-11-27 22:45:23.213 DEBUG 10040 --- [nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using &#39;application/json;q=0.8&#39;, given [text/html, application/xhtml+xml, image/webp, image/apng, application/signed-exchange;v=b3, application/xml;q=0.9, */*;q=0.8] and supported [application/json, application/*+json, application/json, application/*+json]2019-11-27 22:45:23.213 DEBUG 10040 --- [nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [Student{id=3, name=&#39;小信&#39;, age=23}]2019-11-27 22:45:23.214 DEBUG 10040 --- [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK</code></pre><blockquote><p>可以看到它并没有去打印sql语句，直接从缓存取的数据</p></blockquote><ul><li>如果查询数据，指定为其他id，第一查询会走数据库，sql会打印到控制台，第二次再同样的请求则直接走缓存。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;我用mybatis+springboot默认的ConcurrentMapCacheManager缓存演示。maven依赖导入mybatis和web相关即可。&lt;/p&gt;
+&lt;h2 id=&quot;一、配置文件&quot;&gt;&lt;a href=&quot;#一、配置文件&quot; class=&quot;headerlink&quot; t
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]assembly自定义打包</title>
+    <link href="http://zx21.xyz/2019/11/24/JAVA-assembly%E8%87%AA%E5%AE%9A%E4%B9%89%E6%89%93%E5%8C%85/"/>
+    <id>http://zx21.xyz/2019/11/24/JAVA-assembly自定义打包/</id>
+    <published>2019-11-24T01:58:29.000Z</published>
+    <updated>2019-11-24T02:12:35.514Z</updated>
+    
+    <content type="html"><![CDATA[<p>在很多场景下，会有很多shell脚本或者需要操作一些配置，可以使用maven的assembly插件打出结构清晰的架构。</p><p>官网参考：<a href="http://maven.apache.org/plugins/maven-assembly-plugin/assembly.html" target="_blank" rel="noopener">点击进入</a></p><h2 id="一、去掉springboot打包方式"><a href="#一、去掉springboot打包方式" class="headerlink" title="一、去掉springboot打包方式"></a>一、去掉springboot打包方式</h2><pre><code>&lt;build&gt;    &lt;plugins&gt;        &lt;plugin&gt;             &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;             &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;        &lt;/plugin&gt;    &lt;/plugins&gt;&lt;/build&gt;</code></pre><hr><h2 id="二、添加assembly依赖"><a href="#二、添加assembly依赖" class="headerlink" title="二、添加assembly依赖"></a>二、添加assembly依赖</h2><pre><code>    &lt;build&gt;        &lt;finalName&gt;zx-demo&lt;/finalName&gt;        &lt;plugins&gt;            &lt;plugin&gt;                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;                &lt;configuration&gt;                    &lt;source&gt;1.8&lt;/source&gt;                    &lt;target&gt;1.8&lt;/target&gt;                &lt;/configuration&gt;            &lt;/plugin&gt;            &lt;plugin&gt;                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;                &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;                &lt;configuration&gt;                    &lt;archive&gt;                        &lt;manifest&gt;                            &lt;!--运行jar包时运行的主类，要求类全名--&gt;                            &lt;mainClass&gt;com.example.zxdemo.Application&lt;/mainClass&gt;                            &lt;!-- 是否指定项目classpath下的依赖 --&gt;                            &lt;addClasspath&gt;true&lt;/addClasspath&gt;                            &lt;!-- 指定依赖的时候声明前缀 --&gt;                            &lt;classpathPrefix&gt;./&lt;/classpathPrefix&gt;                        &lt;/manifest&gt;                        &lt;manifestEntries&gt;                            &lt;Class-Path&gt;../conf/ ../resources/&lt;/Class-Path&gt;                        &lt;/manifestEntries&gt;                    &lt;/archive&gt;                &lt;/configuration&gt;            &lt;/plugin&gt;            &lt;plugin&gt;                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;                &lt;configuration&gt;                    &lt;descriptors&gt;                        &lt;descriptor&gt;src/main/assembly/assembly.xml&lt;/descriptor&gt;                    &lt;/descriptors&gt;                &lt;/configuration&gt;                &lt;executions&gt;                    &lt;execution&gt;&lt;!-- 配置执行器 --&gt;                        &lt;id&gt;make-assembly&lt;/id&gt;                        &lt;phase&gt;package&lt;/phase&gt;&lt;!-- 绑定到package生命周期阶段上 --&gt;                        &lt;goals&gt;                            &lt;goal&gt;single&lt;/goal&gt;&lt;!-- 只运行一次 --&gt;                        &lt;/goals&gt;                    &lt;/execution&gt;                &lt;/executions&gt;            &lt;/plugin&gt;        &lt;/plugins&gt;    &lt;/build&gt;</code></pre><ul><li><p>可以看到依赖中写了src/main/assembly/assembly.xml，这是配置文件存放的位置。</p><h2 id="三、assembly-xml"><a href="#三、assembly-xml" class="headerlink" title="三、assembly.xml"></a>三、assembly.xml</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;assembly&gt;  &lt;id&gt;zx-demo&lt;/id&gt;  &lt;formats&gt;      &lt;format&gt;tar&lt;/format&gt;&lt;!--打包的文件格式,也可以有：war zip--&gt;  &lt;/formats&gt;  &lt;!--tar.gz压缩包下是否生成和项目名相同的根目录--&gt;  &lt;includeBaseDirectory&gt;false&lt;/includeBaseDirectory&gt;  &lt;dependencySets&gt;      &lt;dependencySet&gt;          &lt;!--是否把本项目添加到依赖文件夹下--&gt;          &lt;useProjectArtifact&gt;true&lt;/useProjectArtifact&gt;          &lt;outputDirectory&gt;lib&lt;/outputDirectory&gt;          &lt;!--将scope为runtime的依赖包打包--&gt;          &lt;scope&gt;runtime&lt;/scope&gt;      &lt;/dependencySet&gt;  &lt;/dependencySets&gt;  &lt;fileSets&gt;      &lt;fileSet&gt;          &lt;directory&gt;src/main/bin&lt;/directory&gt;          &lt;outputDirectory&gt;./&lt;/outputDirectory&gt;      &lt;/fileSet&gt;      &lt;fileSet&gt;          &lt;directory&gt;src/main/resources&lt;/directory&gt;          &lt;outputDirectory&gt;conf&lt;/outputDirectory&gt;      &lt;/fileSet&gt;  &lt;/fileSets&gt;&lt;/assembly&gt;</code></pre></li><li><p>可以看到 src/main/bin 目录，可以自定义启动脚本。</p><h2 id="四、自定义脚本"><a href="#四、自定义脚本" class="headerlink" title="四、自定义脚本"></a>四、自定义脚本</h2><h3 id="start-sh"><a href="#start-sh" class="headerlink" title="start.sh"></a>start.sh</h3><pre><code>nohup java -jar -Dfile.encoding=UTF-8 -Djava.security.egd=file:/dev/urandom ./lib/zx-demo.jar &gt; /dev/null 2&gt;&amp;1 &amp;</code></pre><h3 id="stop-sh"><a href="#stop-sh" class="headerlink" title="stop.sh"></a>stop.sh</h3><pre><code>PID=`ps -ef | grep zx-demo.jar | grep -v grep | awk &#39;{print $2}&#39;`if [ -z $PID ]; then  echo Application is already stoppedelse  echo kill $PID  kill -s 9 $PIDfi</code></pre></li></ul><p>在assembly.xml中可自定义打包格式，打包后，target下会生成相应的压缩文件。<br><img src="http://" alt="图片"></p><p>conf：resources下的文件</p><p>lib：所有依赖的jar包</p><h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p><img src="http://image.xiaoxinyes.club/20191124094523.png" alt="项目"></p><h3 id="解压后结构"><a href="#解压后结构" class="headerlink" title="解压后结构"></a>解压后结构</h3><p><img src="http://image.xiaoxinyes.club/20191124094451.png" alt="目录"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在很多场景下，会有很多shell脚本或者需要操作一些配置，可以使用maven的assembly插件打出结构清晰的架构。&lt;/p&gt;
+&lt;p&gt;官网参考：&lt;a href=&quot;http://maven.apache.org/plugins/maven-assembly-plugin/as
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="maven" scheme="http://zx21.xyz/tags/maven/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]Mybatis注解操作表数据</title>
+    <link href="http://zx21.xyz/2019/11/21/JAVA-Mybatis%E6%B3%A8%E8%A7%A3%E6%93%8D%E4%BD%9C%E8%A1%A8%E6%95%B0%E6%8D%AE/"/>
+    <id>http://zx21.xyz/2019/11/21/JAVA-Mybatis注解操作表数据/</id>
+    <published>2019-11-21T14:24:04.000Z</published>
+    <updated>2019-11-21T14:25:22.721Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="springboot-mybatis演示"><a href="#springboot-mybatis演示" class="headerlink" title="springboot+mybatis演示"></a>springboot+mybatis演示</h1><p>@Insert/@Delete/@Select/@Update</p><hr><h2 id="一、依赖"><a href="#一、依赖" class="headerlink" title="一、依赖"></a>一、依赖</h2><pre><code>        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;            &lt;version&gt;2.0.0&lt;/version&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;mysql&lt;/groupId&gt;            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;            &lt;version&gt;5.1.25&lt;/version&gt;        &lt;/dependency&gt;</code></pre><h2 id="二、启动类"><a href="#二、启动类" class="headerlink" title="二、启动类"></a>二、启动类</h2><pre><code>@SpringBootApplicationpublic class DemoApplication {    public static void main(String[] args) {        SpringApplication app = new SpringApplication(DemoApplication.class);        app.run(args);    }}</code></pre><h2 id="三、application-yml"><a href="#三、application-yml" class="headerlink" title="三、application,yml"></a>三、application,yml</h2><pre><code>spring:  datasource:    password: 1579886070    username: root    driver-class-name: com.mysql.jdbc.Driver    url: jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=falsemybatis:  configuration:    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql</code></pre><h2 id="四、student数据表"><a href="#四、student数据表" class="headerlink" title="四、student数据表"></a>四、student数据表</h2><pre><code>CREATE TABLE `student` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `name` varchar(255) DEFAULT NULL,  `age` int(11) DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;</code></pre><h2 id="五、来一个实体类"><a href="#五、来一个实体类" class="headerlink" title="五、来一个实体类"></a>五、来一个实体类</h2><pre><code>public class Student {    public Student() {    }    public Student(Integer id, String name, Integer age) {        this.id = id;        this.name = name;        this.age = age;    }    private Integer id;    private String name;    private Integer age;    //get    //set}</code></pre><h2 id="六、service和它的实现类"><a href="#六、service和它的实现类" class="headerlink" title="六、service和它的实现类"></a>六、service和它的实现类</h2><pre><code>public interface StudentService {    int add(Student student);    boolean deleteById(int id);    List&lt;Student&gt; selectAll();    boolean updateStudent(Student s);}</code></pre><pre><code>@Servicepublic class StudentServiceImlp implements StudentService {    @Autowired    private StudentMapper studentMapper;    @Override    public int add(Student student) {        return studentMapper.insertStudent(student);    }    @Override    public boolean deleteById(int id) {        return studentMapper.deleteStudent(id);    }    @Override    public List&lt;Student&gt; selectAll() {        return studentMapper.selectStudentAll();    }    @Override    public boolean updateStudent(Student s) {        return studentMapper.update(s);    }}</code></pre><h2 id="七、注入mapper"><a href="#七、注入mapper" class="headerlink" title="七、注入mapper"></a>七、注入mapper</h2><p>包含增删改查，类上加了@mapper,则不用再启动类上@MapperScan()</p><pre><code>@Mapperpublic interface StudentMapper {    @Insert(&quot;insert into student(name,age) values (#{name},#{age})&quot;)    int insertStudent(Student student);    @Delete(&quot;delete from student where id = #{id}&quot;)    boolean deleteStudent(int id);    @Select(&quot;select * from student&quot;)    List&lt;Student&gt; selectStudentAll();    @Update(&quot;update student set name=#{name},age = #{age} where id = #{id}&quot;)    boolean update(Student student);}</code></pre><h2 id="八、最后controller"><a href="#八、最后controller" class="headerlink" title="八、最后controller"></a>八、最后controller</h2><pre><code>@RestController@RequestMappingpublic class StudentController {    @Autowired    private StudentService studentService;    /**     * 添加数据     *     * @param name     * @param age     * @return     */    @GetMapping(&quot;addStu&quot;)    public Object insertStudent(@Param(&quot;name&quot;) String name, @Param(&quot;age&quot;) int age) {        Student student = new Student(null, name, age);        int index = studentService.add(student);        return index;    }    /**     * 根据id删除数据     *     * @param id     * @return     */    @GetMapping(&quot;delete&quot;)    public Object delete(@Param(&quot;id&quot;) int id) {        return studentService.deleteById(id);    }    /**     * 查询所有数据     *     * @return     */    @GetMapping(&quot;select&quot;)    public Object select() {        return studentService.selectAll();    }    /**     * 修改数据     *     * @param id     * @param name     * @param age     * @return     */    @GetMapping(&quot;update&quot;)    public Object update(int id, String name, int age) {        Student s = new Student(id, name, age);        return studentService.updateStudent(s);    }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;springboot-mybatis演示&quot;&gt;&lt;a href=&quot;#springboot-mybatis演示&quot; class=&quot;headerlink&quot; title=&quot;springboot+mybatis演示&quot;&gt;&lt;/a&gt;springboot+mybatis演示&lt;/h1&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="mybatis" scheme="http://zx21.xyz/tags/mybatis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]MVC请求映射</title>
+    <link href="http://zx21.xyz/2019/11/10/JAVA-MVC%E8%AF%B7%E6%B1%82%E6%98%A0%E5%B0%84/"/>
+    <id>http://zx21.xyz/2019/11/10/JAVA-MVC请求映射/</id>
+    <published>2019-11-10T12:50:49.000Z</published>
+    <updated>2019-11-10T13:16:34.001Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一、-RequestMapping方式"><a href="#一、-RequestMapping方式" class="headerlink" title="一、@RequestMapping方式"></a>一、@RequestMapping方式</h2><p>以前我们controller写请求路劲都是如下格式,指定每个http方法，如get、post等。</p><pre><code>@RequestMapping(value = &quot;v1/get&quot;,method = RequestMethod.GET)</code></pre><p>点击方法，进入源代码中查看一下，可以看到方法包含如下多种：<br><img src="http://image.xiaoxinyes.club/2019-11-10_205659.png" alt="源码"></p><hr><h2 id="二、更简洁的方式"><a href="#二、更简洁的方式" class="headerlink" title="二、更简洁的方式"></a>二、更简洁的方式</h2><p>很多以前的老项目的格式都是上面的那种，而现在新增了@GetMapping，@PostMapping，@PutMapping，@DeleteMapping，@PatchMapping。</p><pre><code>    @GetMapping(&quot;get&quot;)    public String get(){        return &quot;get请求!&quot;;    }    @PostMapping(&quot;post&quot;)    public String post(){        return &quot;post请求!&quot;;    }    @DeleteMapping(&quot;delete&quot;)    public String delete(){        return &quot;delete请求!&quot;;    }    @PutMapping(&quot;put&quot;)    public String put(){        return &quot;put请求!&quot;;    }</code></pre><p>点击任意一个注解进入源码里面，可以看到组合注解。只是简化了，而依旧调用的是RequestMethod。<br><img src="http://image.xiaoxinyes.club/2019-11-10_210259.png" alt="源码"></p><hr><h2 id="三、基于restful接口开发"><a href="#三、基于restful接口开发" class="headerlink" title="三、基于restful接口开发"></a>三、基于restful接口开发</h2><p>Get:对应查询<br>post：对应新增<br>put:对应更新<br>delete:对应删除</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;一、-RequestMapping方式&quot;&gt;&lt;a href=&quot;#一、-RequestMapping方式&quot; class=&quot;headerlink&quot; title=&quot;一、@RequestMapping方式&quot;&gt;&lt;/a&gt;一、@RequestMapping方式&lt;/h2&gt;&lt;p&gt;以前
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]@Value与@ConfigurationProperties</title>
+    <link href="http://zx21.xyz/2019/10/29/JAVA-Value%E4%B8%8E-ConfigurationProperties/"/>
+    <id>http://zx21.xyz/2019/10/29/JAVA-Value与-ConfigurationProperties/</id>
+    <published>2019-10-28T16:49:59.000Z</published>
+    <updated>2019-10-28T17:06:22.290Z</updated>
+    
+    <content type="html"><![CDATA[<p>有时重要的信息需要写在配置文件中，如application.yml或是如application.preperties，那么可以通过@Value或是@ConfigurationProperties获取到配置文件中的值。</p><hr><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="一、-Value"><a href="#一、-Value" class="headerlink" title="一、@Value"></a>一、@Value</h3><h4 id="yml配置"><a href="#yml配置" class="headerlink" title="yml配置"></a>yml配置</h4><pre><code>person:  name: 小信  age: 20</code></pre><h4 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h4><pre><code>@RestController@RequestMappingpublic class PersonController {    @Value(&quot;${person.name}&quot;)    private String name;    @Value(&quot;${person.age}&quot;)    private Integer age;    @GetMapping(&quot;getInfo&quot;)    public String Info() {        return name + &quot;:&quot; + age;    }}</code></pre><h4 id="访问地址"><a href="#访问地址" class="headerlink" title="访问地址"></a>访问地址</h4><p><a href="http://127.0.0.1:8080/getInfo" target="_blank" rel="noopener">http://127.0.0.1:8080/getInfo</a></p><p>响应 <code>小信:20</code></p><hr><p><em>使用该方式可以发现，若配置多个，那么都需要使用@Value注入多次，显得较为繁琐</em></p><hr><h3 id="二、-ConfigurationProperties"><a href="#二、-ConfigurationProperties" class="headerlink" title="二、@ConfigurationProperties"></a>二、@ConfigurationProperties</h3><p>将配置文件中得属性与一个Bean相关联，实现类型安全的配置。</p><h4 id="yml配置-1"><a href="#yml配置-1" class="headerlink" title="yml配置"></a>yml配置</h4><pre><code>student:  name: 小信  email: xiaoxin1218@qq.com</code></pre><h4 id="Bean实体"><a href="#Bean实体" class="headerlink" title="Bean实体"></a>Bean实体</h4><pre><code>@ConfigurationProperties(prefix = &quot;student&quot;)public class StudentVO {    private String name;    private String email;    public String getName() {        return name;    }    public void setName(String name) {        this.name = name;    }    public String getEmail() {        return email;    }    public void setEmail(String email) {        this.email = email;    }}</code></pre><p><strong>通过prefix指定配置文件的前缀</strong></p><h4 id="controller-1"><a href="#controller-1" class="headerlink" title="controller"></a>controller</h4><pre><code>@RestController@RequestMappingpublic class StudentController {    @Autowired    private StudentVO studentVO;    @GetMapping(&quot;getStu&quot;)    public String studentInfo() {        return studentVO.getName() + &quot;::&quot; + studentVO.getEmail();    }}</code></pre><p><strong>@Autowired可直接注入</strong></p><h4 id="访问地址-1"><a href="#访问地址-1" class="headerlink" title="访问地址"></a>访问地址</h4><p><a href="http://127.0.0.1:8080/getStu" target="_blank" rel="noopener">http://127.0.0.1:8080/getStu</a><br>响应 <code>小信::xiaoxin1218@qq.com</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;有时重要的信息需要写在配置文件中，如application.yml或是如application.preperties，那么可以通过@Value或是@ConfigurationProperties获取到配置文件中的值。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;使用&quot;&gt;&lt;a href
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]SpringBoot定制benner</title>
+    <link href="http://zx21.xyz/2019/10/27/JAVA-SpringBoot%E5%AE%9A%E5%88%B6benner/"/>
+    <id>http://zx21.xyz/2019/10/27/JAVA-SpringBoot定制benner/</id>
+    <published>2019-10-27T11:56:08.000Z</published>
+    <updated>2019-10-27T13:00:15.329Z</updated>
+    
+    <content type="html"><![CDATA[<p>springboot默认启动banner如下：</p><p><img src="http://image.xiaoxinyes.club/2019-10-27_195347.png" alt="默认banner"></p><p>修改步骤也十分简单</p><hr><h2 id="修改步骤"><a href="#修改步骤" class="headerlink" title="修改步骤"></a>修改步骤</h2><h3 id="一"><a href="#一" class="headerlink" title="一"></a>一</h3><p>在src/main/resources下新建名为banner.txt的文件。</p><h3 id="二"><a href="#二" class="headerlink" title="二"></a>二</h3><p>文本中写入需要的字符，可通过<a href="http://patorjk.com/software/taag" target="_blank" rel="noopener">点击进入</a>该网站生成字符。<br><img src="http://image.xiaoxinyes.club/2019-10-27_200333.png" alt="生成字符网站"></p><h3 id="三"><a href="#三" class="headerlink" title="三"></a>三</h3><p>启动程序即可，可以看到已经发生了变化<br><img src="http://image.xiaoxinyes.club/2019-10-27_200550.png" alt="修改后的benner"></p><h2 id="关闭benner"><a href="#关闭benner" class="headerlink" title="关闭benner"></a>关闭benner</h2><pre><code>@SpringBootApplicationpublic class DemoApplication {    public static void main(String[] args) {        SpringApplication app = new SpringApplication(DemoApplication.class);        app.setBannerMode(Banner.Mode.OFF);        app.run(args);      }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;springboot默认启动banner如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://image.xiaoxinyes.club/2019-10-27_195347.png&quot; alt=&quot;默认banner&quot;&gt;&lt;/p&gt;
+&lt;p&gt;修改步骤也十分简单&lt;/p&gt;
+&lt;hr&gt;
+&lt;h
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]Mybatis代码生成</title>
+    <link href="http://zx21.xyz/2019/10/27/JAVA-Mybatis%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/"/>
+    <id>http://zx21.xyz/2019/10/27/JAVA-Mybatis代码生成/</id>
+    <published>2019-10-27T01:43:26.000Z</published>
+    <updated>2019-10-27T01:45:49.089Z</updated>
+    
+    <content type="html"><![CDATA[<p>generatorConfig.xml</p><h3 id="首先在pom-xml中添加插件依赖"><a href="#首先在pom-xml中添加插件依赖" class="headerlink" title="首先在pom.xml中添加插件依赖"></a>首先在pom.xml中添加插件依赖</h3><pre><code>&lt;build&gt;    &lt;plugins&gt;        &lt;plugin&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;        &lt;/plugin&gt;        &lt;!-- mybatis generator 自动生成代码插件 --&gt;        &lt;plugin&gt;            &lt;groupId&gt;org.mybatis.generator&lt;/groupId&gt;            &lt;artifactId&gt;mybatis-generator-maven-plugin&lt;/artifactId&gt;            &lt;version&gt;1.3.1&lt;/version&gt;            &lt;configuration&gt;                &lt;configurationFile&gt;${basedir}/src/main/resources/generator/generatorConfig.xml&lt;/configurationFile&gt;                &lt;overwrite&gt;true&lt;/overwrite&gt;                &lt;verbose&gt;true&lt;/verbose&gt;            &lt;/configuration&gt;        &lt;/plugin&gt;    &lt;/plugins&gt;&lt;/build&gt;</code></pre><h3 id="新建generatorConfig-xml"><a href="#新建generatorConfig-xml" class="headerlink" title="新建generatorConfig.xml"></a>新建generatorConfig.xml</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE generatorConfiguration        PUBLIC &quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;        &quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;&gt;&lt;generatorConfiguration&gt;    &lt;!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包--&gt;    &lt;classPathEntry  location=&quot;E:\SSH_SSM\mysql-connector-java-5.1.44\mysql-connector-java-5.1.44\mysql-connector-java-5.1.44-bin.jar&quot;/&gt;    &lt;context id=&quot;DB2Tables&quot;  targetRuntime=&quot;MyBatis3&quot;&gt;        &lt;commentGenerator&gt;            &lt;property name=&quot;suppressDate&quot; value=&quot;true&quot;/&gt;            &lt;!-- 是否去除自动生成的注释 true：是 ： false:否 --&gt;            &lt;property name=&quot;suppressAllComments&quot; value=&quot;false&quot;/&gt;        &lt;/commentGenerator&gt;        &lt;!--数据库连接驱动类,URL，用户名、密码 --&gt;        &lt;jdbcConnection driverClass=&quot;com.mysql.jdbc.Driver&quot; connectionURL=&quot;jdbc:mysql://127.0.0.1/blogs&quot; userId=&quot;root&quot; password=&quot;密码&quot;&gt;        &lt;/jdbcConnection&gt;        &lt;javaTypeResolver&gt;            &lt;property name=&quot;forceBigDecimals&quot; value=&quot;false&quot;/&gt;        &lt;/javaTypeResolver&gt;        &lt;!-- 生成(实体)模型的包名和位置--&gt;        &lt;javaModelGenerator targetPackage=&quot;xyz.xioaxin12.blogs.entity&quot; targetProject=&quot;E:\Idea Project\blogs\src\main\java&quot;&gt;            &lt;property name=&quot;enableSubPackages&quot; value=&quot;true&quot;/&gt;            &lt;property name=&quot;trimStrings&quot; value=&quot;true&quot;/&gt;        &lt;/javaModelGenerator&gt;        &lt;!-- 生成XML映射文件的包名和位置--&gt;        &lt;sqlMapGenerator targetPackage=&quot;resources.mapper&quot; targetProject=&quot;E:\Idea Project\blogs\src\main&quot;&gt;            &lt;property name=&quot;enableSubPackages&quot; value=&quot;true&quot;/&gt;        &lt;/sqlMapGenerator&gt;        &lt;!-- 生成DAO接口的包名和位置--&gt;        &lt;javaClientGenerator type=&quot;XMLMAPPER&quot; targetPackage=&quot;xyz.xioaxin12.blogs.dao&quot; targetProject=&quot;E:\Idea Project\blogs\src\main\java&quot;&gt;            &lt;property name=&quot;enableSubPackages&quot; value=&quot;true&quot;/&gt;        &lt;/javaClientGenerator&gt;        &lt;!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名--&gt;        &lt;table tableName=&quot;t_blog&quot; domainObjectName=&quot;Blog&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_blog&quot; domainObjectName=&quot;Blog&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_blogger&quot; domainObjectName=&quot;Blogger&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_blog&quot; domainObjectName=&quot;Blog&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_blogtype&quot; domainObjectName=&quot;BlogType&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_blog&quot; domainObjectName=&quot;Blog&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_comment&quot; domainObjectName=&quot;Comment&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_blog&quot; domainObjectName=&quot;Blog&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_link&quot; domainObjectName=&quot;Link&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;        &lt;table tableName=&quot;t_blog&quot; domainObjectName=&quot;Blog&quot; enableCountByExample=&quot;false&quot; enableUpdateByExample=&quot;false&quot; enableDeleteByExample=&quot;false&quot; enableSelectByExample=&quot;false&quot; selectByExampleQueryId=&quot;false&quot;&gt;&lt;/table&gt;    &lt;/context&gt;&lt;/generatorConfiguration&gt;</code></pre><p>配置信息，包的所在位置等自行更改。</p><hr><p>idea执行步骤，run–&gt;Edit Configurations–&gt;添加maven–&gt;mybatis-generator:generate -e</p><p><img src="http://image.xiaoxinyes.club/2019-02-13_15-18-24.png" alt></p><p><img src="http://image.xiaoxinyes.club/2019-02-13_15-23-07.png" alt></p><p>最后生成即可<br><img src="http://image.xiaoxinyes.club/Snipaste_2019-02-13_15-25-55.png" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;generatorConfig.xml&lt;/p&gt;
+&lt;h3 id=&quot;首先在pom-xml中添加插件依赖&quot;&gt;&lt;a href=&quot;#首先在pom-xml中添加插件依赖&quot; class=&quot;headerlink&quot; title=&quot;首先在pom.xml中添加插件依赖&quot;&gt;&lt;/a&gt;首先在pom.x
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[ERROR]SpringBoot+Mybatis一个错误</title>
+    <link href="http://zx21.xyz/2019/10/27/ERROR-SpringBoot-Mybatis%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF/"/>
+    <id>http://zx21.xyz/2019/10/27/ERROR-SpringBoot-Mybatis一个错误/</id>
+    <published>2019-10-27T01:37:46.000Z</published>
+    <updated>2019-10-27T01:40:11.166Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="异常信息如下"><a href="#异常信息如下" class="headerlink" title="异常信息如下"></a>异常信息如下</h3><pre><code>java.sql.SQLNonTransientConnectionException: CLIENT_PLUGIN_AUTH is required</code></pre><p>image<br><img src="http://image.xiaoxinyes.club/Snipaste_2019-02-13_19-50-35.png" alt></p><hr><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>降低mysql-connector-java的版本即可，我自己试了下5.x的似乎都没问题。</p><h4 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h4><p>将pom.xml中的jdbc数据库驱动修改下。<br>原</p><pre><code> &lt;dependency&gt;    &lt;groupId&gt;mysql&lt;/groupId&gt;    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;    &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;</code></pre><p>修改为</p><pre><code> &lt;dependency&gt;    &lt;groupId&gt;mysql&lt;/groupId&gt;    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;    &lt;version&gt;5.1.25&lt;/version&gt;&lt;/dependency&gt;</code></pre><h4 id="关于application-properties配置修改"><a href="#关于application-properties配置修改" class="headerlink" title="关于application.properties配置修改"></a>关于application.properties配置修改</h4><p>原来(mysql6版本以上)</p><pre><code>spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver</code></pre><p>修改为(mysql5)</p><pre><code>spring.datasource.driver-class-name=com.mysql.jdbc.Driver</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;异常信息如下&quot;&gt;&lt;a href=&quot;#异常信息如下&quot; class=&quot;headerlink&quot; title=&quot;异常信息如下&quot;&gt;&lt;/a&gt;异常信息如下&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;java.sql.SQLNonTransientConnectionException: C
+      
+    
+    </summary>
+    
+    
+      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
+    
+    
+      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[ERROR]Mybaits传递多个参数</title>
+    <link href="http://zx21.xyz/2019/10/27/ERROR-Mybaits%E4%BC%A0%E9%80%92%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0/"/>
+    <id>http://zx21.xyz/2019/10/27/ERROR-Mybaits传递多个参数/</id>
+    <published>2019-10-27T01:34:00.000Z</published>
+    <updated>2019-10-27T01:36:18.300Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="异常信息如下："><a href="#异常信息如下：" class="headerlink" title="异常信息如下："></a>异常信息如下：</h3><pre><code>2019-02-13 19:33:46.931 ERROR 1992 --- [p-nio-80-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.binding.BindingException: Parameter &#39;username&#39; not found. Available parameters are [arg1, arg0, param1, param2]] with root causeorg.apache.ibatis.binding.BindingException: Parameter &#39;username&#39; not found. Available parameters are [arg1, arg0, param1, param2]</code></pre><p>image<br><img src="http://image.xiaoxinyes.club/Snipaste_2019-02-13_19-40-48.png" alt></p><hr><h3 id="原因在于用mybatis查询时，传递了两个参数。"><a href="#原因在于用mybatis查询时，传递了两个参数。" class="headerlink" title="原因在于用mybatis查询时，传递了两个参数。"></a>原因在于用mybatis查询时，传递了两个参数。</h3><pre><code>Blogger selectByNameAndPassword(String username, String password);</code></pre><p>而这样的话匹配不到，用注解@Param即可。</p><pre><code>Blogger selectByNameAndPassword(@Param(&quot;username&quot;)String username, @Param(&quot;password&quot;) String password)</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;异常信息如下：&quot;&gt;&lt;a href=&quot;#异常信息如下：&quot; class=&quot;headerlink&quot; title=&quot;异常信息如下：&quot;&gt;&lt;/a&gt;异常信息如下：&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;2019-02-13 19:33:46.931 ERROR 1992 --- [p-
+      
+    
+    </summary>
+    
+    
+      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
+    
+    
+      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[ERROR]gradle+idea使用时的错误</title>
+    <link href="http://zx21.xyz/2019/10/27/ERROR-gradle-idea%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E9%94%99%E8%AF%AF/"/>
+    <id>http://zx21.xyz/2019/10/27/ERROR-gradle-idea使用时的错误/</id>
+    <published>2019-10-27T01:26:34.000Z</published>
+    <updated>2019-10-27T01:32:13.560Z</updated>
+    
+    <content type="html"><![CDATA[<p>gradle类似于maven，今天(以前的文章，不是当天哦)我下载配置完后发现了许多问题，导致纠结了许久。</p><p>下载官网：<a href="http://services.gradle.org/distributions/" target="_blank" rel="noopener">http://services.gradle.org/distributions/</a></p><p>我去下载了最新的版本，解压后配置环境变量。于是开始在idea上创建项目，无奈怎样都有问题，显示无法构建，这个问题真是搞了许久，检查环境变量，idea搭建过程是否有误等等因素。一直没看出来…..<br><code>1Failed to notify build listener</code></p><p>无奈之下，重新下载了另一个版本，再次测试，同样的结果，我都开始怀疑是不是idea版本的原因了~</p><hr><p>先去忙其他事情…</p><p>临近晚上…</p><hr><p>想着不解决心里不舒服，于是把原来下载的删去，又去下载一个低版本的，不过这次下载的是4.0版本(发现在结合spring boot有问题后修改成4.6)的。系统环境配置依旧。idea开启!</p><p><img src="http://image.xiaoxinyes.club/2019-01-13_190710.png" alt></p><hr><p>选择自动导入，和本地已有的gradle路径。<br><img src="http://image.xiaoxinyes.club/2019-01-13_191241.png" alt></p><hr><p>刷新，目录如下。<br><img src="http://image.xiaoxinyes.club/2019-01-13_191534.png" alt></p><hr><p>发现用了该版本，没有报错了，这里暂时不纠结确实是否版本的原因，有时间我下次再下载一个试试。</p><p>能够发现，没有呈现src目录，这里有两个方法解决。</p><hr><p><strong>方法一：</strong></p><p>file–&gt;settings<br><img src="http://image.xiaoxinyes.club/2019-01-13_192126.png" alt></p><p><strong>方法二：</strong></p><p>build.gradle添加下列代码</p><pre><code>task &quot;create-dirs&quot; &lt;&lt; {    sourceSets*.java.srcDirs*.each {        it.mkdirs()    }    sourceSets*.resources.srcDirs*.each{        it.midirs()    }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;gradle类似于maven，今天(以前的文章，不是当天哦)我下载配置完后发现了许多问题，导致纠结了许久。&lt;/p&gt;
+&lt;p&gt;下载官网：&lt;a href=&quot;http://services.gradle.org/distributions/&quot; target=&quot;_blank&quot; rel
+      
+    
+    </summary>
+    
+    
+      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
+    
+    
+      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[ERROR]未识别mapper配置文件</title>
+    <link href="http://zx21.xyz/2019/10/27/ERROR-%E6%9C%AA%E8%AF%86%E5%88%ABmapper%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"/>
+    <id>http://zx21.xyz/2019/10/27/ERROR-未识别mapper配置文件/</id>
+    <published>2019-10-27T00:58:34.000Z</published>
+    <updated>2019-10-27T01:06:38.399Z</updated>
+    
+    <content type="html"><![CDATA[<p>学习就是从错误中不断吸取知识!在springboot+mybatis整合中，发现一个异常。</p><h2 id="如下"><a href="#如下" class="headerlink" title="如下"></a>如下</h2><pre><code>context with path [] threw exception [Request processing failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): xyz.xioaxin12.mapper.StudentMapper.insetStudent] with root causeorg.apache.ibatis.binding.BindingException: Invalid bound statement (not found): xyz.xioaxin12.mapper.StudentMapper.insetStudent</code></pre><p><img src="http://image.xiaoxinyes.club/2019-01-12_142810.png" alt><br><br><br>发现并没有调用到mapper.xml文件，而我是将mapper.xml和接口写在同包下。<br><img src="http://image.xiaoxinyes.club/2019-01-12_143343.png" alt><br><br><br>发现别名，路径等信息无误之后，我注意到classes文件，果然编译后的xml并那个不存在。<br><img src="http://image.xiaoxinyes.club/2019-01-12_143633.png" alt><br><br></p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>pom.xml中加入以下代码,这样不论是java下还是resourecs下编译后都会加载进去。</p><pre><code>resources&gt;        &lt;resource&gt;            &lt;directory&gt;src/main/resources&lt;/directory&gt;        &lt;/resource&gt;        &lt;resource&gt;            &lt;directory&gt;src/main/java&lt;/directory&gt;            &lt;includes&gt;                &lt;include&gt;**/*.xml&lt;/include&gt;            &lt;/includes&gt;            &lt;filtering&gt;false&lt;/filtering&gt;        &lt;/resource&gt;&lt;/resources&gt;</code></pre><p>若放在指定的resources文件下，需要指定mapper的位置。</p><pre><code>mybatis.mapper-locations=classpath:mapper/*.xml</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;学习就是从错误中不断吸取知识!在springboot+mybatis整合中，发现一个异常。&lt;/p&gt;
+&lt;h2 id=&quot;如下&quot;&gt;&lt;a href=&quot;#如下&quot; class=&quot;headerlink&quot; title=&quot;如下&quot;&gt;&lt;/a&gt;如下&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;context w
+      
+    
+    </summary>
+    
+    
+      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
+    
+    
+      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]Logback日志级别</title>
+    <link href="http://zx21.xyz/2019/10/24/JAVA-Logback%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB/"/>
+    <id>http://zx21.xyz/2019/10/24/JAVA-Logback日志级别/</id>
+    <published>2019-10-24T14:43:43.000Z</published>
+    <updated>2019-10-24T14:44:31.238Z</updated>
+    
+    <content type="html"><![CDATA[<pre class="lang:default decode:true">&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!--scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。例如： --&gt;&lt;configuration scan="true" scanPeriod="60 seconds" debug="true"&gt;    &lt;!-- 项目名称 --&gt;    &lt;property name="PROJECT_NAME" value="XXXXX" /&gt;    &lt;!-- 文件输出格式 --&gt;    &lt;property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/&gt;    &lt;!-- 输出文件路径 --&gt;    &lt;property name="OPEN_FILE_PATH" value="./logs/"/&gt;    &lt;appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt;        &lt;encoder&gt;            &lt;pattern&gt;${PATTERN}&lt;/pattern&gt;            &lt;charset&gt;UTF-8&lt;/charset&gt;        &lt;/encoder&gt;    &lt;/appender&gt;    &lt;!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 --&gt;    &lt;appender name="OPEN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;        &lt;!--不能有这项配置！！！！！--&gt;        &lt;!--&lt;Encoding&gt;UTF-8&lt;/Encoding&gt;--&gt;        &lt;!--&lt;File&gt;${OPEN_FILE_PATH}/zqread.log&lt;/File&gt;--&gt;        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;            &lt;!--日志文件输出的文件名--&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/all/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;!--日志文件保留天数--&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;                &lt;!--日志文件最大的大小--&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;layout class="ch.qos.logback.classic.PatternLayout"&gt;            &lt;pattern&gt;${PATTERN}&lt;/pattern&gt;        &lt;/layout&gt;    &lt;/appender&gt;    &lt;!--输出到debug--&gt;    &lt;appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/debug/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;append&gt;true&lt;/append&gt;        &lt;encoder&gt;            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;            &lt;charset&gt;utf-8&lt;/charset&gt;        &lt;/encoder&gt;        &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;&lt;!-- 只打印DEBUG日志 --&gt;            &lt;level&gt;DEBUG&lt;/level&gt;            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;        &lt;/filter&gt;    &lt;/appender&gt;    &lt;!--输出到info--&gt;    &lt;appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/info/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;append&gt;true&lt;/append&gt;        &lt;encoder&gt;            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;            &lt;charset&gt;utf-8&lt;/charset&gt;        &lt;/encoder&gt;        &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;&lt;!-- 只打印INFO日志 --&gt;            &lt;level&gt;INFO&lt;/level&gt;            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;        &lt;/filter&gt;    &lt;/appender&gt;    &lt;!--输出到error--&gt;    &lt;appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/error/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;append&gt;true&lt;/append&gt;        &lt;encoder&gt;            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;            &lt;charset&gt;utf-8&lt;/charset&gt;        &lt;/encoder&gt;        &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;&lt;!-- 只打印ERROR日志 --&gt;            &lt;level&gt;ERROR&lt;/level&gt;            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;        &lt;/filter&gt;    &lt;/appender&gt;    &lt;!--输出到warn--&gt;    &lt;appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender"&gt;        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/warn/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;append&gt;true&lt;/append&gt;        &lt;encoder&gt;            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;            &lt;charset&gt;utf-8&lt;/charset&gt;        &lt;/encoder&gt;        &lt;filter class="ch.qos.logback.classic.filter.LevelFilter"&gt;&lt;!-- 只打印WARN日志 --&gt;            &lt;level&gt;WARN&lt;/level&gt;            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;        &lt;/filter&gt;    &lt;/appender&gt;    &lt;root level="info"&gt;        &lt;appender-ref ref="STDOUT"/&gt;        &lt;appender-ref ref="OPEN-FILE"/&gt;        &lt;appender-ref ref="debug" /&gt;        &lt;appender-ref ref="info" /&gt;        &lt;appender-ref ref="error" /&gt;        &lt;appender-ref ref="warn" /&gt;    &lt;/root&gt;&lt;/configuration&gt;</pre><p>&nbsp;</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre class=&quot;lang:default decode:true&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
+&amp;lt;!--
+scan:
+当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
+s
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]Maven打包到本地仓库</title>
+    <link href="http://zx21.xyz/2019/10/24/JAVA-Maven%E6%89%93%E5%8C%85%E5%88%B0%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/"/>
+    <id>http://zx21.xyz/2019/10/24/JAVA-Maven打包到本地仓库/</id>
+    <published>2019-10-24T14:42:32.000Z</published>
+    <updated>2019-10-24T14:42:54.337Z</updated>
+    
+    <content type="html"><![CDATA[<p>有些jar中央仓库没得，那么可以自己把jar添加到本地maven仓库使用。<a id="more"></a></p><pre class="lang:default decode:true">mvn install:install-file -DgroupId=signalr-client-sdk -DartifactId=signalr-client-sdk -Dversion=1.0.0 -Dfile=G:\signalr-client-sdk-1.0.0.jar -Dpackaging=jar</pre><p>&nbsp;</p><p>-DgroupId：组织名<br>-DartifactId：项目名<br>-Dversion：版本号<br>-Dfile：jar包路径<br>-Dpackaging：jar</p><p>&nbsp;</p><p>maven依赖</p><pre class="lang:default decode:true ">&lt;dependency&gt;    &lt;groupId&gt;signalr-client-sdk&lt;/groupId&gt;    &lt;artifactId&gt;signalr-client-sdk&lt;/artifactId&gt;    &lt;version&gt;1.0.0&lt;/version&gt;&lt;/dependency&gt;</pre><p>&nbsp;</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有些jar中央仓库没得，那么可以自己把jar添加到本地maven仓库使用。
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]SpringBoot整合thymeleaf</title>
+    <link href="http://zx21.xyz/2019/10/24/JAVA-SpringBoot%E6%95%B4%E5%90%88thymeleaf/"/>
+    <id>http://zx21.xyz/2019/10/24/JAVA-SpringBoot整合thymeleaf/</id>
+    <published>2019-10-23T16:55:08.000Z</published>
+    <updated>2019-10-27T01:13:03.016Z</updated>
+    
+    <content type="html"><![CDATA[<p>本篇将通过java实例，详细举出thymeleaf常用语法。</p><p>pom添加thymeleaf依赖</p><pre><code>&lt;dependency&gt;      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;      &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;&lt;/dependency&gt;</code></pre><p>html导入头标签，这样编写的时候会有相关提示。</p><pre><code>&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</code></pre><hr><p>&nbsp;</p><p>&nbsp;</p><p>好了，接下来我们通过代码来看效果吧!</p><h2 id="一-创建Student对象"><a href="#一-创建Student对象" class="headerlink" title="一.创建Student对象"></a>一.创建Student对象</h2><p>这是为了后面演示thymeleaf中迭代遍历的语法。</p><pre><code>package xyz.xioaxin12.springboot.student;public class Student {    private Integer id;    private String name;    public Student() {    }    public Student(Integer id, String name) {        this.id = id;        this.name = name;    }    public Integer getId() {        return id;    }    public void setId(Integer id) {        this.id = id;    }    public String getName() {        return name;    }    public void setName(String name) {        this.name = name;    }    @Override    public String toString() {        return &quot;Student{&quot; +                &quot;id=&quot; + id +                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +                &#39;}&#39;;    }}</code></pre><p>&nbsp;</p><h2 id="二-编写Controller"><a href="#二-编写Controller" class="headerlink" title="二.编写Controller"></a>二.编写Controller</h2><p>该controller存储了一些字符串、日期、list、map等数据。</p><pre><code>package xyz.xioaxin12.springboot.controller;import org.springframework.stereotype.Controller;import org.springframework.ui.Model;import org.springframework.web.bind.annotation.RequestMapping;import xyz.xioaxin12.springboot.student.Student;import javax.servlet.http.HttpServletRequest;import java.util.*;@Controllerpublic class SutdentController {    @RequestMapping(&quot;/show&quot;)    public String showStudent(Model model){        //演示文本        model.addAttribute(&quot;msg&quot;,&quot;thymeleay&lt;hr/&gt;！SHOW&quot;);        //演示日期        model.addAttribute(&quot;date&quot;,new Date());        //演示条件判断        model.addAttribute(&quot;age&quot;,20);        //演示迭代遍历list        List&lt;Student&gt; list = new ArrayList&lt;&gt;();        list.add(new Student(1,&quot;王五&quot;));        list.add(new Student(2,&quot;赵六&quot;));        list.add(new Student(3,&quot;李四&quot;));        model.addAttribute(&quot;list&quot;,list);        //演示迭代遍历map        Map&lt;String,Student&gt; map = new HashMap&lt;&gt;();        map.put(&quot;s1&quot;,new Student(1,&quot;芳芳&quot;));        map.put(&quot;s2&quot;,new Student(2,&quot;娇娇&quot;));        map.put(&quot;s3&quot;,new Student(3,&quot;美美&quot;));        model.addAttribute(&quot;map&quot;,map);        return &quot;index&quot;;    }</code></pre><h3 id="三-编写视图"><a href="#三-编写视图" class="headerlink" title="三.编写视图"></a>三.编写视图</h3><p>通过上面的controller，发现返回到index页面。</p><p>代码看上去或许比较乱，演示thymeleaf中对文本、字符串、日期、条件判断、迭代遍历的语法。</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;&lt;head&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;    &lt;title&gt;文本+字符串+日期+条件+遍历&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h2&gt;1.文本操作&lt;/h2&gt;&lt;br/&gt;普通字符串：&lt;span th:text=&quot;${msg}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;可转义字符：&lt;span th:utext=&quot;${msg}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;显示input标签的value中：&lt;input type=&quot;text&quot; th:value=&quot;${msg}&quot;/&gt;&lt;hr/&gt;&lt;br/&gt;&lt;h2&gt;2.字符串操作&lt;/h2&gt;判断字符串是否为空：&lt;span th:text=&quot;${#strings.isEmpty(msg)}&quot; &gt;&lt;/span&gt;&lt;hr/&gt;判断字符串是否包含指定字串：&lt;span th:text=&quot;${#strings.contains(msg,&#39;me&#39;)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;判断是否是指定的子串开头：&lt;span th:text=&quot;${#strings.startsWith(msg,&#39;thy&#39;)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;判断是否是指定的子串结尾：&lt;span th:text=&quot;${#strings.endsWith(msg,&#39;SHOW&#39;)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;返回该字符串的长度：&lt;span th:text=&quot;${#strings.length(msg)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;查找子串下标位置：&lt;span th:text=&quot;${#strings.indexOf(msg,&#39;hy&#39;)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;截取子串：&lt;span th:text=&quot;${#strings.substring(msg,5,10)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;字符串转大写：&lt;span th:text=&quot;${#strings.toUpperCase(msg)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;字符串转小写：&lt;span th:text=&quot;${#strings.toLowerCase(msg)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;&lt;br/&gt;&lt;h2&gt;3.日期操作&lt;/h2&gt;系统默认格式日期：&lt;span th:text=&quot;${#dates.format(date)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;自定义日期格式：&lt;span th:text=&quot;${#dates.format(date,&#39;yyy-mm-dd&#39;)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;分别取年月日：&lt;select&gt;    &lt;option th:text=&quot;${#dates.year(date)}&quot;&gt;&lt;/option&gt;    &lt;option th:text=&quot;${#dates.month(date)}&quot;&gt;&lt;/option&gt;    &lt;option th:text=&quot;${#dates.day(date)}&quot;&gt;&lt;/option&gt;&lt;/select&gt;&lt;hr/&gt;&lt;br/&gt;&lt;h2&gt;4.条件判断&lt;/h2&gt;if演示：&lt;span th:if=&quot;${age}&gt;30&quot;&gt;超过30岁呢&lt;/span&gt;&lt;span th:if=&quot;${age}&lt;30&quot;&gt;没有30岁呢&lt;/span&gt;&lt;hr/&gt;&lt;div th:switch=&quot;${age}&quot;&gt;    swith演示：    &lt;span th:case=&quot;10&quot;&gt;10岁&lt;/span&gt;    &lt;span th:case=&quot;20&quot;&gt;20岁&lt;/span&gt;&lt;/div&gt;&lt;hr/&gt;&lt;br/&gt;&lt;h2&gt;5.遍历迭代&lt;/h2&gt;list方式一：&lt;table border=&quot;1&quot;&gt;    &lt;tr&gt;        &lt;th&gt;ID&lt;/th&gt;        &lt;th&gt;姓名&lt;/th&gt;    &lt;/tr&gt;    &lt;tr th:each=&quot;u : ${list}&quot;&gt;        &lt;td th:text=&quot;${u.id}&quot;&gt;&lt;/td&gt;        &lt;td th:text=&quot;${u.name}&quot;&gt;&lt;/td&gt;    &lt;/tr&gt;&lt;/table&gt;&lt;hr/&gt;list方式二，可以取index,size,count等信息&lt;table border=&quot;1&quot;&gt;    &lt;tr&gt;        &lt;th&gt;ID&lt;/th&gt;        &lt;th&gt;姓名&lt;/th&gt;        &lt;th&gt;Index&lt;/th&gt;    &lt;/tr&gt;    &lt;tr th:each=&quot;u,var : ${list}&quot;&gt;        &lt;td th:text=&quot;${u.id}&quot;&gt;&lt;/td&gt;        &lt;td th:text=&quot;${u.name}&quot;&gt;&lt;/td&gt;        &lt;td th:text=&quot;${var.index}&quot;&gt;&lt;/td&gt;    &lt;/tr&gt;&lt;/table&gt;&lt;hr/&gt;map迭代:&lt;table border=&quot;1&quot;&gt;    &lt;tr&gt;        &lt;th&gt;ID&lt;/th&gt;        &lt;th&gt;姓名&lt;/th&gt;    &lt;/tr&gt;    &lt;tr th:each=&quot;maps : ${map}&quot;&gt;      &lt;td th:each=&quot;entry : ${maps}&quot; th:text=&quot;${entry.value.id}&quot;&gt;&lt;/td&gt;      &lt;td th:each=&quot;entry : ${maps}&quot; th:text=&quot;${entry.value.name}&quot;&gt;&lt;/td&gt;    &lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><h2 id="四-启动类"><a href="#四-启动类" class="headerlink" title="四.启动类"></a>四.启动类</h2><pre><code>package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;@SpringBootApplicationpublic class SpringBoot05ThymeleafApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot05ThymeleafApplication.class, args);    }}</code></pre><p>&nbsp;</p><h2 id="五-浏览器访问路径"><a href="#五-浏览器访问路径" class="headerlink" title="五.浏览器访问路径"></a>五.浏览器访问路径</h2><p>效果如下</p><p><a href="http://image.xiaoxinyes.club/2019-01-10_103057.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-10_103057.png" alt></a></p><hr><p>&nbsp;</p><p>接下来在原controller类中添加一个方法，用于演示thymeleaf中的其他语法。</p><pre><code>123456789@RequestMapping(&quot;/show2&quot;)public String show2(Model model, HttpServletRequest request){    request.setAttribute(&quot;req&quot;,&quot;HttpServletRequest&quot;);    request.getSession().setAttribute(&quot;sess&quot;,&quot;HttpSession&quot;);    request.getSession().getServletContext().setAttribute(&quot;app&quot;,&quot;Application&quot;);    return &quot;show2&quot;;}</code></pre><p>返回到show.html页面</p><p>该页面举出了thymeleaf对域对象、路径等语法</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;    &lt;title&gt;域对象+路径+图片&lt;/title&gt;&lt;/head&gt;&lt;body&gt;HttpServletRequest：&lt;span th:text=&quot;${#httpServletRequest.getAttribute(&#39;req&#39;)}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;HttpSession：&lt;span th:text=&quot;${session.sess}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;Application：&lt;span th:text=&quot;${application.app}&quot;&gt;&lt;/span&gt;&lt;hr/&gt;绝对路径：&lt;a th:href=&quot;@{http://www.xioaxin12.xyz}&quot;&gt;爱生活爱技术&lt;/a&gt;&lt;hr/&gt;相对路径：&lt;a th:href=&quot;@{/show}&quot;&gt;相对于项目上下文路径&lt;/a&gt;&lt;hr/&gt;相对路径：&lt;a th:href=&quot;@{~/show}&quot;&gt;相对于服务器上的根路径&lt;/a&gt;&lt;hr/&gt;相对路径：&lt;a th:href=&quot;@{/show(id=1,name=zhagnsan)}&quot;&gt;传参&lt;/a&gt;&lt;hr/&gt;图片：&lt;img th:src=&quot;@{https://www.baidu.com/img/baidu_jgylogo3.gif}&quot; th:alt=&quot;百度&quot;/&gt;&lt;hr/&gt;th:attr设置属性值：&lt;img th:attr=&quot;src=@{https://www.baidu.com/img/baidu_jgylogo3.gif},alt=@{百度},title=@{百度}&quot;/&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p>浏览器访问该路径</p><p><a href="http://image.xiaoxinyes.club/2019-01-10_103722.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-10_103722.png" alt></a></p><hr><p>&nbsp;</p><p>&nbsp;</p><p>关于上面的thymeleaf语法，我弄了一张图，详细如下图。</p><p><a href="http://image.xiaoxinyes.club/thymeleaf.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/thymeleaf.png" alt></a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;本篇将通过java实例，详细举出thymeleaf常用语法。&lt;/p&gt;
+&lt;p&gt;pom添加thymeleaf依赖&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+      &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]SpringBoot整合freemarker</title>
+    <link href="http://zx21.xyz/2019/10/24/JAVA-SpringBoot%E6%95%B4%E5%90%88freemarker/"/>
+    <id>http://zx21.xyz/2019/10/24/JAVA-SpringBoot整合freemarker/</id>
+    <published>2019-10-23T16:43:38.000Z</published>
+    <updated>2019-10-23T16:44:23.671Z</updated>
+    
+    <content type="html"><![CDATA[<p>FreeMarker是一款模板引擎： 即一种基于模板和要改变的数据<a id="more"></a>， 并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。 它不是面向最终用户的，而是一个Java类库，是一款程序员可以嵌入他们所开发产品的组件。–百度百科</p><p>&nbsp;</p><p>首先pom.xml导入freemarker依赖</p><pre class="lang:default decode:true " title="pom.xml">        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-starter-freemarker&lt;/artifactId&gt;        &lt;/dependency&gt;</pre><p>&nbsp;</p><p>跟<span style="text-decoration: underline;"><a href="http://www.xioaxin12.xyz/1226.html" target="_blank" rel="noopener">Spring Boot整合Jsp</a></span>该篇文章类似，一个实体类用户返回结果，controller和启动类。</p><p><span style="font-size: 10pt;">Student.java</span></p><pre class="lang:java decode:true " title="Student.java">package xyz.xioaxin12.springboot.controller.student;public class Student {    private Integer id;    private String name;    private int age;    public Student() {    }    public Student(Integer id, String name, int age) {        this.id = id;        this.name = name;        this.age = age;    }    public Integer getId() {        return id;    }    public void setId(Integer id) {        this.id = id;    }    public String getName() {        return name;    }    public void setName(String name) {        this.name = name;    }    public int getAge() {        return age;    }    public void setAge(int age) {        this.age = age;    }}</pre><p>&nbsp;</p><p><span style="font-size: 10pt;">StudentController .java </span></p><pre class="lang:java decode:true" title="StudentController ">package xyz.xioaxin12.springboot.controller;import org.springframework.stereotype.Controller;import org.springframework.ui.Model;import org.springframework.web.bind.annotation.RequestMapping;import xyz.xioaxin12.springboot.controller.student.Student;import java.util.ArrayList;import java.util.List;@Controllerpublic class StudentController {    @RequestMapping("/show")    public String showStudent(Model model){        List&lt;Student&gt; list = new ArrayList&lt;&gt;();        list.add(new Student(1,"小信",22));        list.add(new Student(2,"天天",25));        list.add(new Student(1,"赵六",20));        model.addAttribute("list",list);        return "show";    }}</pre><p>&nbsp;</p><p><span style="font-size: 10pt;">启动类</span></p><pre class="lang:java decode:true ">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;/** * @author 爱生活爱技术 */@SpringBootApplicationpublic class SpringBoot04FreemarkerApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot04FreemarkerApplication.class, args);    }}</pre><p>&nbsp;</p><p>最后编写视图</p><p><span style="color: #ff0000;">注意：模板形式的文件必须放在templates下，外界不可直接访问的！</span></p><pre class="lang:default decode:true " title="show.ftl">&lt;html&gt;    &lt;head&gt;        &lt;title&gt;freemarker&lt;/title&gt;        &lt;meta charset="utf-8"/&gt;    &lt;/head&gt;    &lt;body&gt;        &lt;table border="2" align="center" width="50%"&gt;            &lt;tr&gt;                &lt;th&gt;ID&lt;/th&gt;                &lt;th&gt;姓名&lt;/th&gt;                &lt;th&gt;年龄&lt;/th&gt;            &lt;/tr&gt;            &lt;#list list as s&gt;                &lt;tr&gt;                    &lt;td&gt;${s.id}&lt;/td&gt;                    &lt;td&gt;${s.name}&lt;/td&gt;                    &lt;td&gt;${s.age}&lt;/td&gt;                &lt;/tr&gt;            &lt;/#list&gt;        &lt;/table&gt;    &lt;/body&gt;&lt;/html&gt;</pre><p>&nbsp;</p><p><a href="http://image.xiaoxinyes.club/2019-01-08_120014.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-08_120014.png" alt></a></p><hr><p>freemarker官方在线手册：<a href="http://freemarker.foofun.cn/ref_directive_switch.html#ref.directive.case" target="_blank" rel="noopener">点击</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;FreeMarker是一款模板引擎： 即一种基于模板和要改变的数据
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]SpringBoot整合Jsp</title>
+    <link href="http://zx21.xyz/2019/10/24/JAVA-SpringBoot%E6%95%B4%E5%90%88Jsp/"/>
+    <id>http://zx21.xyz/2019/10/24/JAVA-SpringBoot整合Jsp/</id>
+    <published>2019-10-23T16:41:35.000Z</published>
+    <updated>2019-10-23T16:42:47.336Z</updated>
+    
+    <content type="html"><![CDATA[<p>springboot并不推荐使用jsp，不推荐!<a id="more"></a></p><h3 id="1-首先idea快速构建一个springboot项目。"><a href="#1-首先idea快速构建一个springboot项目。" class="headerlink" title="1.首先idea快速构建一个springboot项目。"></a>1.首先idea快速构建一个springboot项目。</h3><p>我们需要手动添加WEB-INF这些文件夹。</p><p><a href="http://image.xiaoxinyes.club/2019-01-07_162623.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-07_162623.png" alt></a></p><hr><p>&nbsp;</p><h3 id="2-配置视图解析"><a href="#2-配置视图解析" class="headerlink" title="2.配置视图解析"></a>2.配置视图解析</h3><p><span style="font-size: 10pt;">application.properties</span></p><pre class="lang:default decode:true ">spring.mvc.view.prefix=/WEB-INF/jsp/spring.mvc.view.suffix=.jspserver.port=8081</pre><hr><p>&nbsp;</p><h3 id="3-编写一个实体类，用户传数据。"><a href="#3-编写一个实体类，用户传数据。" class="headerlink" title="3.编写一个实体类，用户传数据。"></a>3.编写一个实体类，用户传数据。</h3><pre class="lang:java decode:true " title="Student.java">package xyz.xioaxin12.springboot.student;public class Student {    private Integer id;    private String name;    private int age;    public Student() {    }    public Student(Integer id, String name, int age) {        this.id = id;        this.name = name;        this.age = age;    }    public Integer getId() {        return id;    }    public void setId(Integer id) {        this.id = id;    }    public String getName() {        return name;    }    public void setName(String name) {        this.name = name;    }    public int getAge() {        return age;    }    public void setAge(int age) {        this.age = age;    }    @Override    public String toString() {        return "Student{" +                "id=" + id +                ", name='" + name + '\'' +                ", age='" + age + '\'' +                '}';    }}</pre><hr><p>&nbsp;</p><h3 id="4-controller视图层"><a href="#4-controller视图层" class="headerlink" title="4.controller视图层"></a>4.controller视图层</h3><p>注意注解是@Controller,可以直接返回一个视图，由于已经设置了视图的”前后缀”，return便是返回到WEB-INF/jsp/index.jsp页面。</p><pre class="lang:java decode:true " title="JspContreller.java">package xyz.xioaxin12.springboot.controller;import org.springframework.stereotype.Controller;import org.springframework.ui.Model;import org.springframework.web.bind.annotation.RequestMapping;import xyz.xioaxin12.springboot.student.Student;import java.util.ArrayList;import java.util.List;@Controllerpublic class JspContreller {    @RequestMapping("/show")    public String Show(Model model){        List&lt;Student&gt; students = new ArrayList&lt;&gt;();        students.add(new Student(1,"小信",33));        students.add(new Student(2,"小田",25));        students.add(new Student(3,"小夏",19));        students.add(new Student(4,"小方",23));        model.addAttribute("student",students);        return "index";    }}</pre><hr><p>&nbsp;</p><h3 id="5-jsp页面的编写"><a href="#5-jsp页面的编写" class="headerlink" title="5.jsp页面的编写"></a>5.jsp页面的编写</h3><pre class="lang:default decode:true" title="index.jsp">&lt;%@ page contentType="text/html;charset=UTF-8" language="java" %&gt;&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;&lt;html&gt;&lt;head&gt;    &lt;title&gt;Title&lt;/title&gt;&lt;/head&gt;&lt;body&gt;    &lt;table border="1" width="600px" style="margin: auto;text-align: center"&gt;        &lt;tr&gt;            &lt;th&gt;id&lt;/th&gt;            &lt;th&gt;姓名&lt;/th&gt;            &lt;th&gt;年龄&lt;/th&gt;        &lt;/tr&gt;        &lt;c:forEach items="${student}" var="s"&gt;            &lt;tr&gt;                &lt;td&gt;${s.id}&lt;/td&gt;                &lt;td&gt;${s.name}&lt;/td&gt;                &lt;td&gt;${s.age}&lt;/td&gt;            &lt;/tr&gt;        &lt;/c:forEach&gt;    &lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</pre><p>&nbsp;</p><p>用到了jsp中的<span style="color: #ff0000;">jstl</span>，所以我们需要提前在pom.xml中引入下列依赖。</p><pre class="lang:default decode:true " title="pom.xml">        &lt;!-- jstl --&gt;        &lt;dependency&gt;            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;            &lt;artifactId&gt;jstl&lt;/artifactId&gt;        &lt;/dependency&gt;        &lt;!-- jasper --&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt;            &lt;artifactId&gt;tomcat-embed-jasper&lt;/artifactId&gt;            &lt;scope&gt;provided&lt;/scope&gt;        &lt;/dependency&gt;</pre><hr><p>&nbsp;</p><h3 id="6-查看"><a href="#6-查看" class="headerlink" title="6.查看"></a>6.查看</h3><p>浏览器地址：<a href="http://localhost:8081/show" target="_blank" rel="noopener">http://localhost:8081/show</a></p><p><a href="http://image.xiaoxinyes.club/2019-01-07_193614.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-07_193614.png" alt></a></p><p>&nbsp;</p><p><span style="color: #ff0000;">补充</span>：关于webapp文件的生成。idea在构建springboot项目中，是没有这个文件的，我们可以按照下图直接生成。</p><p><a href="http://image.xiaoxinyes.club/2019-01-07_194025.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-07_194025.png" alt></a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;springboot并不推荐使用jsp，不推荐!
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]文件上传</title>
+    <link href="http://zx21.xyz/2019/10/22/JAVA-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
+    <id>http://zx21.xyz/2019/10/22/JAVA-文件上传/</id>
+    <published>2019-10-22T14:40:28.000Z</published>
+    <updated>2019-10-22T14:41:06.091Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于文件上传有几个需要注意的地方！<a id="more"></a></p><ul><li>静态资源需要放到static文件下。</li><li>form表单提交属性为enctype=”multipart/form-data”。</li><li>设置上传文件的默认大小值。<br>&nbsp;</li></ul><h2 id="1-index-html"><a href="#1-index-html" class="headerlink" title="1.index.html"></a>1.index.html</h2><p>static文件下建立index.htnl页面</p><pre class="lang:default decode:true" title="index.html">&lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt;    &lt;meta charset="UTF-8"&gt;    &lt;title&gt;Title&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;form action="upload" method="post" enctype="multipart/form-data"&gt;    &lt;input type="file" name="fileupload"&gt;&lt;br/&gt;    &lt;input type="submit" value="提交"&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;</pre><p>&nbsp;</p><h2 id="2-编写Contorller"><a href="#2-编写Contorller" class="headerlink" title="2.编写Contorller"></a>2.编写Contorller</h2><pre class="lang:java decode:true" title="FileUploadController.java">package xyz.xioaxin12.springboot.controller;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.RestController;import org.springframework.web.multipart.MultipartFile;import java.io.File;import java.io.IOException;/** * @author 爱生活爱技术 */@RestControllerpublic class FileUploadController {    @RequestMapping("/upload")    public String fileUpload(@RequestParam("fileupload") MultipartFile file) throws IOException {        System.out.println(file.getOriginalFilename());        //保存到本地g盘        file.transferTo(new File("g://"+file.getOriginalFilename()));        return "OK！";    }}</pre><p>&nbsp;</p><h2 id="3-启动类"><a href="#3-启动类" class="headerlink" title="3.启动类"></a>3.启动类</h2><pre class="lang:java decode:true">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;@SpringBootApplicationpublic class SpringBootUploadApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBootUploadApplication.class, args);    }}</pre><p>&nbsp;</p><p>关于文件大小</p><p>当上传的文件超出时，需要自己设置最大值。</p><p>application.properties设置如下配置</p><pre class="lang:default decode:true">#设置单个上传文件的大小spring.servlet.multipart.max-file-size=100MB#设置一次请求上传文件的总容量spring.servlet.multipart.max-request-size=100MB</pre><p>&nbsp;</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于文件上传有几个需要注意的地方！
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]SpringBoot整合Listener</title>
+    <link href="http://zx21.xyz/2019/10/22/JAVA-SpringBoot%E6%95%B4%E5%90%88Listener/"/>
+    <id>http://zx21.xyz/2019/10/22/JAVA-SpringBoot整合Listener/</id>
+    <published>2019-10-22T14:39:00.000Z</published>
+    <updated>2019-10-22T14:39:18.493Z</updated>
+    
+    <content type="html"><![CDATA[<p>还是两种方式，注解与方法注册。<a id="more"></a></p><h2 id="1-注解形式"><a href="#1-注解形式" class="headerlink" title="1.注解形式"></a>1.注解形式</h2><p>很简单，添加@WebListener()即可。</p><pre class="lang:java decode:true">package xyz.xioaxin12.springboot.listener;import javax.servlet.ServletContextEvent;import javax.servlet.ServletContextListener;import javax.servlet.annotation.WebListener;@WebListener()public class MyListener implements ServletContextListener{    @Override    public void contextDestroyed(ServletContextEvent sce) {    }    @Override    public void contextInitialized(ServletContextEvent sce) {        System.out.println("listener...init......");    }}</pre><p>&nbsp;</p><p>启动类</p><p>添加@ServletComponentScan就行了。</p><pre class="lang:java decode:true">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.web.servlet.ServletComponentScan;import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;import org.springframework.context.annotation.Bean;import xyz.xioaxin12.springboot.listener.MyListener;@SpringBootApplication@ServletComponentScanpublic class SpringBoot02FilterApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot02FilterApplication.class, args);    }}</pre><p>这样在项目启动的时候就会打印listener…init……</p><hr><p>&nbsp;</p><h2 id="2-方法注册"><a href="#2-方法注册" class="headerlink" title="2.方法注册"></a>2.方法注册</h2><p>1).删除MyListener上的注解。</p><p>2).修改启动类。</p><p>在原启动类上添加如下代码即可!</p><pre class="lang:java decode:true">@Bean                                                                                                                      public ServletListenerRegistrationBean&lt;MyListener&gt; getListenerServletListenerRegistrationBean(){                               ServletListenerRegistrationBean&lt;MyListener&gt; bean = new ServletListenerRegistrationBean&lt;MyListener&gt;(new MyListener());     return bean;                                                                                                            }</pre><p>&nbsp;</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;还是两种方式，注解与方法注册。
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[JAVA]SpringBoot整合Filter</title>
+    <link href="http://zx21.xyz/2019/10/22/JAVA-SpringBoot%E6%95%B4%E5%90%88Filter/"/>
+    <id>http://zx21.xyz/2019/10/22/JAVA-SpringBoot整合Filter/</id>
+    <published>2019-10-22T14:35:41.000Z</published>
+    <updated>2019-10-22T14:36:47.276Z</updated>
+    
+    <content type="html"><![CDATA[<p>同样有注解扫描与方法注册两种方式。<a id="more"></a></p><h2 id="1-注解扫描"><a href="#1-注解扫描" class="headerlink" title="1.注解扫描"></a>1.注解扫描</h2><p>编写filter类</p><pre class="lang:java decode:true ">package xyz.xioaxin12.springboot.filter;import javax.servlet.*;import javax.servlet.annotation.WebFilter;import java.io.IOException;@WebFilter(filterName = "MyFilter",urlPatterns = "/hello")public class MyFilter implements Filter {    public void destroy() {    }    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {        System.out.println("进入doFilter...");        chain.doFilter(req, resp);        System.out.println("退出doFilter...");    }    public void init(FilterConfig config) throws ServletException {    }}</pre><p>&nbsp;</p><p>拦截MyServlet</p><pre class="lang:java decode:true">package xyz.xioaxin12.springboot.servlet;import javax.servlet.ServletException;import javax.servlet.annotation.WebServlet;import javax.servlet.http.HttpServlet;import javax.servlet.http.HttpServletRequest;import javax.servlet.http.HttpServletResponse;import java.io.IOException;@WebServlet(name = "MyServlet",urlPatterns = "/hello")public class MyServlet extends HttpServlet {    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {       doGet(request,response);    }    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {        System.out.println("MyServlet...");    }}</pre><p>&nbsp;</p><p>启动类</p><pre class="lang:java decode:true ">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.web.servlet.ServletComponentScan;@SpringBootApplication@ServletComponentScanpublic class SpringBoot02FilterApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot02FilterApplication.class, args);    }}</pre><p>&nbsp;</p><p>启动运行</p><p><img src="http://image.xiaoxinyes.club/2019-01-06_144153.png" alt></p><hr><p>&nbsp;</p><h2 id="2-方法注册"><a href="#2-方法注册" class="headerlink" title="2.方法注册"></a>2.方法注册</h2><p>1).删除原filter类上的注解。</p><p>2).将原Servlet类修改成方法注册形式。</p><p>3).修改启动类，如下</p><pre class="lang:java decode:true ">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.boot.web.servlet.FilterRegistrationBean;import org.springframework.boot.web.servlet.ServletRegistrationBean;import org.springframework.context.annotation.Bean;import xyz.xioaxin12.springboot.filter.MyFilter;import xyz.xioaxin12.springboot.servlet.MyServlet;@SpringBootApplicationpublic class SpringBoot02FilterApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot02FilterApplication.class, args);    }    @Bean    public ServletRegistrationBean getregistrationBean(){        ServletRegistrationBean bean = new ServletRegistrationBean(new MyServlet());        bean.addUrlMappings("/hello");        return bean;    }    @Bean    public FilterRegistrationBean getfilterRegistrationBean(){        FilterRegistrationBean bean = new FilterRegistrationBean(new MyFilter());        bean.addUrlPatterns("/hello");        return bean;    }}</pre><p>&nbsp;</p><p>还可以拦截多个请求：</p><pre class="lang:default decode:true ">@WebFilter(filterName = "MyFilter",urlPatterns = {"*.do","*.jsp","/hello"})</pre><p>&nbsp;</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;同样有注解扫描与方法注册两种方式。
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
+  
+</feed>
