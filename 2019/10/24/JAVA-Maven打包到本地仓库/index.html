@@ -156,7 +156,7 @@
     
         
             
-            <li><div data-rel="Sql">Sql<small>(3)</small></div>
+            <li><div data-rel="Ohter">Ohter<small>(3)</small></div>
                 
             </li>
             
@@ -164,7 +164,7 @@
     
         
             
-            <li><div data-rel="Ohter">Ohter<small>(3)</small></div>
+            <li><div data-rel="Sql">Sql<small>(3)</small></div>
                 
             </li>
             
@@ -241,11 +241,11 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color1">mysql</a>
+        <a href="javascript:" class="color2">github</a>
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color2">github</a>
+        <a href="javascript:" class="color1">mysql</a>
     </li>
     
     <li class="article-tag-list-item">
@@ -794,7 +794,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-24 22:42:54'>2019-10-24 22:42</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-20 11:38:04'>2019-10-24 22:42</time>
         
     </div>
     <div class="article-meta">
@@ -846,8 +846,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>有些jar中央仓库没得，那么可以自己把jar添加到本地maven仓库使用。<a id="more"></a></p>
-<pre class="lang:default decode:true">mvn install:install-file -DgroupId=signalr-client-sdk -DartifactId=signalr-client-sdk -Dversion=1.0.0 -Dfile=G:\signalr-client-sdk-1.0.0.jar -Dpackaging=jar</pre>
-<p>&nbsp;</p>
+<pre><code>mvn install:install-file -DgroupId=signalr-client-sdk -DartifactId=signalr-client-sdk -Dversion=1.0.0 -Dfile=G:\signalr-client-sdk-1.0.0.jar -Dpackaging=jar</code></pre><p>&nbsp;</p>
 <p>-DgroupId：组织名<br>-DartifactId：项目名<br>-Dversion：版本号<br>-Dfile：jar包路径<br>-Dpackaging：jar</p>
 <p>&nbsp;</p>
 <p>maven依赖</p>
@@ -874,7 +873,7 @@
     <p><span class="copy-title">文章字数:</span><span class="post-count">111</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
     <p><span class="copy-title">发布时间:</span>2019-10-24, 22:42:32</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-24, 22:42:54</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-20, 11:38:04</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/24/JAVA-Maven打包到本地仓库/" title="[JAVA]Maven打包到本地仓库">http://zx21.xyz/2019/10/24/JAVA-Maven打包到本地仓库/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -957,7 +956,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['@周信','#error','#Golang','#java','#mybatis','#maven','#js','#mysql','#github','#Oracle',],
+            'data': ['@周信','#error','#Golang','#java','#mybatis','#maven','#js','#github','#mysql','#Oracle',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
