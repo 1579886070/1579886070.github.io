@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2019-12-20T11:28:25.751Z</updated>
+  <updated>2019-12-21T07:05:54.486Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[JAVA]记一次内存溢出</title>
+    <link href="http://zx21.xyz/2019/12/21/JAVA-%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/"/>
+    <id>http://zx21.xyz/2019/12/21/JAVA-记一次内存溢出/</id>
+    <published>2019-12-21T07:03:40.000Z</published>
+    <updated>2019-12-21T07:05:54.486Z</updated>
+    
+    <content type="html"><![CDATA[<p>项目部署到服务器后，第二天发现异常，记录下排查过程。</p><h2 id="异常发现"><a href="#异常发现" class="headerlink" title="异常发现"></a>异常发现</h2><p>带有权限的账号，突然ssh连接不上服务器了，项目也出现访问不了的情况。后面尝试用root账号，意外的可以登录上。</p><pre><code>topjps</code></pre><p>发现CPU没啥明显的异常，项目进程也没有挂。于是进入项目，查看日志，发现日志中存在异常。</p><pre><code>2019-12-15 11:36:58.200 default [nioEventLoopGroup-4-2] ERROR o.r.client.handler.CommandsQueue - Exception occured. Channel: [id: 0x2f80895c, L:/172.16.149.12:60435 - R:172.16.149.13/172.16.149.13:6379]java.lang.OutOfMemoryError: unable to create new native thread    at java.lang.Thread.start0(Native Method)    at java.lang.Thread.start(Thread.java:717)    at io.netty.util.concurrent.ThreadPerTaskExecutor.execute(ThreadPerTaskExecutor.java:33)    at io.netty.util.internal.ThreadExecutorMap$1.execute(ThreadExecutorMap.java:57)    at io.netty.util.concurrent.SingleThreadEventExecutor.doStartThread(SingleThreadEventExecutor.java:895)    at io.netty.util.concurrent.SingleThreadEventExecutor.startThread(SingleThreadEventExecutor.java:866)    at io.netty.util.concurrent.SingleThreadEventExecutor.execute(SingleThreadEventExecutor.java:759)    at io.netty.util.concurrent.AbstractScheduledEventExecutor.schedule(AbstractScheduledEventExecutor.java:232)    at io.netty.util.concurrent.AbstractScheduledEventExecutor.schedule(AbstractScheduledEventExecutor.java:155)    at io.netty.util.concurrent.AbstractEventExecutorGroup.schedule(AbstractEventExecutorGroup.java:50)    at org.redisson.client.RedisConnection.async(RedisConnection.java:205)    at org.redisson.client.RedisConnection.async(RedisConnection.java:191)    at org.redisson.client.RedisConnection.async(RedisConnection.java:183)    at org.redisson.client.handler.BaseConnectionHandler.channelActive(BaseConnectionHandler.java:68)</code></pre><p><strong>竟然内存溢出了</strong>,开始了一段分析过程。</p><hr><p>报错为无法创建线程<code>unable to create new native thread</code>。使用命令查看下是否有问题。</p><pre><code>pstree -a    //查看所有进程相关的线程pstree -p PID|wc -l    //查看指定进程的线程数</code></pre><p>发现一个项目竟然创建了接近3000线程。能大致推出这是代码有问题，线程未释放导致溢出，但是为什么服务器有权限的账号在发生异常时登录不上了，而root可以呢？</p><h3 id="账号登录不上解决方法"><a href="#账号登录不上解决方法" class="headerlink" title="账号登录不上解决方法"></a>账号登录不上解决方法</h3><p>把服务kill之后，发现用权限的账户可以登录了，原因在于最初时用该账户执行的项目，那么也就是说跟权限配置有关了。用ulimit -a查看下，发现max user processes只有<strong>4096</strong>,这样一算的话启动那些java服务加起来创建的线程数正好就超过这个数了，提高该配置之后，未发现之前出现的权限用户登录不上的情况。</p><pre><code>ulimit -a---core file size          (blocks, -c) unlimiteddata seg size           (kbytes, -d) unlimitedscheduling priority             (-e) 0file size               (blocks, -f) unlimitedpending signals                 (-i) 63459max locked memory       (kbytes, -l) 32000max memory size         (kbytes, -m) unlimitedopen files                      (-n) 1000000pipe size            (512 bytes, -p) 8POSIX message queues     (bytes, -q) 8192000real-time priority              (-r) 0stack size              (kbytes, -s) 8192cpu time               (seconds, -t) unlimitedmax user processes              (-u) 4096virtual memory          (kbytes, -v) unlimitedfile locks                      (-x) unlimited</code></pre><hr><h3 id="堆栈分析"><a href="#堆栈分析" class="headerlink" title="堆栈分析"></a>堆栈分析</h3><p>为了排查错误，项目开着，发现线程一直在慢慢累加，最终到了10000多，不再继续，但也没有释放。linux中<strong>jstack</strong>分析下线程堆栈情况。</p><pre><code>jstack -l PID &gt; jstack.log</code></pre><p>日志</p><pre><code>Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.212-b10 mixed mode):&quot;nioEventLoopGroup-1240-13&quot; #13017 prio=10 os_prio=0 tid=0x00007f1278f46000 nid=0x374 runnable [0x00007f1264b4a000]   java.lang.Thread.State: RUNNABLE    at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)    at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)    at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:93)    at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)    - locked &lt;0x0000000768f9f6d8&gt; (a io.netty.channel.nio.SelectedSelectionKeySet)    - locked &lt;0x0000000768f9f6c8&gt; (a java.util.Collections$UnmodifiableSet)    - locked &lt;0x0000000768f9f6f0&gt; (a sun.nio.ch.EPollSelectorImpl)    at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)    at io.netty.channel.nio.SelectedSelectionKeySetSelector.select(SelectedSelectionKeySetSelector.java:62)    at io.netty.channel.nio.NioEventLoop.select(NioEventLoop.java:791)    at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:439)    at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:906)    at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)    at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)    at java.lang.Thread.run(Thread.java:748)   Locked ownable synchronizers:    - None&quot;nioEventLoopGroup-1240-16&quot; #13016 prio=10 os_prio=0 tid=0x00007f15700d4800 nid=0x373 runnable [0x00007f1264c4b000]   java.lang.Thread.State: RUNNABLE    at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)    at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)    at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:93)    at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)    - locked &lt;0x0000000768fa15e8&gt; (a io.netty.channel.nio.SelectedSelectionKeySet)    - locked &lt;0x0000000768fa15d8&gt; (a java.util.Collections$UnmodifiableSet)    - locked &lt;0x0000000768fa1600&gt; (a sun.nio.ch.EPollSelectorImpl)    at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)    at io.netty.channel.nio.SelectedSelectionKeySetSelector.select(SelectedSelectionKeySetSelector.java:62)    at io.netty.channel.nio.NioEventLoop.select(NioEventLoop.java:791)    at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:439)    at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:906)    at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)    at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)    at java.lang.Thread.run(Thread.java:748)   Locked ownable synchronizers:    - None&quot;nioEventLoopGroup-1240-14&quot; #13015 prio=10 os_prio=0 tid=0x00007f1578006800 nid=0x362 runnable [0x00007f1264d4c000]   java.lang.Thread.State: RUNNABLE    at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)    at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)    at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:93)    at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)    - locked &lt;0x0000000768f9d840&gt; (a io.netty.channel.nio.SelectedSelectionKeySet)    - locked &lt;0x0000000768f9d830&gt; (a java.util.Collections$UnmodifiableSet)    - locked &lt;0x0000000768f9d858&gt; (a sun.nio.ch.EPollSelectorImpl)    at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)    at io.netty.channel.nio.SelectedSelectionKeySetSelector.select(SelectedSelectionKeySetSelector.java:62)    at io.netty.channel.nio.NioEventLoop.select(NioEventLoop.java:791)    at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:439)    at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:906)    at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)    at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)    at java.lang.Thread.run(Thread.java:748)   Locked ownable synchronizers:    - None</code></pre><p>以上，能看到nioEventLoopGroup一直处于运行状态，为了更加直观的查看，我本地运行，使用jdk自带的jvm分析工具(在jdk安装目录，bin目录下的jvisualvm.exe),，发现随着时间的推移，nioEventLoopGroup创建数量越来越多。<br><img src="http://image.xiaoxinyes.club/2019122101.png" alt></p><h3 id="代码追踪"><a href="#代码追踪" class="headerlink" title="代码追踪"></a>代码追踪</h3><p>查询代码后，发现有个定时任务中循环创建了redisson，而每次创建琐时都会new NioEventLoopGroup();正是因为这个每次创建后一直处于执行中，JVM垃圾回收并不会处理，所以溢出了。</p><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>我的处理方法<br>1、初始化之创建一个线程池。</p><pre><code>private static NioEventLoopGroup nioEventLoopGroup;private static NioEventLoopGroup getNioEventLoopGroup() {        if (nioEventLoopGroup == null) {            nioEventLoopGroup = new NioEventLoopGroup();        }        return nioEventLoopGroup;    }</code></pre><p>2、或者释放</p><pre><code>nioEventLoopGroup.shutdownGracefully();</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;项目部署到服务器后，第二天发现异常，记录下排查过程。&lt;/p&gt;
+&lt;h2 id=&quot;异常发现&quot;&gt;&lt;a href=&quot;#异常发现&quot; class=&quot;headerlink&quot; title=&quot;异常发现&quot;&gt;&lt;/a&gt;异常发现&lt;/h2&gt;&lt;p&gt;带有权限的账号，突然ssh连接不上服务器了，项目也出现访
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA,ERROR" scheme="http://zx21.xyz/categories/JAVA-ERROR/"/>
+    
+    
+      <category term="java,error" scheme="http://zx21.xyz/tags/java-error/"/>
+    
+  </entry>
   
   <entry>
     <title>[ERROR]关于下划线引发的错误</title>
@@ -511,29 +538,6 @@ scanPeri
     <summary type="html">
     
       &lt;p&gt;springboot并不推荐使用jsp，不推荐!
-    
-    </summary>
-    
-    
-      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
-    
-    
-      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JAVA]文件上传</title>
-    <link href="http://zx21.xyz/2019/10/22/JAVA-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
-    <id>http://zx21.xyz/2019/10/22/JAVA-文件上传/</id>
-    <published>2019-10-22T14:40:28.000Z</published>
-    <updated>2019-10-22T14:41:06.091Z</updated>
-    
-    <content type="html"><![CDATA[<p>关于文件上传有几个需要注意的地方！<a id="more"></a></p><ul><li>静态资源需要放到static文件下。</li><li>form表单提交属性为enctype=”multipart/form-data”。</li><li>设置上传文件的默认大小值。<br>&nbsp;</li></ul><h2 id="1-index-html"><a href="#1-index-html" class="headerlink" title="1.index.html"></a>1.index.html</h2><p>static文件下建立index.htnl页面</p><pre class="lang:default decode:true" title="index.html">&lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt;    &lt;meta charset="UTF-8"&gt;    &lt;title&gt;Title&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;form action="upload" method="post" enctype="multipart/form-data"&gt;    &lt;input type="file" name="fileupload"&gt;&lt;br/&gt;    &lt;input type="submit" value="提交"&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;</pre><p>&nbsp;</p><h2 id="2-编写Contorller"><a href="#2-编写Contorller" class="headerlink" title="2.编写Contorller"></a>2.编写Contorller</h2><pre class="lang:java decode:true" title="FileUploadController.java">package xyz.xioaxin12.springboot.controller;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.RestController;import org.springframework.web.multipart.MultipartFile;import java.io.File;import java.io.IOException;/** * @author 爱生活爱技术 */@RestControllerpublic class FileUploadController {    @RequestMapping("/upload")    public String fileUpload(@RequestParam("fileupload") MultipartFile file) throws IOException {        System.out.println(file.getOriginalFilename());        //保存到本地g盘        file.transferTo(new File("g://"+file.getOriginalFilename()));        return "OK！";    }}</pre><p>&nbsp;</p><h2 id="3-启动类"><a href="#3-启动类" class="headerlink" title="3.启动类"></a>3.启动类</h2><pre class="lang:java decode:true">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;@SpringBootApplicationpublic class SpringBootUploadApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBootUploadApplication.class, args);    }}</pre><p>&nbsp;</p><p>关于文件大小</p><p>当上传的文件超出时，需要自己设置最大值。</p><p>application.properties设置如下配置</p><pre class="lang:default decode:true">#设置单个上传文件的大小spring.servlet.multipart.max-file-size=100MB#设置一次请求上传文件的总容量spring.servlet.multipart.max-request-size=100MB</pre><p>&nbsp;</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;关于文件上传有几个需要注意的地方！
     
     </summary>
     
