@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]SpringBoot整合Listener | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]SpringBoot整合Listener | 周信的博客">
+  <title>[Angular]入门之运行项目 | 周信的博客</title>
+  <meta name="keywords" content=" Angular ">
+  <meta name="description" content="[Angular]入门之运行项目 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -814,9 +814,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-SpringBoot整合Listener" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Angular-入门之运行项目" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]SpringBoot整合Listener</h1>
+        <h1 class="article-title">[Angular]入门之运行项目</h1>
     
     <div class="article-meta">
         
@@ -824,26 +824,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="JAVA">JAVA</a>
+                <a href="javascript:" data-rel="Web">Web</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color3">Angular</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-22 22:39:18'>2019-10-22 22:39</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-04 19:05:00'>2020-02-04 18:59</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:206</span>
+        <span>字数:181</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -873,7 +873,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-注解形式"><span class="toc-text">1.注解形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-方法注册"><span class="toc-text">2.方法注册</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、安装node-js"><span class="toc-text">1、安装node.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、安装cnpm"><span class="toc-text">2、安装cnpm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、安装angular"><span class="toc-text">3、安装angular</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看是否安装成功"><span class="toc-text">查看是否安装成功</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、创建安装angular项目"><span class="toc-text">4、创建安装angular项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、运行项目"><span class="toc-text">5、运行项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、访问"><span class="toc-text">6、访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跳过npm安装"><span class="toc-text">跳过npm安装</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -889,62 +889,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>还是两种方式，注解与方法注册。<a id="more"></a></p>
-<h2 id="1-注解形式"><a href="#1-注解形式" class="headerlink" title="1.注解形式"></a>1.注解形式</h2><p>很简单，添加@WebListener()即可。</p>
-<pre class="lang:java decode:true">package xyz.xioaxin12.springboot.listener;
+        <h2 id="1、安装node-js"><a href="#1、安装node-js" class="headerlink" title="1、安装node.js"></a>1、安装node.js</h2><h2 id="2、安装cnpm"><a href="#2、安装cnpm" class="headerlink" title="2、安装cnpm"></a>2、安装cnpm</h2><pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="3、安装angular"><a href="#3、安装angular" class="headerlink" title="3、安装angular"></a>3、安装angular</h2><pre><code>cnpm install -g @angular/cli</code></pre><h3 id="查看是否安装成功"><a href="#查看是否安装成功" class="headerlink" title="查看是否安装成功"></a>查看是否安装成功</h3><pre><code>C:\Users\Administrator&gt;ng v
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
+     _                      _                 ____ _     ___
+    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+   / △ \ | &#39;_ \ / _` | | | | |/ _` | &#39;__|   | |   | |    | |
+  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+ /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+                |___/
 
-@WebListener()
-public class MyListener implements ServletContextListener{
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
 
-    }
+Angular CLI: 8.3.24
+Node: 10.16.3
+OS: win32 x64
+Angular:
+...
 
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("listener...init......");
-    }
-}
-</pre>
-<p>&nbsp;</p>
-<p>启动类</p>
-<p>添加@ServletComponentScan就行了。</p>
-<pre class="lang:java decode:true">package xyz.xioaxin12.springboot;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import xyz.xioaxin12.springboot.listener.MyListener;
-
-@SpringBootApplication
-@ServletComponentScan
-public class SpringBoot02FilterApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBoot02FilterApplication.class, args);
-    }
-}
-
-</pre>
-<p>这样在项目启动的时候就会打印listener…init……</p>
+Package                      Version
+------------------------------------------------------
+@angular-devkit/architect    0.803.24
+@angular-devkit/core         8.3.24
+@angular-devkit/schematics   8.3.24
+@schematics/angular          8.3.24
+@schematics/update           0.803.24
+rxjs                         6.5.4</code></pre><h2 id="4、创建安装angular项目"><a href="#4、创建安装angular项目" class="headerlink" title="4、创建安装angular项目"></a>4、创建安装angular项目</h2><p>打开命令提示符窗口</p>
+<pre><code>ng new demo</code></pre><h2 id="5、运行项目"><a href="#5、运行项目" class="headerlink" title="5、运行项目"></a>5、运行项目</h2><p>进入到文件夹下</p>
+<pre><code>cd demo</code></pre><p>运行</p>
+<pre><code>ng serve --open</code></pre><h2 id="6、访问"><a href="#6、访问" class="headerlink" title="6、访问"></a>6、访问</h2><p> <a href="http://localhost:4200/" target="_blank" rel="noopener">http://localhost:4200/</a></p>
 <hr>
-<p>&nbsp;</p>
-<h2 id="2-方法注册"><a href="#2-方法注册" class="headerlink" title="2.方法注册"></a>2.方法注册</h2><p>1).删除MyListener上的注解。</p>
-<p>2).修改启动类。</p>
-<p>在原启动类上添加如下代码即可!</p>
-<pre class="lang:java decode:true">@Bean                                                                                                                      
-public ServletListenerRegistrationBean&lt;MyListener&gt; getListenerServletListenerRegistrationBean(){                           
-    ServletListenerRegistrationBean&lt;MyListener&gt; bean = new ServletListenerRegistrationBean&lt;MyListener&gt;(new MyListener());  
-   return bean;                                                                                                            
-}</pre>
-<p>&nbsp;</p>
-
+<h2 id="跳过npm安装"><a href="#跳过npm安装" class="headerlink" title="跳过npm安装"></a>跳过npm安装</h2><pre><code>ng new demo2 --skip-install</code></pre><pre><code>cnpm install</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -957,12 +930,12 @@ public ServletListenerRegistrationBean&lt;MyListener&gt; getListenerServletListe
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]SpringBoot整合Listener</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">206</span></p>
+    <p><span class="copy-title">文章标题:</span>[Angular]入门之运行项目</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">181</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-22, 22:39:00</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-22, 22:39:18</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/22/JAVA-SpringBoot整合Listener/" title="[JAVA]SpringBoot整合Listener">http://zx21.xyz/2019/10/22/JAVA-SpringBoot整合Listener/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-04, 18:59:16</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-04, 19:05:00</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/04/Angular-入门之运行项目/" title="[Angular]入门之运行项目">http://zx21.xyz/2020/02/04/Angular-入门之运行项目/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

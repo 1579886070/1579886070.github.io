@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>[Angular]入门之运行项目</title>
+      <link href="/2020/02/04/Angular-%E5%85%A5%E9%97%A8%E4%B9%8B%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE/"/>
+      <url>/2020/02/04/Angular-%E5%85%A5%E9%97%A8%E4%B9%8B%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1、安装node-js"><a href="#1、安装node-js" class="headerlink" title="1、安装node.js"></a>1、安装node.js</h2><h2 id="2、安装cnpm"><a href="#2、安装cnpm" class="headerlink" title="2、安装cnpm"></a>2、安装cnpm</h2><pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="3、安装angular"><a href="#3、安装angular" class="headerlink" title="3、安装angular"></a>3、安装angular</h2><pre><code>cnpm install -g @angular/cli</code></pre><h3 id="查看是否安装成功"><a href="#查看是否安装成功" class="headerlink" title="查看是否安装成功"></a>查看是否安装成功</h3><pre><code>C:\Users\Administrator&gt;ng v     _                      _                 ____ _     ___    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|   / △ \ | &#39;_ \ / _` | | | | |/ _` | &#39;__|   | |   | |    | |  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | | /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|                |___/Angular CLI: 8.3.24Node: 10.16.3OS: win32 x64Angular:...Package                      Version------------------------------------------------------@angular-devkit/architect    0.803.24@angular-devkit/core         8.3.24@angular-devkit/schematics   8.3.24@schematics/angular          8.3.24@schematics/update           0.803.24rxjs                         6.5.4</code></pre><h2 id="4、创建安装angular项目"><a href="#4、创建安装angular项目" class="headerlink" title="4、创建安装angular项目"></a>4、创建安装angular项目</h2><p>打开命令提示符窗口</p><pre><code>ng new demo</code></pre><h2 id="5、运行项目"><a href="#5、运行项目" class="headerlink" title="5、运行项目"></a>5、运行项目</h2><p>进入到文件夹下</p><pre><code>cd demo</code></pre><p>运行</p><pre><code>ng serve --open</code></pre><h2 id="6、访问"><a href="#6、访问" class="headerlink" title="6、访问"></a>6、访问</h2><p> <a href="http://localhost:4200/" target="_blank" rel="noopener">http://localhost:4200/</a></p><hr><h2 id="跳过npm安装"><a href="#跳过npm安装" class="headerlink" title="跳过npm安装"></a>跳过npm安装</h2><pre><code>ng new demo2 --skip-install</code></pre><pre><code>cnpm install</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Angular </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[JAVA]逻辑分页与物理分页</title>
       <link href="/2020/01/05/JAVA-%E9%80%BB%E8%BE%91%E5%88%86%E9%A1%B5%E4%B8%8E%E7%89%A9%E7%90%86%E5%88%86%E9%A1%B5/"/>
       <url>/2020/01/05/JAVA-%E9%80%BB%E8%BE%91%E5%88%86%E9%A1%B5%E4%B8%8E%E7%89%A9%E7%90%86%E5%88%86%E9%A1%B5/</url>

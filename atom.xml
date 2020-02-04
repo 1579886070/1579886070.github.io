@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-01-05T06:21:29.926Z</updated>
+  <updated>2020-02-04T11:05:00.683Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Angular]入门之运行项目</title>
+    <link href="http://zx21.xyz/2020/02/04/Angular-%E5%85%A5%E9%97%A8%E4%B9%8B%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE/"/>
+    <id>http://zx21.xyz/2020/02/04/Angular-入门之运行项目/</id>
+    <published>2020-02-04T10:59:16.000Z</published>
+    <updated>2020-02-04T11:05:00.683Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、安装node-js"><a href="#1、安装node-js" class="headerlink" title="1、安装node.js"></a>1、安装node.js</h2><h2 id="2、安装cnpm"><a href="#2、安装cnpm" class="headerlink" title="2、安装cnpm"></a>2、安装cnpm</h2><pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="3、安装angular"><a href="#3、安装angular" class="headerlink" title="3、安装angular"></a>3、安装angular</h2><pre><code>cnpm install -g @angular/cli</code></pre><h3 id="查看是否安装成功"><a href="#查看是否安装成功" class="headerlink" title="查看是否安装成功"></a>查看是否安装成功</h3><pre><code>C:\Users\Administrator&gt;ng v     _                      _                 ____ _     ___    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|   / △ \ | &#39;_ \ / _` | | | | |/ _` | &#39;__|   | |   | |    | |  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | | /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|                |___/Angular CLI: 8.3.24Node: 10.16.3OS: win32 x64Angular:...Package                      Version------------------------------------------------------@angular-devkit/architect    0.803.24@angular-devkit/core         8.3.24@angular-devkit/schematics   8.3.24@schematics/angular          8.3.24@schematics/update           0.803.24rxjs                         6.5.4</code></pre><h2 id="4、创建安装angular项目"><a href="#4、创建安装angular项目" class="headerlink" title="4、创建安装angular项目"></a>4、创建安装angular项目</h2><p>打开命令提示符窗口</p><pre><code>ng new demo</code></pre><h2 id="5、运行项目"><a href="#5、运行项目" class="headerlink" title="5、运行项目"></a>5、运行项目</h2><p>进入到文件夹下</p><pre><code>cd demo</code></pre><p>运行</p><pre><code>ng serve --open</code></pre><h2 id="6、访问"><a href="#6、访问" class="headerlink" title="6、访问"></a>6、访问</h2><p> <a href="http://localhost:4200/" target="_blank" rel="noopener">http://localhost:4200/</a></p><hr><h2 id="跳过npm安装"><a href="#跳过npm安装" class="headerlink" title="跳过npm安装"></a>跳过npm安装</h2><pre><code>ng new demo2 --skip-install</code></pre><pre><code>cnpm install</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;1、安装node-js&quot;&gt;&lt;a href=&quot;#1、安装node-js&quot; class=&quot;headerlink&quot; title=&quot;1、安装node.js&quot;&gt;&lt;/a&gt;1、安装node.js&lt;/h2&gt;&lt;h2 id=&quot;2、安装cnpm&quot;&gt;&lt;a href=&quot;#2、安装cnpm&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="Web" scheme="http://zx21.xyz/categories/Web/"/>
+    
+    
+      <category term="Angular" scheme="http://zx21.xyz/tags/Angular/"/>
+    
+  </entry>
   
   <entry>
     <title>[JAVA]逻辑分页与物理分页</title>
@@ -519,29 +545,6 @@ scanPeri
 &lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
       &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt
       
-    
-    </summary>
-    
-    
-      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
-    
-    
-      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JAVA]SpringBoot整合freemarker</title>
-    <link href="http://zx21.xyz/2019/10/24/JAVA-SpringBoot%E6%95%B4%E5%90%88freemarker/"/>
-    <id>http://zx21.xyz/2019/10/24/JAVA-SpringBoot整合freemarker/</id>
-    <published>2019-10-23T16:43:38.000Z</published>
-    <updated>2019-10-23T16:44:23.671Z</updated>
-    
-    <content type="html"><![CDATA[<p>FreeMarker是一款模板引擎： 即一种基于模板和要改变的数据<a id="more"></a>， 并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。 它不是面向最终用户的，而是一个Java类库，是一款程序员可以嵌入他们所开发产品的组件。–百度百科</p><p>&nbsp;</p><p>首先pom.xml导入freemarker依赖</p><pre class="lang:default decode:true " title="pom.xml">        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-starter-freemarker&lt;/artifactId&gt;        &lt;/dependency&gt;</pre><p>&nbsp;</p><p>跟<span style="text-decoration: underline;"><a href="http://www.xioaxin12.xyz/1226.html" target="_blank" rel="noopener">Spring Boot整合Jsp</a></span>该篇文章类似，一个实体类用户返回结果，controller和启动类。</p><p><span style="font-size: 10pt;">Student.java</span></p><pre class="lang:java decode:true " title="Student.java">package xyz.xioaxin12.springboot.controller.student;public class Student {    private Integer id;    private String name;    private int age;    public Student() {    }    public Student(Integer id, String name, int age) {        this.id = id;        this.name = name;        this.age = age;    }    public Integer getId() {        return id;    }    public void setId(Integer id) {        this.id = id;    }    public String getName() {        return name;    }    public void setName(String name) {        this.name = name;    }    public int getAge() {        return age;    }    public void setAge(int age) {        this.age = age;    }}</pre><p>&nbsp;</p><p><span style="font-size: 10pt;">StudentController .java </span></p><pre class="lang:java decode:true" title="StudentController ">package xyz.xioaxin12.springboot.controller;import org.springframework.stereotype.Controller;import org.springframework.ui.Model;import org.springframework.web.bind.annotation.RequestMapping;import xyz.xioaxin12.springboot.controller.student.Student;import java.util.ArrayList;import java.util.List;@Controllerpublic class StudentController {    @RequestMapping("/show")    public String showStudent(Model model){        List&lt;Student&gt; list = new ArrayList&lt;&gt;();        list.add(new Student(1,"小信",22));        list.add(new Student(2,"天天",25));        list.add(new Student(1,"赵六",20));        model.addAttribute("list",list);        return "show";    }}</pre><p>&nbsp;</p><p><span style="font-size: 10pt;">启动类</span></p><pre class="lang:java decode:true ">package xyz.xioaxin12.springboot;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;/** * @author 爱生活爱技术 */@SpringBootApplicationpublic class SpringBoot04FreemarkerApplication {    public static void main(String[] args) {        SpringApplication.run(SpringBoot04FreemarkerApplication.class, args);    }}</pre><p>&nbsp;</p><p>最后编写视图</p><p><span style="color: #ff0000;">注意：模板形式的文件必须放在templates下，外界不可直接访问的！</span></p><pre class="lang:default decode:true " title="show.ftl">&lt;html&gt;    &lt;head&gt;        &lt;title&gt;freemarker&lt;/title&gt;        &lt;meta charset="utf-8"/&gt;    &lt;/head&gt;    &lt;body&gt;        &lt;table border="2" align="center" width="50%"&gt;            &lt;tr&gt;                &lt;th&gt;ID&lt;/th&gt;                &lt;th&gt;姓名&lt;/th&gt;                &lt;th&gt;年龄&lt;/th&gt;            &lt;/tr&gt;            &lt;#list list as s&gt;                &lt;tr&gt;                    &lt;td&gt;${s.id}&lt;/td&gt;                    &lt;td&gt;${s.name}&lt;/td&gt;                    &lt;td&gt;${s.age}&lt;/td&gt;                &lt;/tr&gt;            &lt;/#list&gt;        &lt;/table&gt;    &lt;/body&gt;&lt;/html&gt;</pre><p>&nbsp;</p><p><a href="http://image.xiaoxinyes.club/2019-01-08_120014.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-08_120014.png" alt></a></p><hr><p>freemarker官方在线手册：<a href="http://freemarker.foofun.cn/ref_directive_switch.html#ref.directive.case" target="_blank" rel="noopener">点击</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;FreeMarker是一款模板引擎： 即一种基于模板和要改变的数据
     
     </summary>
     
