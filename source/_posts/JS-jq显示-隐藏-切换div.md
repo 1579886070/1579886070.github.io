@@ -1,7 +1,7 @@
 ---
 title: '[JS]jq显示/隐藏/切换div'
 date: 2019-10-08 22:28:40
-categories: JS
+categories: Web
 tags: js
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: '[JS]实现简单的计算器'
 date: 2019-10-07 21:49:25
-categories: JS
+categories: Web
 tags: js
 ---
 

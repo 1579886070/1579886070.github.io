@@ -1,7 +1,7 @@
 ---
 title: '[JS]编写九九乘法表'
 date: 2019-10-07 21:47:25
-categories: JS
+categories: Web
 tags: js
 ---
 

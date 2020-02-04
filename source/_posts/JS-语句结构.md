@@ -1,7 +1,7 @@
 ---
 title: '[JS]语句结构'
 date: 2019-10-07 21:50:25
-categories: JS
+categories: Web
 tags: js
 ---
 

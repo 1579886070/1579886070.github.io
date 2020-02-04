@@ -1,7 +1,7 @@
 ---
 title: '[JS]History对象'
 date: 2019-10-07 21:53:25
-categories: JS
+categories: Web
 tags: js
 ---
 

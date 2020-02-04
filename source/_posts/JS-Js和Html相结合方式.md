@@ -1,7 +1,7 @@
 ---
 title: '[JS]Js和Html相结合方式'
 date: 2019-10-07 21:24:25
-categories: JS
+categories: Web
 tags: js
 ---
 

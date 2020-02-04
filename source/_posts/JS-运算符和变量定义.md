@@ -1,7 +1,7 @@
 ---
 title: '[JS]运算符和变量定义'
 date: 2019-10-07 21:35:25
-categories: JS
+categories: Web
 tags: js
 ---
 
