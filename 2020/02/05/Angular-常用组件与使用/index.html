@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JS]编写九九乘法表 | 周信的博客</title>
-  <meta name="keywords" content=" js ">
-  <meta name="description" content="[JS]编写九九乘法表 | 周信的博客">
+  <title>[Angular]常用组件与使用 | 周信的博客</title>
+  <meta name="keywords" content=" Angular ">
+  <meta name="description" content="[Angular]常用组件与使用 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -814,9 +814,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JS-编写九九乘法表" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Angular-常用组件与使用" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JS]编写九九乘法表</h1>
+        <h1 class="article-title">[Angular]常用组件与使用</h1>
     
     <div class="article-meta">
         
@@ -831,19 +831,19 @@
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">js</a>
+            <a href="javascript:" class="color3">Angular</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-04 19:13:24'>2019-10-07 21:47</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-05 20:17:33'>2020-02-05 20:00</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:185</span>
+        <span>字数:967</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -873,7 +873,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#angular绑定数据"><span class="toc-text">angular绑定数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular绑定属性"><span class="toc-text">angular绑定属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular绑定html"><span class="toc-text">angular绑定html</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular做简单的运算、"><span class="toc-text">angular做简单的运算、</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular数据循环"><span class="toc-text">angular数据循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular引入图片"><span class="toc-text">angular引入图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular显示数组索引"><span class="toc-text">angular显示数组索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular条件判断"><span class="toc-text">angular条件判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular-ngStyle"><span class="toc-text">angular-ngStyle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular-管道"><span class="toc-text">angular-管道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular-点击事件"><span class="toc-text">angular-点击事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular-表单事件"><span class="toc-text">angular-表单事件</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -889,45 +889,173 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>学过其他语言的应该知道初级阶段写九九乘法表，下面用JavaScript实现。<a id="more"></a></p>
-<p>代码如下</p>
-<pre class="lang:javascript decode:true">&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-    &lt;link rel="stylesheet" type="text/css" href="table.css"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;script type="text/javascript"&gt;
-        /*
-        练习：在页面显示一个99乘法表
-        */
-        document.write("&lt;table&gt;");
-        for(var i = 1;i &lt;= 9;i++){
-            document.write("&lt;tr&gt;");
-            for(var j = 1;j &lt;= i;j++){
-                document.write("&lt;td&gt;"+j+"*"+i+"="+j*i+"&lt;/td&gt;");
-            }
-            document.write("&lt;/tr&gt;");
-        }
-        document.write("&lt;/table&gt;");
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-
+        <p>记录一下笔记</p>
+<p>html代码放在xxx.component.html中</p>
+<p>组件代码放在xxx.component.ts中</p>
+<p>css放在xxx.component.css中</p>
 <hr>
-<p>为了让显示得好看些，导入css,增加了边框效果。</p>
-<p>代码如下</p>
-<pre class="lang:javascript decode:true ">table ,table td{
-    border: solid #1690EE 1px;
-    width: 600px;
-}</pre>
+<h2 id="angular绑定数据"><a href="#angular绑定数据" class="headerlink" title="angular绑定数据"></a>angular绑定数据</h2><pre><code>&lt;h1&gt;angular模板绑定数据&lt;/h1&gt;
+&lt;h3&gt;{{title}}&lt;/h3&gt;
+&lt;h3&gt;{{msg}}&lt;/h3&gt;
+&lt;h3&gt;{{username}}&lt;/h3&gt;
+&lt;h3&gt;{{userage}}&lt;/h3&gt;
+&lt;h3&gt;{{userinfo.age}}&lt;/h3&gt;
+&lt;h3&gt;{{message}}&lt;/h3&gt;</code></pre><pre><code>  public title=&#39;我是一个新闻组件&#39;;
 
-<hr>
-<p>效果如图</p>
-<p><img src="http://image.xiaoxinyes.club/js_4_22_2.png" alt="爱生活爱语录"></p>
+  msg=&#39;我是一个新闻组件的msg&#39;;
 
+  public username:string = &quot;我是一个姓名&quot;;
+
+  public userage:any=111;
+
+  public userinfo:object={
+    age:11
+  }
+
+  public message:string = &#39;这是消息&#39;;</code></pre><hr>
+<h2 id="angular绑定属性"><a href="#angular绑定属性" class="headerlink" title="angular绑定属性"></a>angular绑定属性</h2><pre><code>&lt;h1&gt;angular模板绑定属性&lt;/h1&gt;
+&lt;div title=&quot;我是一个属性&quot;&gt;
+    鼠标瞄上去看一下
+&lt;/div&gt;
+
+&lt;div [title]=&quot;msg&quot;&gt;
+    鼠标再瞄上去看一下
+&lt;/div&gt;</code></pre><pre><code>public msg=&#39;我是一个属性&#39;;</code></pre><hr>
+<h2 id="angular绑定html"><a href="#angular绑定html" class="headerlink" title="angular绑定html"></a>angular绑定html</h2><pre><code>&lt;h1&gt;angular模板绑定html&lt;/h1&gt;
+&lt;div&gt;
+    {{content}}
+&lt;/div&gt;
+&lt;br&gt;
+&lt;span [innerHTML]=&#39;content&#39; class=&quot;red&quot;&gt;&lt;/span&gt;</code></pre><pre><code> public content:string=&quot;&lt;h2&gt;我是一个html标签&lt;/h2&gt;&quot;</code></pre><pre><code>.red{
+    color:red;
+}</code></pre><hr>
+<h2 id="angular做简单的运算、"><a href="#angular做简单的运算、" class="headerlink" title="angular做简单的运算、"></a>angular做简单的运算、</h2><pre><code>&lt;h1&gt;angular做简单的运算&lt;/h1&gt;
+&lt;h3&gt;1+2={{1+2}}&lt;/h3&gt;</code></pre><hr>
+<h2 id="angular数据循环"><a href="#angular数据循环" class="headerlink" title="angular数据循环"></a>angular数据循环</h2><pre><code>&lt;ul&gt;
+    &lt;li *ngFor=&quot;let item of arr&quot;&gt;
+        {{item}}
+    &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+    &lt;li *ngFor=&quot;let item of list&quot;&gt;
+        {{item}}
+    &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+    &lt;li *ngFor=&quot;let item of userlist&quot;&gt;
+        {{item.username}}---{{item.userage}}
+    &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+    &lt;li *ngFor=&quot;let item of cars&quot;&gt;
+        &lt;h3&gt;{{item.brand}}&lt;/h3&gt;
+        &lt;ol&gt;
+            &lt;li *ngFor=&quot;let car of item.list&quot;&gt;
+                {{car.title}}---{{car.price}}
+            &lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre><pre><code>//循环
+  public arr=[&#39;abc&#39;,&#39;123&#39;,&#39;哈哈&#39;];
+
+  public list:any=[&#39;zxc&#39;,&#39;321&#39;,&#39;嘻嘻&#39;];
+
+  public lists:Array&lt;string&gt;=[&#39;qwe&#39;,&#39;456&#39;,&#39;呵呵&#39;];
+
+  public userlist=[{
+    username:&#39;张三&#39;,
+    userage:20
+  },{
+    username:&#39;李四&#39;,
+    userage:22
+  },{
+    username:&#39;王五&#39;,
+    userage:25
+  }];
+
+
+  public cars:any[]=[
+    {
+    brand:&#39;宝马&#39;,
+    list:[
+      {
+        title:&#39;宝马01&#39;,
+        price:&#39;30万&#39;
+      },
+      {
+        title:&#39;宝马02&#39;,
+        price:&#39;40万&#39; 
+      }
+    ]
+  },
+  {
+    brand:&#39;奔驰&#39;,
+    list:[
+      {
+        title:&#39;奔驰01&#39;,
+        price:&#39;30万&#39;
+      },
+      {
+        title:&#39;奔驰02&#39;,
+        price:&#39;40万&#39; 
+      }
+    ]
+  }]</code></pre><hr>
+<h2 id="angular引入图片"><a href="#angular引入图片" class="headerlink" title="angular引入图片"></a>angular引入图片</h2><pre><code>&lt;h1&gt;angular引入图片&lt;/h1&gt;
+&lt;img src=&quot;assets/images/100.jpg&quot; alt=&quot;图片&quot;&gt;
+&lt;br&gt;
+&lt;img [src]=&quot;picUrl&quot;&gt;</code></pre><pre><code>  public picUrl: string = &quot;https://www.baidu.com/img/pc_1c6e30772d5e4103103bd460913332f9.png&quot;;</code></pre><hr>
+<h2 id="angular显示数组索引"><a href="#angular显示数组索引" class="headerlink" title="angular显示数组索引"></a>angular显示数组索引</h2><pre><code>&lt;h1&gt;angular显示数组索引&lt;/h1&gt;
+&lt;ul&gt;
+    &lt;li *ngFor=&quot;let item of arr;let key=index&quot; [ngClass]=&quot;{&#39;red&#39;: key==0,&#39;orange&#39;:key==2}&quot;&gt;
+        {{item.name}}---{{key}}
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre><pre><code>  public arr: any[] = [{
+    name: &#39;张三&#39;,
+  }, {
+    name: &#39;王五&#39;,
+  }, {
+    name: &#39;赵六&#39;
+  }]</code></pre><hr>
+<h2 id="angular条件判断"><a href="#angular条件判断" class="headerlink" title="angular条件判断"></a>angular条件判断</h2><pre><code>&lt;div *ngIf=&quot;flag&quot;&gt;
+    输出true
+&lt;/div&gt;
+&lt;div *ngIf=&quot;!flag&quot;&gt;
+    输出false
+&lt;/div&gt;
+
+&lt;div *ngIf=&quot;false;else other&quot;&gt;
+    输出false
+&lt;/div&gt;
+&lt;ng-template #other&gt;other content...&lt;/ng-template&gt;
+
+&lt;div [ngSwitch]=&quot;404&quot;&gt;
+    &lt;div *ngSwitchCase=&quot;200&quot;&gt;成功&lt;/div&gt;
+    &lt;div *ngSwitchCase=&quot;404&quot;&gt;找不到&lt;/div&gt;
+    &lt;div *ngSwitchCase=&quot;500&quot;&gt;内部服务错误&lt;/div&gt;
+    &lt;div *ngSwitchDefault&gt;其他错误&lt;/div&gt;
+&lt;/div&gt;</code></pre><pre><code>  public flag: boolean = true;</code></pre><hr>
+<h2 id="angular-ngStyle"><a href="#angular-ngStyle" class="headerlink" title="angular-ngStyle"></a>angular-ngStyle</h2><pre><code>&lt;h1&gt;angular-ngStyle&lt;/h1&gt;
+&lt;p style=&quot;color: red;&quot;&gt;我是一个标签&lt;/p&gt;
+&lt;p [ngStyle]=&quot;{color: &#39;blue&#39;}&quot;&gt;我也是一个标签&lt;/p&gt;</code></pre><hr>
+<h2 id="angular-管道"><a href="#angular-管道" class="headerlink" title="angular-管道"></a>angular-管道</h2><pre><code>&lt;h1&gt;angular-管道&lt;/h1&gt;
+{{today|date:'yyyy-MM-dd HH:mm:ss'}}</code></pre><pre><code>public today: any = new Date();</code></pre><hr>
+<h2 id="angular-点击事件"><a href="#angular-点击事件" class="headerlink" title="angular-点击事件"></a>angular-点击事件</h2><pre><code>&lt;h1&gt;angular-点击事件&lt;/h1&gt;
+&lt;button (click)=&quot;run()&quot;&gt;点击&lt;/button&gt;</code></pre><pre><code> run(){
+    alert(&quot;触发点击事件&quot;)
+  }</code></pre><hr>
+<h2 id="angular-表单事件"><a href="#angular-表单事件" class="headerlink" title="angular-表单事件"></a>angular-表单事件</h2><pre><code>&lt;h1&gt;angular-表单事件&lt;/h1&gt;
+&lt;input type=&quot;text&quot; (keyup)=&quot;keyup($event)&quot;/&gt;</code></pre><pre><code>  keyup(e){
+    if(e.keyCode==13){
+      console.log(&quot;按了一下回车&quot;);
+    }else{
+      //e.target 获取dom对象
+      console.log(e.target.value);
+    }
+  }</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -940,12 +1068,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JS]编写九九乘法表</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">185</span></p>
+    <p><span class="copy-title">文章标题:</span>[Angular]常用组件与使用</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">967</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-07, 21:47:25</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-04, 19:13:24</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/07/JS-编写九九乘法表/" title="[JS]编写九九乘法表">http://zx21.xyz/2019/10/07/JS-编写九九乘法表/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-05, 20:00:23</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-05, 20:17:33</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/05/Angular-常用组件与使用/" title="[Angular]常用组件与使用">http://zx21.xyz/2020/02/05/Angular-常用组件与使用/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
