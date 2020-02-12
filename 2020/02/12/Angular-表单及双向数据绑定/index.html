@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]java连接数据库 | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]java连接数据库 | 周信的博客">
+  <title>[Angular]表单及双向数据绑定 | 周信的博客</title>
+  <meta name="keywords" content=" Angular ">
+  <meta name="description" content="[Angular]表单及双向数据绑定 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -822,9 +822,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-java连接数据库" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Angular-表单及双向数据绑定" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]java连接数据库</h1>
+        <h1 class="article-title">[Angular]表单及双向数据绑定</h1>
     
     <div class="article-meta">
         
@@ -832,26 +832,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="JAVA">JAVA</a>
+                <a href="javascript:" data-rel="Web">Web</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color3">Angular</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-13 22:54:45'>2019-10-13 22:53</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-12 21:00:47'>2020-02-12 20:43</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:527</span>
+        <span>字数:475</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -881,7 +881,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入表单相关模块"><span class="toc-text">引入表单相关模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建一个form组件"><span class="toc-text">新建一个form组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写页面"><span class="toc-text">编写页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css样式"><span class="toc-text">css样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块代码"><span class="toc-text">模块代码</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -897,59 +897,115 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Driver 是一个接口：数据库厂商必须提供实现得接口。能从其中获取数据库连接。可以通过Driver 的实现类对象获取数据库连接。</p>
-<p>1，加入mysql驱动<br>1),解压mysql-connector-java-5.1.44<br>2),在当前项目下新建lib目录<br>3),把mysql-connector-java-5.1.44-bin.jar 复制到lib目录下<br>4),右键build-path，add to buildpath 加入到类路径下</p>
-<p><strong>说明：博主用的mysql连接的，默认端口为3306，我修改过：为3360。</strong></p>
-<pre class="lang:java decode:true">public void testDriver() throws SQLException {
-        //1,创建一个Driver实现类的对象
-        Driver driver = new com.mysql.jdbc.Driver();
+        <h2 id="引入表单相关模块"><a href="#引入表单相关模块" class="headerlink" title="引入表单相关模块"></a>引入表单相关模块</h2><p>引入表单相关模块，才可以使用双向数据绑定。</p>
+<p>app.module.ts</p>
+<pre><code>//引入表单相关模块
+import { FormsModule } from &#39;@angular/forms&#39;;</code></pre><h2 id="新建一个form组件"><a href="#新建一个form组件" class="headerlink" title="新建一个form组件"></a>新建一个form组件</h2><pre><code>ng g component components/form</code></pre><h2 id="编写页面"><a href="#编写页面" class="headerlink" title="编写页面"></a>编写页面</h2><p>form.component.html</p>
+<pre><code>&lt;h2&gt;表单演示&lt;/h2&gt;
 
-        //2,准备连接数据库的基本信息:url,user,password
-        String url = "jdbc:mysql://127.0.0.1:3360/test";
-        Properties info = new Properties();    
-        info.put("user", "root");
-        info.put("password", "1579886070");
+&lt;div class=&quot;form&quot;&gt;
+    &lt;ul&gt;
+        &lt;li&gt;
+            姓名：&lt;input type=&quot;text&quot; [(ngModel)]=&quot;formInfo.inputValue&quot; /&gt;
+        &lt;/li&gt;
 
-        //3,调用Driver接口的 connect(url,info) 获取数据库连接
-        Connection connection = driver.connect(url, info);
-        System.out.println(connection);
-    }</pre>
-<p>&nbsp;</p>
-<hr>
-<p><strong>另一种方式，用读取配置文件的方式</strong><br>** 好处：这样提高了复用性，如要将MySql换成Oracle，只需要修改配置文件中的信息即可**</p>
-<p>首先建立一个配置文件为：jdbc.properties</p>
-<p><a href="http://image.xiaoxinyes.club/java_4_25_1.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/java_4_25_1.png" alt="爱生活爱语录"></a></p>
-<p>然后使用类加载器加载bin目录 (类路径下的)文件</p>
-<pre class="lang:java decode:true ">public void testGetConnection2() throws Exception{
-    //1.读取jdbc.properties
-    Properties properties = new Properties();
-    InputStream inStream = ReviewTest.class.getClassLoader().getResourceAsStream("jdbc.properties");
+        &lt;li&gt;
+            性别：
+            &lt;input type=&quot;radio&quot; value=&quot;1&quot; name=&quot;sex&quot; id=&quot;sex1&quot; [(ngModel)]=&quot;formInfo.sex&quot;&gt;&lt;label for=&quot;sex1&quot;&gt; 男&lt;/label&gt;
+            &lt;input type=&quot;radio&quot; value=&quot;2&quot; name=&quot;sex&quot; id=&quot;sex2&quot; [(ngModel)]=&quot;formInfo.sex&quot;&gt;&lt;label for=&quot;sex2&quot;&gt; 女&lt;/label&gt;
+        &lt;/li&gt;
 
-    properties.load(inStream);
+        &lt;li&gt;
+            城市：
+            &lt;select [(ngModel)]=&quot;formInfo.defaultCity&quot;&gt;
+                &lt;option *ngFor=&quot;let item of formInfo.city&quot; [value]=&quot;item&quot;&gt;{{item}}&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/li&gt;
 
-    //2.获取连接的4个字符串
-    String user = properties.getProperty("user");
-    String password = properties.getProperty("password");
-    String jdbcUrl = properties.getProperty("jdbcUrl");
-    String driverClass = properties.getProperty("driverClass");
+        &lt;li&gt;
+            爱好：
+            &lt;span *ngFor=&quot;let item of formInfo.hobby;let key=index;&quot;&gt;
+                &lt;input type=&quot;checkbox&quot; [id]=&quot;&#39;check&#39;+key&quot; [(ngModel)]=&quot;item.cheked&quot;/&gt;&lt;label [for]=&quot;&#39;check&#39;+key&quot;&gt; {{item.title}}&lt;/label&gt;
+            &lt;/span&gt;
 
-    //3.加载驱动        
-    Class.forName(driverClass);
+        &lt;/li&gt;
 
-    //4.调用获取
-    Connection connection = DriverManager.getConnection(jdbcUrl, user, password);
-    System.out.println(connection);
-}</pre>
+        &lt;li&gt;
+            &lt;textarea name=&quot;mark&quot; id=&quot;&quot; cols=&quot;30&quot; rows=&quot;10&quot; [(ngModel)]=&quot;formInfo.mark&quot;&gt;&lt;/textarea&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
 
-<hr>
-<p><strong>方法说明：</strong></p>
-<ul>
-<li><span style="font-size: 10pt;">getClassLoader()是取得该Class对象的类装载器;</span></li>
-<li><span style="font-size: 10pt;">getResourceAsStream(“database.properties”) 调用类加载器的方法加载 资源，返回的是字节流。使用Properties类是为了可以从.properties属性文件对应的文件输入流中，加载属性列表到Properties类对象，然后通过getProperty方法用指定的键在此属性列表中搜索属性.</span></li>
-<li><span style="font-size: 10pt;">getProperty ( String key)，用指定的键在此属性列表中搜索属性。也就是通过参数 key ，得到 key 所对应的 value。</span></li>
-<li><span style="font-size: 10pt;">load ( InputStream inStream)，从输入流中读取属性列表（键和元素对）。</span></li>
-</ul>
+    &lt;button (click)=&quot;dosubmit()&quot;&gt;获取内容&lt;/button&gt;
 
+    &lt;br /&gt;
+
+    &lt;pre&gt;
+        {{formInfo|json}}
+    &lt;/pre&gt;
+&lt;/div&gt;</code></pre><h2 id="css样式"><a href="#css样式" class="headerlink" title="css样式"></a>css样式</h2><p>form.component.css</p>
+<pre><code>h2{
+    text-align: center;
+}
+
+.form{
+    width: 400px;
+    margin: auto;
+    border: 2px solid #000;
+}
+
+button{
+    width: 100px;
+    float: right;
+}
+
+ul{
+    list-style-type: none;
+}
+
+li{
+    line-height: 50px;
+}
+</code></pre><h2 id="模块代码"><a href="#模块代码" class="headerlink" title="模块代码"></a>模块代码</h2><p>form.component.ts</p>
+<pre><code>import { Component, OnInit } from &#39;@angular/core&#39;;
+
+@Component({
+  selector: &#39;app-form&#39;,
+  templateUrl: &#39;./form.component.html&#39;,
+  styleUrls: [&#39;./form.component.css&#39;]
+})
+export class FormComponent implements OnInit {
+  public citys: any[] = [&#39;长沙&#39;, &#39;杭州&#39;, &#39;苏州&#39;];
+
+  public formInfo: any = {
+    inputValue: &#39;&#39;,
+    sex: &#39;1&#39;,
+    city: this.citys,
+    defaultCity:this.citys[0],
+
+    hobby:[{
+      title:&#39;画画&#39;,
+      cheked:false
+    },{
+      title:&#39;弹吉他&#39;,
+      cheked:false
+    },{
+      title:&#39;运动&#39;,
+      cheked:false
+    },],
+
+    mark:&#39;&#39;
+  }
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  dosubmit() {
+      console.log(this.formInfo);
+  }
+}
+</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -962,12 +1018,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]java连接数据库</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">527</span></p>
+    <p><span class="copy-title">文章标题:</span>[Angular]表单及双向数据绑定</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">475</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-13, 22:53:53</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-13, 22:54:45</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/13/JAVA-java连接数据库/" title="[JAVA]java连接数据库">http://zx21.xyz/2019/10/13/JAVA-java连接数据库/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-12, 20:43:47</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-12, 21:00:47</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/12/Angular-表单及双向数据绑定/" title="[Angular]表单及双向数据绑定">http://zx21.xyz/2020/02/12/Angular-表单及双向数据绑定/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>[Angular]表单及双向数据绑定</title>
+      <link href="/2020/02/12/Angular-%E8%A1%A8%E5%8D%95%E5%8F%8A%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/"/>
+      <url>/2020/02/12/Angular-%E8%A1%A8%E5%8D%95%E5%8F%8A%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/</url>
+      
+        <content type="html"><![CDATA[<h2 id="引入表单相关模块"><a href="#引入表单相关模块" class="headerlink" title="引入表单相关模块"></a>引入表单相关模块</h2><p>引入表单相关模块，才可以使用双向数据绑定。</p><p>app.module.ts</p><pre><code>//引入表单相关模块import { FormsModule } from &#39;@angular/forms&#39;;</code></pre><h2 id="新建一个form组件"><a href="#新建一个form组件" class="headerlink" title="新建一个form组件"></a>新建一个form组件</h2><pre><code>ng g component components/form</code></pre><h2 id="编写页面"><a href="#编写页面" class="headerlink" title="编写页面"></a>编写页面</h2><p>form.component.html</p><pre><code>&lt;h2&gt;表单演示&lt;/h2&gt;&lt;div class=&quot;form&quot;&gt;    &lt;ul&gt;        &lt;li&gt;            姓名：&lt;input type=&quot;text&quot; [(ngModel)]=&quot;formInfo.inputValue&quot; /&gt;        &lt;/li&gt;        &lt;li&gt;            性别：            &lt;input type=&quot;radio&quot; value=&quot;1&quot; name=&quot;sex&quot; id=&quot;sex1&quot; [(ngModel)]=&quot;formInfo.sex&quot;&gt;&lt;label for=&quot;sex1&quot;&gt; 男&lt;/label&gt;            &lt;input type=&quot;radio&quot; value=&quot;2&quot; name=&quot;sex&quot; id=&quot;sex2&quot; [(ngModel)]=&quot;formInfo.sex&quot;&gt;&lt;label for=&quot;sex2&quot;&gt; 女&lt;/label&gt;        &lt;/li&gt;        &lt;li&gt;            城市：            &lt;select [(ngModel)]=&quot;formInfo.defaultCity&quot;&gt;                &lt;option *ngFor=&quot;let item of formInfo.city&quot; [value]=&quot;item&quot;&gt;{{item}}&lt;/option&gt;            &lt;/select&gt;        &lt;/li&gt;        &lt;li&gt;            爱好：            &lt;span *ngFor=&quot;let item of formInfo.hobby;let key=index;&quot;&gt;                &lt;input type=&quot;checkbox&quot; [id]=&quot;&#39;check&#39;+key&quot; [(ngModel)]=&quot;item.cheked&quot;/&gt;&lt;label [for]=&quot;&#39;check&#39;+key&quot;&gt; {{item.title}}&lt;/label&gt;            &lt;/span&gt;        &lt;/li&gt;        &lt;li&gt;            &lt;textarea name=&quot;mark&quot; id=&quot;&quot; cols=&quot;30&quot; rows=&quot;10&quot; [(ngModel)]=&quot;formInfo.mark&quot;&gt;&lt;/textarea&gt;        &lt;/li&gt;    &lt;/ul&gt;    &lt;button (click)=&quot;dosubmit()&quot;&gt;获取内容&lt;/button&gt;    &lt;br /&gt;    &lt;pre&gt;        {{formInfo|json}}    &lt;/pre&gt;&lt;/div&gt;</code></pre><h2 id="css样式"><a href="#css样式" class="headerlink" title="css样式"></a>css样式</h2><p>form.component.css</p><pre><code>h2{    text-align: center;}.form{    width: 400px;    margin: auto;    border: 2px solid #000;}button{    width: 100px;    float: right;}ul{    list-style-type: none;}li{    line-height: 50px;}</code></pre><h2 id="模块代码"><a href="#模块代码" class="headerlink" title="模块代码"></a>模块代码</h2><p>form.component.ts</p><pre><code>import { Component, OnInit } from &#39;@angular/core&#39;;@Component({  selector: &#39;app-form&#39;,  templateUrl: &#39;./form.component.html&#39;,  styleUrls: [&#39;./form.component.css&#39;]})export class FormComponent implements OnInit {  public citys: any[] = [&#39;长沙&#39;, &#39;杭州&#39;, &#39;苏州&#39;];  public formInfo: any = {    inputValue: &#39;&#39;,    sex: &#39;1&#39;,    city: this.citys,    defaultCity:this.citys[0],    hobby:[{      title:&#39;画画&#39;,      cheked:false    },{      title:&#39;弹吉他&#39;,      cheked:false    },{      title:&#39;运动&#39;,      cheked:false    },],    mark:&#39;&#39;  }  constructor() { }  ngOnInit() {  }  dosubmit() {      console.log(this.formInfo);  }}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Angular </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[Angular]常用组件与使用</title>
       <link href="/2020/02/05/Angular-%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6%E4%B8%8E%E4%BD%BF%E7%94%A8/"/>
       <url>/2020/02/05/Angular-%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6%E4%B8%8E%E4%BD%BF%E7%94%A8/</url>
