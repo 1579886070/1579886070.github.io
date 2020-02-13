@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-02-12T13:00:47.119Z</updated>
+  <updated>2020-02-13T08:41:31.617Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Angular]搜索持久化</title>
+    <link href="http://zx21.xyz/2020/02/13/Angular-%E6%90%9C%E7%B4%A2%E6%8C%81%E4%B9%85%E5%8C%96/"/>
+    <id>http://zx21.xyz/2020/02/13/Angular-搜索持久化/</id>
+    <published>2020-02-13T08:32:24.000Z</published>
+    <updated>2020-02-13T08:41:31.617Z</updated>
+    
+    <content type="html"><![CDATA[<p>类似与淘宝/京东等，搜索关键字，保留搜索历史记录。</p><h2 id="新建search组件"><a href="#新建search组件" class="headerlink" title="新建search组件"></a>新建search组件</h2><pre><code>ng g component components/search</code></pre><h2 id="新建服务"><a href="#新建服务" class="headerlink" title="新建服务"></a>新建服务</h2><p>可以用于公用，我理解为java中的类一样。</p><pre><code>ng g service services/storage</code></pre><h2 id="编写页面"><a href="#编写页面" class="headerlink" title="编写页面"></a>编写页面</h2><p>search.component.html</p><pre><code>&lt;div class=&quot;search&quot;&gt;    &lt;input type=&quot;text&quot; [(ngModel)]=&quot;keyWord&quot;&gt;&lt;button (click)=&quot;doSearch()&quot;&gt;搜索&lt;/button&gt;    &lt;hr&gt;    搜索记录    &lt;hr&gt;    &lt;ul&gt;        &lt;li *ngFor=&quot;let item of historyList;let key=index;&quot;&gt;            {{item}}---            &lt;button (click)=&quot;deleteSearch(key)&quot;&gt;X&lt;/button&gt;        &lt;/li&gt;    &lt;/ul&gt;&lt;/div&gt;</code></pre><p>search.component.css</p><pre><code>.search {  width: 400px;  margin: 20px auto;}button {  height: 32px;  width: 80px;}input {  margin-bottom: 20px;  width: 300px;  height: 30px;}ul {  list-style-type: none;}</code></pre><h2 id="根模块引入服务"><a href="#根模块引入服务" class="headerlink" title="根模块引入服务"></a>根模块引入服务</h2><pre><code>import { BrowserModule } from &#39;@angular/platform-browser&#39;;import { NgModule } from &#39;@angular/core&#39;;//引入表单相关模块import { FormsModule } from &#39;@angular/forms&#39;;import { AppRoutingModule } from &#39;./app-routing.module&#39;;import { AppComponent } from &#39;./app.component&#39;;import { FormComponent } from &#39;./components/form/form.component&#39;;import { SearchComponent } from &#39;./components/search/search.component&#39;;//引入服务import { StorageService } from &#39;./services/storage.service&#39;;@NgModule({  declarations: [    AppComponent,    FormComponent,    SearchComponent  ],  imports: [    BrowserModule,    AppRoutingModule,    FormsModule  ],  //引入服务  providers: [StorageService],  bootstrap: [AppComponent]})export class AppModule { }</code></pre><h2 id="服务模块中的方法"><a href="#服务模块中的方法" class="headerlink" title="服务模块中的方法"></a>服务模块中的方法</h2><p>storage.service.ts</p><pre><code>import { Injectable } from &#39;@angular/core&#39;;@Injectable({  providedIn: &#39;root&#39;})export class StorageService {  constructor() { }  set(key:string,value:any){    localStorage.setItem(key,JSON.stringify(value));  }  get(key:string) {   return JSON.parse(localStorage.getItem(key));  }  remove(key:string){    localStorage.removeItem(key);  }}</code></pre><h2 id="search组件中调用"><a href="#search组件中调用" class="headerlink" title="search组件中调用"></a>search组件中调用</h2><ul><li>注意同样需要引入服务才可以使用</li></ul><pre><code>import { Component, OnInit } from &#39;@angular/core&#39;;//引入服务import { StorageService } from &#39;../../services/storage.service&#39;;@Component({  selector: &#39;app-search&#39;,  templateUrl: &#39;./search.component.html&#39;,  styleUrls: [&#39;./search.component.css&#39;]})export class SearchComponent implements OnInit {  public keyWord: string;  public historyList: any[] = [];  //构造函数注入服务  constructor(public storage: StorageService) {  }  ngOnInit() {    //刷新页面持久化    var historyList: any = this.storage.get(&#39;historyList&#39;);    if (historyList) {      this.historyList = this.storage.get(&#39;historyList&#39;);    }  }  doSearch() {    //避免重复数据    if (this.historyList.indexOf(this.keyWord) == -1) {      this.historyList.push(this.keyWord);      this.storage.set(&#39;historyList&#39;, this.historyList);    }    this.keyWord = &#39;&#39;;  }  deleteSearch(key: number) {    this.historyList.splice(key, 1);    this.storage.set(&#39;historyList&#39;, this.historyList);  }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;类似与淘宝/京东等，搜索关键字，保留搜索历史记录。&lt;/p&gt;
+&lt;h2 id=&quot;新建search组件&quot;&gt;&lt;a href=&quot;#新建search组件&quot; class=&quot;headerlink&quot; title=&quot;新建search组件&quot;&gt;&lt;/a&gt;新建search组件&lt;/h2&gt;&lt;pre&gt;&lt;co
+      
+    
+    </summary>
+    
+    
+      <category term="Web" scheme="http://zx21.xyz/categories/Web/"/>
+    
+    
+      <category term="Angular" scheme="http://zx21.xyz/tags/Angular/"/>
+    
+  </entry>
   
   <entry>
     <title>[Angular]表单及双向数据绑定</title>
@@ -529,36 +556,6 @@
     
     
       <category term="error" scheme="http://zx21.xyz/tags/error/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JAVA]Logback日志级别</title>
-    <link href="http://zx21.xyz/2019/10/24/JAVA-Logback%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB/"/>
-    <id>http://zx21.xyz/2019/10/24/JAVA-Logback日志级别/</id>
-    <published>2019-10-24T14:43:43.000Z</published>
-    <updated>2019-12-20T03:40:07.977Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!--scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。例如： --&gt;&lt;configuration scan=&quot;true&quot; scanPeriod=&quot;60 seconds&quot; debug=&quot;true&quot;&gt;    &lt;!-- 项目名称 --&gt;    &lt;property name=&quot;PROJECT_NAME&quot; value=&quot;XXXXX&quot; /&gt;    &lt;!-- 文件输出格式 --&gt;    &lt;property name=&quot;PATTERN&quot; value=&quot;%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&quot;/&gt;    &lt;!-- 输出文件路径 --&gt;    &lt;property name=&quot;OPEN_FILE_PATH&quot; value=&quot;./logs/&quot;/&gt;    &lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;        &lt;encoder&gt;            &lt;pattern&gt;${PATTERN}&lt;/pattern&gt;            &lt;charset&gt;UTF-8&lt;/charset&gt;        &lt;/encoder&gt;    &lt;/appender&gt;    &lt;!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 --&gt;    &lt;appender name=&quot;OPEN-FILE&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;        &lt;!--不能有这项配置！！！！！--&gt;        &lt;!--&lt;Encoding&gt;UTF-8&lt;/Encoding&gt;--&gt;        &lt;!--&lt;File&gt;${OPEN_FILE_PATH}/zqread.log&lt;/File&gt;--&gt;        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;            &lt;!--日志文件输出的文件名--&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/all/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;!--日志文件保留天数--&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;                &lt;!--日志文件最大的大小--&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;layout class=&quot;ch.qos.logback.classic.PatternLayout&quot;&gt;            &lt;pattern&gt;${PATTERN}&lt;/pattern&gt;        &lt;/layout&gt;    &lt;/appender&gt;    &lt;!--输出到debug--&gt;    &lt;appender name=&quot;debug&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/debug/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;append&gt;true&lt;/append&gt;        &lt;encoder&gt;            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;            &lt;charset&gt;utf-8&lt;/charset&gt;        &lt;/encoder&gt;        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;&lt;!-- 只打印DEBUG日志 --&gt;            &lt;level&gt;DEBUG&lt;/level&gt;            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;        &lt;/filter&gt;    &lt;/appender&gt;    &lt;!--输出到info--&gt;    &lt;appender name=&quot;info&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/info/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;append&gt;true&lt;/append&gt;        &lt;encoder&gt;            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;            &lt;charset&gt;utf-8&lt;/charset&gt;        &lt;/encoder&gt;        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;&lt;!-- 只打印INFO日志 --&gt;            &lt;level&gt;INFO&lt;/level&gt;            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;        &lt;/filter&gt;    &lt;/appender&gt;    &lt;!--输出到error--&gt;    &lt;appender name=&quot;error&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/error/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;append&gt;true&lt;/append&gt;        &lt;encoder&gt;            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;            &lt;charset&gt;utf-8&lt;/charset&gt;        &lt;/encoder&gt;        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;&lt;!-- 只打印ERROR日志 --&gt;            &lt;level&gt;ERROR&lt;/level&gt;            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;        &lt;/filter&gt;    &lt;/appender&gt;    &lt;!--输出到warn--&gt;    &lt;appender name=&quot;warn&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;            &lt;FileNamePattern&gt;${OPEN_FILE_PATH}/warn/%d{yyyy-MM-dd}-%i.log&lt;/FileNamePattern&gt;            &lt;MaxHistory&gt;30&lt;/MaxHistory&gt;            &lt;TimeBasedFileNamingAndTriggeringPolicy                    class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;                &lt;MaxFileSize&gt;10MB&lt;/MaxFileSize&gt;            &lt;/TimeBasedFileNamingAndTriggeringPolicy&gt;        &lt;/rollingPolicy&gt;        &lt;append&gt;true&lt;/append&gt;        &lt;encoder&gt;            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;            &lt;charset&gt;utf-8&lt;/charset&gt;        &lt;/encoder&gt;        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;&lt;!-- 只打印WARN日志 --&gt;            &lt;level&gt;WARN&lt;/level&gt;            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;        &lt;/filter&gt;    &lt;/appender&gt;    &lt;root level=&quot;info&quot;&gt;        &lt;appender-ref ref=&quot;STDOUT&quot;/&gt;        &lt;appender-ref ref=&quot;OPEN-FILE&quot;/&gt;        &lt;appender-ref ref=&quot;debug&quot; /&gt;        &lt;appender-ref ref=&quot;info&quot; /&gt;        &lt;appender-ref ref=&quot;error&quot; /&gt;        &lt;appender-ref ref=&quot;warn&quot; /&gt;    &lt;/root&gt;&lt;/configuration&gt;</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;pre&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;!--
-scan:
-当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
-scanPeri
-      
-    
-    </summary>
-    
-    
-      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
-    
-    
-      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
     
   </entry>
   
