@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-02-14T07:07:28.570Z</updated>
+  <updated>2020-02-14T07:08:20.098Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -21,17 +21,17 @@
     <link href="http://zx21.xyz/2020/02/14/JAVA-%E5%B0%8F%E7%9F%A5%E8%AF%86%E4%B9%8B%E5%8F%8D%E6%96%9C%E6%9D%A0/"/>
     <id>http://zx21.xyz/2020/02/14/JAVA-小知识之反斜杠/</id>
     <published>2020-02-14T06:54:25.000Z</published>
-    <updated>2020-02-14T07:07:28.570Z</updated>
+    <updated>2020-02-14T07:08:20.098Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>在java中，反斜杠()是一个特殊的字符，作用为转义。</p><hr><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><table><thead><tr><th align="left">字符</th><th align="left">解释</th></tr></thead><tbody><tr><td align="left">常见的转义字符</td><td align="left"></td></tr><tr><td align="left">\r</td><td align="left">表示回车符号，光标在当前行的开头</td></tr><tr><td align="left">\n</td><td align="left">表示换行符号，到下一行的开头</td></tr><tr><td align="left">\t</td><td align="left">表示制表符号，同tab</td></tr><tr><td align="left">\b</td><td align="left">表示退格符号</td></tr><tr><td align="left">含有特殊意义的转义字符</td><td align="left"></td></tr><tr><td align="left">\‘</td><td align="left">表示单引号</td></tr><tr><td align="left">\“</td><td align="left">表示双引号</td></tr><tr><td align="left">\\</td><td align="left">表示字面意思上的\</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>在java中，反斜杠(\)是一个特殊的字符，作用为转义。</p><hr><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><table><thead><tr><th align="left">字符</th><th align="left">解释</th></tr></thead><tbody><tr><td align="left">常见的转义字符</td><td align="left"></td></tr><tr><td align="left">\r</td><td align="left">表示回车符号，光标在当前行的开头</td></tr><tr><td align="left">\n</td><td align="left">表示换行符号，到下一行的开头</td></tr><tr><td align="left">\t</td><td align="left">表示制表符号，同tab</td></tr><tr><td align="left">\b</td><td align="left">表示退格符号</td></tr><tr><td align="left">含有特殊意义的转义字符</td><td align="left"></td></tr><tr><td align="left">\‘</td><td align="left">表示单引号</td></tr><tr><td align="left">\“</td><td align="left">表示双引号</td></tr><tr><td align="left">\\</td><td align="left">表示字面意思上的\</td></tr></tbody></table>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;解释&quot;&gt;&lt;a href=&quot;#解释&quot; class=&quot;headerlink&quot; title=&quot;解释&quot;&gt;&lt;/a&gt;解释&lt;/h2&gt;&lt;p&gt;在java中，反斜杠()是一个特殊的字符，作用为转义。&lt;/p&gt;
+        &lt;h2 id=&quot;解释&quot;&gt;&lt;a href=&quot;#解释&quot; class=&quot;headerlink&quot; title=&quot;解释&quot;&gt;&lt;/a&gt;解释&lt;/h2&gt;&lt;p&gt;在java中，反斜杠(\)是一个特殊的字符，作用为转义。&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;
+&lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=
       
     
     </summary>
