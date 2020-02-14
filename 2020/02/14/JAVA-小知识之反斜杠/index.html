@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[Angular]表单及双向数据绑定 | 周信的博客</title>
-  <meta name="keywords" content=" Angular ">
-  <meta name="description" content="[Angular]表单及双向数据绑定 | 周信的博客">
+  <title>[JAVA]小知识之反斜杠 | 周信的博客</title>
+  <meta name="keywords" content=" java ">
+  <meta name="description" content="[JAVA]小知识之反斜杠 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -838,9 +838,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Angular-表单及双向数据绑定" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-JAVA-小知识之反斜杠" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[Angular]表单及双向数据绑定</h1>
+        <h1 class="article-title">[JAVA]小知识之反斜杠</h1>
     
     <div class="article-meta">
         
@@ -848,26 +848,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Web">Web</a>
+                <a href="javascript:" data-rel="JAVA">JAVA</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">Angular</a>
+            <a href="javascript:" class="color5">java</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-12 21:00:47'>2020-02-12 20:43</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-14 15:05:16'>2020-02-14 14:54</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:475</span>
+        <span>字数:111</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -897,7 +897,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入表单相关模块"><span class="toc-text">引入表单相关模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建一个form组件"><span class="toc-text">新建一个form组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写页面"><span class="toc-text">编写页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css样式"><span class="toc-text">css样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块代码"><span class="toc-text">模块代码</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解释"><span class="toc-text">解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-text">说明</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -913,115 +913,53 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="引入表单相关模块"><a href="#引入表单相关模块" class="headerlink" title="引入表单相关模块"></a>引入表单相关模块</h2><p>引入表单相关模块，才可以使用双向数据绑定。</p>
-<p>app.module.ts</p>
-<pre><code>//引入表单相关模块
-import { FormsModule } from &#39;@angular/forms&#39;;</code></pre><h2 id="新建一个form组件"><a href="#新建一个form组件" class="headerlink" title="新建一个form组件"></a>新建一个form组件</h2><pre><code>ng g component components/form</code></pre><h2 id="编写页面"><a href="#编写页面" class="headerlink" title="编写页面"></a>编写页面</h2><p>form.component.html</p>
-<pre><code>&lt;h2&gt;表单演示&lt;/h2&gt;
+        <h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>在java中，反斜杠()是一个特殊的字符，作用为转义。</p>
+<hr>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><table>
+<thead>
+<tr>
+<th align="left">字符</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">常见的转义字符</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">\r</td>
+<td align="left">表示回车符号，光标在当前行的开头</td>
+</tr>
+<tr>
+<td align="left">\n</td>
+<td align="left">表示换行符号，到下一行的开头</td>
+</tr>
+<tr>
+<td align="left">\t</td>
+<td align="left">表示制表符号，同tab</td>
+</tr>
+<tr>
+<td align="left">\b</td>
+<td align="left">表示退格符号</td>
+</tr>
+<tr>
+<td align="left">含有特殊意义的转义字符</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">&#39;</td>
+<td align="left">表示单引号</td>
+</tr>
+<tr>
+<td align="left">&quot;</td>
+<td align="left">表示双引号</td>
+</tr>
+<tr>
+<td align="left">\</td>
+<td align="left">表示字面意思上的\</td>
+</tr>
+</tbody></table>
 
-&lt;div class=&quot;form&quot;&gt;
-    &lt;ul&gt;
-        &lt;li&gt;
-            姓名：&lt;input type=&quot;text&quot; [(ngModel)]=&quot;formInfo.inputValue&quot; /&gt;
-        &lt;/li&gt;
-
-        &lt;li&gt;
-            性别：
-            &lt;input type=&quot;radio&quot; value=&quot;1&quot; name=&quot;sex&quot; id=&quot;sex1&quot; [(ngModel)]=&quot;formInfo.sex&quot;&gt;&lt;label for=&quot;sex1&quot;&gt; 男&lt;/label&gt;
-            &lt;input type=&quot;radio&quot; value=&quot;2&quot; name=&quot;sex&quot; id=&quot;sex2&quot; [(ngModel)]=&quot;formInfo.sex&quot;&gt;&lt;label for=&quot;sex2&quot;&gt; 女&lt;/label&gt;
-        &lt;/li&gt;
-
-        &lt;li&gt;
-            城市：
-            &lt;select [(ngModel)]=&quot;formInfo.defaultCity&quot;&gt;
-                &lt;option *ngFor=&quot;let item of formInfo.city&quot; [value]=&quot;item&quot;&gt;{{item}}&lt;/option&gt;
-            &lt;/select&gt;
-        &lt;/li&gt;
-
-        &lt;li&gt;
-            爱好：
-            &lt;span *ngFor=&quot;let item of formInfo.hobby;let key=index;&quot;&gt;
-                &lt;input type=&quot;checkbox&quot; [id]=&quot;&#39;check&#39;+key&quot; [(ngModel)]=&quot;item.cheked&quot;/&gt;&lt;label [for]=&quot;&#39;check&#39;+key&quot;&gt; {{item.title}}&lt;/label&gt;
-            &lt;/span&gt;
-
-        &lt;/li&gt;
-
-        &lt;li&gt;
-            &lt;textarea name=&quot;mark&quot; id=&quot;&quot; cols=&quot;30&quot; rows=&quot;10&quot; [(ngModel)]=&quot;formInfo.mark&quot;&gt;&lt;/textarea&gt;
-        &lt;/li&gt;
-    &lt;/ul&gt;
-
-    &lt;button (click)=&quot;dosubmit()&quot;&gt;获取内容&lt;/button&gt;
-
-    &lt;br /&gt;
-
-    &lt;pre&gt;
-        {{formInfo|json}}
-    &lt;/pre&gt;
-&lt;/div&gt;</code></pre><h2 id="css样式"><a href="#css样式" class="headerlink" title="css样式"></a>css样式</h2><p>form.component.css</p>
-<pre><code>h2{
-    text-align: center;
-}
-
-.form{
-    width: 400px;
-    margin: auto;
-    border: 2px solid #000;
-}
-
-button{
-    width: 100px;
-    float: right;
-}
-
-ul{
-    list-style-type: none;
-}
-
-li{
-    line-height: 50px;
-}
-</code></pre><h2 id="模块代码"><a href="#模块代码" class="headerlink" title="模块代码"></a>模块代码</h2><p>form.component.ts</p>
-<pre><code>import { Component, OnInit } from &#39;@angular/core&#39;;
-
-@Component({
-  selector: &#39;app-form&#39;,
-  templateUrl: &#39;./form.component.html&#39;,
-  styleUrls: [&#39;./form.component.css&#39;]
-})
-export class FormComponent implements OnInit {
-  public citys: any[] = [&#39;长沙&#39;, &#39;杭州&#39;, &#39;苏州&#39;];
-
-  public formInfo: any = {
-    inputValue: &#39;&#39;,
-    sex: &#39;1&#39;,
-    city: this.citys,
-    defaultCity:this.citys[0],
-
-    hobby:[{
-      title:&#39;画画&#39;,
-      cheked:false
-    },{
-      title:&#39;弹吉他&#39;,
-      cheked:false
-    },{
-      title:&#39;运动&#39;,
-      cheked:false
-    },],
-
-    mark:&#39;&#39;
-  }
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  dosubmit() {
-      console.log(this.formInfo);
-  }
-}
-</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -1034,12 +972,12 @@ export class FormComponent implements OnInit {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[Angular]表单及双向数据绑定</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">475</span></p>
+    <p><span class="copy-title">文章标题:</span>[JAVA]小知识之反斜杠</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">111</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-02-12, 20:43:47</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-12, 21:00:47</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/12/Angular-表单及双向数据绑定/" title="[Angular]表单及双向数据绑定">http://zx21.xyz/2020/02/12/Angular-表单及双向数据绑定/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-14, 14:54:25</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-14, 15:05:16</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/14/JAVA-小知识之反斜杠/" title="[JAVA]小知识之反斜杠">http://zx21.xyz/2020/02/14/JAVA-小知识之反斜杠/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

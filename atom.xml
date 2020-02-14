@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-02-13T08:41:31.617Z</updated>
+  <updated>2020-02-14T07:05:16.097Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[JAVA]小知识之反斜杠</title>
+    <link href="http://zx21.xyz/2020/02/14/JAVA-%E5%B0%8F%E7%9F%A5%E8%AF%86%E4%B9%8B%E5%8F%8D%E6%96%9C%E6%9D%A0/"/>
+    <id>http://zx21.xyz/2020/02/14/JAVA-小知识之反斜杠/</id>
+    <published>2020-02-14T06:54:25.000Z</published>
+    <updated>2020-02-14T07:05:16.097Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>在java中，反斜杠()是一个特殊的字符，作用为转义。</p><hr><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><table><thead><tr><th align="left">字符</th><th align="left">解释</th></tr></thead><tbody><tr><td align="left">常见的转义字符</td><td align="left"></td></tr><tr><td align="left">\r</td><td align="left">表示回车符号，光标在当前行的开头</td></tr><tr><td align="left">\n</td><td align="left">表示换行符号，到下一行的开头</td></tr><tr><td align="left">\t</td><td align="left">表示制表符号，同tab</td></tr><tr><td align="left">\b</td><td align="left">表示退格符号</td></tr><tr><td align="left">含有特殊意义的转义字符</td><td align="left"></td></tr><tr><td align="left">&#39;</td><td align="left">表示单引号</td></tr><tr><td align="left">&quot;</td><td align="left">表示双引号</td></tr><tr><td align="left">\</td><td align="left">表示字面意思上的\</td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;解释&quot;&gt;&lt;a href=&quot;#解释&quot; class=&quot;headerlink&quot; title=&quot;解释&quot;&gt;&lt;/a&gt;解释&lt;/h2&gt;&lt;p&gt;在java中，反斜杠()是一个特殊的字符，作用为转义。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>[Angular]搜索持久化</title>
@@ -520,33 +548,6 @@
       
         &lt;p&gt;gradle类似于maven，今天(以前的文章，不是当天哦)我下载配置完后发现了许多问题，导致纠结了许久。&lt;/p&gt;
 &lt;p&gt;下载官网：&lt;a href=&quot;http://services.gradle.org/distributions/&quot; target=&quot;_blank&quot; rel
-      
-    
-    </summary>
-    
-    
-      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
-    
-    
-      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[ERROR]未识别mapper配置文件</title>
-    <link href="http://zx21.xyz/2019/10/27/ERROR-%E6%9C%AA%E8%AF%86%E5%88%ABmapper%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"/>
-    <id>http://zx21.xyz/2019/10/27/ERROR-未识别mapper配置文件/</id>
-    <published>2019-10-27T00:58:34.000Z</published>
-    <updated>2019-10-27T01:06:38.399Z</updated>
-    
-    <content type="html"><![CDATA[<p>学习就是从错误中不断吸取知识!在springboot+mybatis整合中，发现一个异常。</p><h2 id="如下"><a href="#如下" class="headerlink" title="如下"></a>如下</h2><pre><code>context with path [] threw exception [Request processing failed; nested exception is org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): xyz.xioaxin12.mapper.StudentMapper.insetStudent] with root causeorg.apache.ibatis.binding.BindingException: Invalid bound statement (not found): xyz.xioaxin12.mapper.StudentMapper.insetStudent</code></pre><p><img src="http://image.xiaoxinyes.club/2019-01-12_142810.png" alt><br><br><br>发现并没有调用到mapper.xml文件，而我是将mapper.xml和接口写在同包下。<br><img src="http://image.xiaoxinyes.club/2019-01-12_143343.png" alt><br><br><br>发现别名，路径等信息无误之后，我注意到classes文件，果然编译后的xml并那个不存在。<br><img src="http://image.xiaoxinyes.club/2019-01-12_143633.png" alt><br><br></p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>pom.xml中加入以下代码,这样不论是java下还是resourecs下编译后都会加载进去。</p><pre><code>resources&gt;        &lt;resource&gt;            &lt;directory&gt;src/main/resources&lt;/directory&gt;        &lt;/resource&gt;        &lt;resource&gt;            &lt;directory&gt;src/main/java&lt;/directory&gt;            &lt;includes&gt;                &lt;include&gt;**/*.xml&lt;/include&gt;            &lt;/includes&gt;            &lt;filtering&gt;false&lt;/filtering&gt;        &lt;/resource&gt;&lt;/resources&gt;</code></pre><p>若放在指定的resources文件下，需要指定mapper的位置。</p><pre><code>mybatis.mapper-locations=classpath:mapper/*.xml</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;学习就是从错误中不断吸取知识!在springboot+mybatis整合中，发现一个异常。&lt;/p&gt;
-&lt;h2 id=&quot;如下&quot;&gt;&lt;a href=&quot;#如下&quot; class=&quot;headerlink&quot; title=&quot;如下&quot;&gt;&lt;/a&gt;如下&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;context w
       
     
     </summary>
