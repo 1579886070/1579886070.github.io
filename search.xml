@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>[Other]进制转换</title>
+      <link href="/2020/02/15/Other-%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/"/>
+      <url>/2020/02/15/Other-%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Other </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[JAVA]小知识之反斜杠</title>
       <link href="/2020/02/14/JAVA-%E5%B0%8F%E7%9F%A5%E8%AF%86%E4%B9%8B%E5%8F%8D%E6%96%9C%E6%9D%A0/"/>
       <url>/2020/02/14/JAVA-%E5%B0%8F%E7%9F%A5%E8%AF%86%E4%B9%8B%E5%8F%8D%E6%96%9C%E6%9D%A0/</url>
@@ -1279,16 +1298,16 @@
     
     
     <entry>
-      <title>[Ohter]github修改显示语言</title>
-      <link href="/2019/10/11/Ohter-github%E4%BF%AE%E6%94%B9%E6%98%BE%E7%A4%BA%E8%AF%AD%E8%A8%80/"/>
-      <url>/2019/10/11/Ohter-github%E4%BF%AE%E6%94%B9%E6%98%BE%E7%A4%BA%E8%AF%AD%E8%A8%80/</url>
+      <title>[Other]github修改显示语言</title>
+      <link href="/2019/10/11/Other-github%E4%BF%AE%E6%94%B9%E6%98%BE%E7%A4%BA%E8%AF%AD%E8%A8%80/"/>
+      <url>/2019/10/11/Other-github%E4%BF%AE%E6%94%B9%E6%98%BE%E7%A4%BA%E8%AF%AD%E8%A8%80/</url>
       
         <content type="html"><![CDATA[<p>将一个java项目git到GitHub上，语言显示的css。也许是css文件比较多吧，自动识别成了css的了。</p><p>&nbsp;</p><h3 id="修改方法"><a href="#修改方法" class="headerlink" title="修改方法"></a>修改方法</h3><p>在目录创建一个<span style="color: #ff0000;">.gitattributes</span>文件。</p><p><img src="http://image.xiaoxinyes.club/2019-01-04_134342.png" alt></p><p>&nbsp;</p><p>创建之后，添加需要指定的语言即可。</p><p><img src="http://image.xiaoxinyes.club/2019-01-04_134514.png" alt></p><p>&nbsp;</p><pre class="lang:default decode:true" title=".gitattributes">*.js linguist-language=java*.css linguist-language=java*.html linguist-language=java</pre><p>&nbsp;</p>]]></content>
       
       
       <categories>
           
-          <category> Ohter </category>
+          <category> Other </category>
           
       </categories>
       
@@ -1304,16 +1323,16 @@
     
     
     <entry>
-      <title>[Ohter]IDEA上传github</title>
-      <link href="/2019/10/11/Ohter-IDEA%E4%B8%8A%E4%BC%A0github/"/>
-      <url>/2019/10/11/Ohter-IDEA%E4%B8%8A%E4%BC%A0github/</url>
+      <title>[Other]IDEA上传github</title>
+      <link href="/2019/10/11/Other-IDEA%E4%B8%8A%E4%BC%A0github/"/>
+      <url>/2019/10/11/Other-IDEA%E4%B8%8A%E4%BC%A0github/</url>
       
         <content type="html"><![CDATA[<p>关于如何在idea中同步到github上去。</p><a id="more"></a><h2 id="一"><a href="#一" class="headerlink" title="一"></a>一</h2><p>idea安装并且分别配置git和github的信息。</p><p><a href="http://image.xiaoxinyes.club/2019-01-05_103516.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_103516.png" alt></a></p><hr><p>&nbsp;</p><h2 id="二"><a href="#二" class="headerlink" title="二"></a>二</h2><p>github–&gt;new repository–&gt;获得链接</p><p><a href="http://image.xiaoxinyes.club/2019-01-05_104045.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104045.png" alt></a></p><hr><p>&nbsp;</p><h3 id="三"><a href="#三" class="headerlink" title="三"></a>三</h3><p>创建本地仓库</p><p><a href="http://image.xiaoxinyes.club/2019-01-05_104224.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104224.png" alt></a></p><p>ok即可</p><p><a href="http://image.xiaoxinyes.club/2019-01-05_104419.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104419.png" alt></a></p><p>我们可以看到项目路径中就有生成的.git文件了。</p><p><a href="http://image.xiaoxinyes.club/2019-01-05_104655.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104655.png" alt></a></p><hr><p>&nbsp;</p><h2 id="四"><a href="#四" class="headerlink" title="四"></a>四</h2><p>idea右键项目名–&gt;git–&gt;add。加入本地仓库！</p><p><a href="http://image.xiaoxinyes.club/2019-01-05_105200.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_105200.png" alt></a></p><p>然后再Commit Directory。提交项目！<br><a href="http://image.xiaoxinyes.club/2019-01-05_104810.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104810.png" alt></a><br>&nbsp;<br><a href="http://image.xiaoxinyes.club/2019-01-05_105647.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_105647.png" alt></a></p><hr><p>&nbsp;</p><h2 id="五"><a href="#五" class="headerlink" title="五"></a>五</h2><p>等待一会，接下来会询问你要提交到哪，点击Define remote,把GitHub地址填写上去，push就行了。</p><p><a href="http://image.xiaoxinyes.club/2019-01-05_105930.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_105930.png" alt></a></p><hr><p>&nbsp;</p><h2 id="六"><a href="#六" class="headerlink" title="六"></a>六</h2><p>打开github地址，就能看到已经push上去了，如果原项目修改了，需要重新传到GitHub上去，重新Commit Directory即可。</p><p><a href="http://image.xiaoxinyes.club/2019-01-05_110547.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_110547.png" alt></a></p><p>&nbsp;</p>]]></content>
       
       
       <categories>
           
-          <category> Ohter </category>
+          <category> Other </category>
           
       </categories>
       

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-02-14T07:08:20.098Z</updated>
+  <updated>2020-02-15T06:36:01.896Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Other]进制转换</title>
+    <link href="http://zx21.xyz/2020/02/15/Other-%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/"/>
+    <id>http://zx21.xyz/2020/02/15/Other-进制转换/</id>
+    <published>2020-02-15T06:33:28.000Z</published>
+    <updated>2020-02-15T06:36:01.896Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+      <category term="Other" scheme="http://zx21.xyz/categories/Other/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>[JAVA]小知识之反斜杠</title>
@@ -521,33 +538,6 @@
       
       
         &lt;h3 id=&quot;异常信息如下：&quot;&gt;&lt;a href=&quot;#异常信息如下：&quot; class=&quot;headerlink&quot; title=&quot;异常信息如下：&quot;&gt;&lt;/a&gt;异常信息如下：&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;2019-02-13 19:33:46.931 ERROR 1992 --- [p-
-      
-    
-    </summary>
-    
-    
-      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
-    
-    
-      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[ERROR]gradle+idea使用时的错误</title>
-    <link href="http://zx21.xyz/2019/10/27/ERROR-gradle-idea%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E9%94%99%E8%AF%AF/"/>
-    <id>http://zx21.xyz/2019/10/27/ERROR-gradle-idea使用时的错误/</id>
-    <published>2019-10-27T01:26:34.000Z</published>
-    <updated>2019-10-27T01:32:13.560Z</updated>
-    
-    <content type="html"><![CDATA[<p>gradle类似于maven，今天(以前的文章，不是当天哦)我下载配置完后发现了许多问题，导致纠结了许久。</p><p>下载官网：<a href="http://services.gradle.org/distributions/" target="_blank" rel="noopener">http://services.gradle.org/distributions/</a></p><p>我去下载了最新的版本，解压后配置环境变量。于是开始在idea上创建项目，无奈怎样都有问题，显示无法构建，这个问题真是搞了许久，检查环境变量，idea搭建过程是否有误等等因素。一直没看出来…..<br><code>1Failed to notify build listener</code></p><p>无奈之下，重新下载了另一个版本，再次测试，同样的结果，我都开始怀疑是不是idea版本的原因了~</p><hr><p>先去忙其他事情…</p><p>临近晚上…</p><hr><p>想着不解决心里不舒服，于是把原来下载的删去，又去下载一个低版本的，不过这次下载的是4.0版本(发现在结合spring boot有问题后修改成4.6)的。系统环境配置依旧。idea开启!</p><p><img src="http://image.xiaoxinyes.club/2019-01-13_190710.png" alt></p><hr><p>选择自动导入，和本地已有的gradle路径。<br><img src="http://image.xiaoxinyes.club/2019-01-13_191241.png" alt></p><hr><p>刷新，目录如下。<br><img src="http://image.xiaoxinyes.club/2019-01-13_191534.png" alt></p><hr><p>发现用了该版本，没有报错了，这里暂时不纠结确实是否版本的原因，有时间我下次再下载一个试试。</p><p>能够发现，没有呈现src目录，这里有两个方法解决。</p><hr><p><strong>方法一：</strong></p><p>file–&gt;settings<br><img src="http://image.xiaoxinyes.club/2019-01-13_192126.png" alt></p><p><strong>方法二：</strong></p><p>build.gradle添加下列代码</p><pre><code>task &quot;create-dirs&quot; &lt;&lt; {    sourceSets*.java.srcDirs*.each {        it.mkdirs()    }    sourceSets*.resources.srcDirs*.each{        it.midirs()    }}</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;gradle类似于maven，今天(以前的文章，不是当天哦)我下载配置完后发现了许多问题，导致纠结了许久。&lt;/p&gt;
-&lt;p&gt;下载官网：&lt;a href=&quot;http://services.gradle.org/distributions/&quot; target=&quot;_blank&quot; rel
       
     
     </summary>
