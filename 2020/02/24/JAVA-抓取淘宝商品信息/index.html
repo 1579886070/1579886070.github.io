@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]SpringBoot整合Jsp | 周信的博客</title>
+  <title>[JAVA]抓取淘宝商品信息 | 周信的博客</title>
   <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]SpringBoot整合Jsp | 周信的博客">
+  <meta name="description" content="[JAVA]抓取淘宝商品信息 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="解释在java中，反斜杠(\)是一个特殊的字符，作用为转义。  说明   字符 解释    常见的转义字符    \r 表示回车符号，光标在当前行的开头   \n 表示换行符号，到下一行的开头   \t 表示制表符号，同tab   \b 表示退格符号   含有特殊意义的转义字符    \‘ 表示单引号   \“ 表示双引号   \\ 表示字面意思上的\">
 <meta name="keywords" content="java">
@@ -858,9 +858,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-SpringBoot整合Jsp" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-JAVA-抓取淘宝商品信息" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]SpringBoot整合Jsp</h1>
+        <h1 class="article-title">[JAVA]抓取淘宝商品信息</h1>
     
     <div class="article-meta">
         
@@ -882,12 +882,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-24 00:42:47'>2019-10-24 00:41</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-24 11:37:53'>2020-02-24 11:26</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:583</span>
+        <span>字数:61</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -917,7 +917,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-首先idea快速构建一个springboot项目。"><span class="toc-text">1.首先idea快速构建一个springboot项目。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-配置视图解析"><span class="toc-text">2.配置视图解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-编写一个实体类，用户传数据。"><span class="toc-text">3.编写一个实体类，用户传数据。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-controller视图层"><span class="toc-text">4.controller视图层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-jsp页面的编写"><span class="toc-text">5.jsp页面的编写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-查看"><span class="toc-text">6.查看</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -933,149 +933,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>springboot并不推荐使用jsp，不推荐!<a id="more"></a></p>
-<h3 id="1-首先idea快速构建一个springboot项目。"><a href="#1-首先idea快速构建一个springboot项目。" class="headerlink" title="1.首先idea快速构建一个springboot项目。"></a>1.首先idea快速构建一个springboot项目。</h3><p>我们需要手动添加WEB-INF这些文件夹。</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-07_162623.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-07_162623.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<h3 id="2-配置视图解析"><a href="#2-配置视图解析" class="headerlink" title="2.配置视图解析"></a>2.配置视图解析</h3><p><span style="font-size: 10pt;">application.properties</span></p>
-<pre class="lang:default decode:true ">spring.mvc.view.prefix=/WEB-INF/jsp/
-spring.mvc.view.suffix=.jsp
-
-server.port=8081</pre>
-
-<hr>
-<p>&nbsp;</p>
-<h3 id="3-编写一个实体类，用户传数据。"><a href="#3-编写一个实体类，用户传数据。" class="headerlink" title="3.编写一个实体类，用户传数据。"></a>3.编写一个实体类，用户传数据。</h3><pre class="lang:java decode:true " title="Student.java">package xyz.xioaxin12.springboot.student;
-
-public class Student {
-    private Integer id;
-    private String name;
-    private int age;
-
-    public Student() {
-    }
-
-    public Student(Integer id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age='" + age + '\'' +
-                '}';
-    }
-}
-</pre>
-
-<hr>
-<p>&nbsp;</p>
-<h3 id="4-controller视图层"><a href="#4-controller视图层" class="headerlink" title="4.controller视图层"></a>4.controller视图层</h3><p>注意注解是@Controller,可以直接返回一个视图，由于已经设置了视图的”前后缀”，return便是返回到WEB-INF/jsp/index.jsp页面。</p>
-<pre class="lang:java decode:true " title="JspContreller.java">package xyz.xioaxin12.springboot.controller;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import xyz.xioaxin12.springboot.student.Student;
-
-import java.util.ArrayList;
-import java.util.List;
-
-@Controller
-public class JspContreller {
-
-    @RequestMapping("/show")
-    public String Show(Model model){
-        List&lt;Student&gt; students = new ArrayList&lt;&gt;();
-        students.add(new Student(1,"小信",33));
-        students.add(new Student(2,"小田",25));
-        students.add(new Student(3,"小夏",19));
-        students.add(new Student(4,"小方",23));
-
-        model.addAttribute("student",students);
-        return "index";
-    }
-
-}
-</pre>
-
-<hr>
-<p>&nbsp;</p>
-<h3 id="5-jsp页面的编写"><a href="#5-jsp页面的编写" class="headerlink" title="5.jsp页面的编写"></a>5.jsp页面的编写</h3><pre class="lang:default decode:true" title="index.jsp">&lt;%@ page contentType="text/html;charset=UTF-8" language="java" %&gt;
-&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Title&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;table border="1" width="600px" style="margin: auto;text-align: center"&gt;
-        &lt;tr&gt;
-            &lt;th&gt;id&lt;/th&gt;
-            &lt;th&gt;姓名&lt;/th&gt;
-            &lt;th&gt;年龄&lt;/th&gt;
-        &lt;/tr&gt;
-        &lt;c:forEach items="${student}" var="s"&gt;
-            &lt;tr&gt;
-                &lt;td&gt;${s.id}&lt;/td&gt;
-                &lt;td&gt;${s.name}&lt;/td&gt;
-                &lt;td&gt;${s.age}&lt;/td&gt;
-            &lt;/tr&gt;
-        &lt;/c:forEach&gt;
-    &lt;/table&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-<p>&nbsp;</p>
-<p>用到了jsp中的<span style="color: #ff0000;">jstl</span>，所以我们需要提前在pom.xml中引入下列依赖。</p>
-<pre class="lang:default decode:true " title="pom.xml">        &lt;!-- jstl --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
-            &lt;artifactId&gt;jstl&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-
-        &lt;!-- jasper --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt;
-            &lt;artifactId&gt;tomcat-embed-jasper&lt;/artifactId&gt;
-            &lt;scope&gt;provided&lt;/scope&gt;
-        &lt;/dependency&gt;</pre>
-
-<hr>
-<p>&nbsp;</p>
-<h3 id="6-查看"><a href="#6-查看" class="headerlink" title="6.查看"></a>6.查看</h3><p>浏览器地址：<a href="http://localhost:8081/show" target="_blank" rel="noopener">http://localhost:8081/show</a></p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-07_193614.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-07_193614.png" alt></a></p>
-<p>&nbsp;</p>
-<p><span style="color: #ff0000;">补充</span>：关于webapp文件的生成。idea在构建springboot项目中，是没有这个文件的，我们可以按照下图直接生成。</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-07_194025.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-07_194025.png" alt></a></p>
+        <p>空闲时间写了一个抓取淘宝商品信息的小demo。</p>
+<p>技术：java提供数据，thymeleaf渲染页面，可以一键下载所有图片保存到本地。</p>
+<p><strong>频繁访问的话，淘宝加了限制。</strong></p>
+<p>GitHub：<a href="https://github.com/1579886070/taobaoImage" target="_blank" rel="noopener">点击</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
@@ -1089,12 +950,12 @@ public class JspContreller {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]SpringBoot整合Jsp</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">583</span></p>
+    <p><span class="copy-title">文章标题:</span>[JAVA]抓取淘宝商品信息</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">61</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-24, 00:41:35</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-24, 00:42:47</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/24/JAVA-SpringBoot整合Jsp/" title="[JAVA]SpringBoot整合Jsp">http://zx21.xyz/2019/10/24/JAVA-SpringBoot整合Jsp/</a>
+    <p><span class="copy-title">发布时间:</span>2020-02-24, 11:26:50</p>
+    <p><span class="copy-title">最后更新:</span>2020-02-24, 11:37:53</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/24/JAVA-抓取淘宝商品信息/" title="[JAVA]抓取淘宝商品信息">http://zx21.xyz/2020/02/24/JAVA-抓取淘宝商品信息/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

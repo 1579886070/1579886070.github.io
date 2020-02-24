@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-02-15T07:10:33.254Z</updated>
+  <updated>2020-02-24T03:37:53.378Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[JAVA]抓取淘宝商品信息</title>
+    <link href="http://zx21.xyz/2020/02/24/JAVA-%E6%8A%93%E5%8F%96%E6%B7%98%E5%AE%9D%E5%95%86%E5%93%81%E4%BF%A1%E6%81%AF/"/>
+    <id>http://zx21.xyz/2020/02/24/JAVA-抓取淘宝商品信息/</id>
+    <published>2020-02-24T03:26:50.000Z</published>
+    <updated>2020-02-24T03:37:53.378Z</updated>
+    
+    <content type="html"><![CDATA[<p>空闲时间写了一个抓取淘宝商品信息的小demo。</p><p>技术：java提供数据，thymeleaf渲染页面，可以一键下载所有图片保存到本地。</p><p><strong>频繁访问的话，淘宝加了限制。</strong></p><p>GitHub：<a href="https://github.com/1579886070/taobaoImage" target="_blank" rel="noopener">点击</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;空闲时间写了一个抓取淘宝商品信息的小demo。&lt;/p&gt;
+&lt;p&gt;技术：java提供数据，thymeleaf渲染页面，可以一键下载所有图片保存到本地。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;频繁访问的话，淘宝加了限制。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;GitHub：&lt;a href=&quot;h
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>[Other]进制转换</title>
@@ -521,32 +550,6 @@
       
       
         &lt;h3 id=&quot;异常信息如下&quot;&gt;&lt;a href=&quot;#异常信息如下&quot; class=&quot;headerlink&quot; title=&quot;异常信息如下&quot;&gt;&lt;/a&gt;异常信息如下&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;java.sql.SQLNonTransientConnectionException: C
-      
-    
-    </summary>
-    
-    
-      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
-    
-    
-      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[ERROR]Mybaits传递多个参数</title>
-    <link href="http://zx21.xyz/2019/10/27/ERROR-Mybaits%E4%BC%A0%E9%80%92%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0/"/>
-    <id>http://zx21.xyz/2019/10/27/ERROR-Mybaits传递多个参数/</id>
-    <published>2019-10-27T01:34:00.000Z</published>
-    <updated>2019-10-27T01:36:18.300Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="异常信息如下："><a href="#异常信息如下：" class="headerlink" title="异常信息如下："></a>异常信息如下：</h3><pre><code>2019-02-13 19:33:46.931 ERROR 1992 --- [p-nio-80-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.binding.BindingException: Parameter &#39;username&#39; not found. Available parameters are [arg1, arg0, param1, param2]] with root causeorg.apache.ibatis.binding.BindingException: Parameter &#39;username&#39; not found. Available parameters are [arg1, arg0, param1, param2]</code></pre><p>image<br><img src="http://image.xiaoxinyes.club/Snipaste_2019-02-13_19-40-48.png" alt></p><hr><h3 id="原因在于用mybatis查询时，传递了两个参数。"><a href="#原因在于用mybatis查询时，传递了两个参数。" class="headerlink" title="原因在于用mybatis查询时，传递了两个参数。"></a>原因在于用mybatis查询时，传递了两个参数。</h3><pre><code>Blogger selectByNameAndPassword(String username, String password);</code></pre><p>而这样的话匹配不到，用注解@Param即可。</p><pre><code>Blogger selectByNameAndPassword(@Param(&quot;username&quot;)String username, @Param(&quot;password&quot;) String password)</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;异常信息如下：&quot;&gt;&lt;a href=&quot;#异常信息如下：&quot; class=&quot;headerlink&quot; title=&quot;异常信息如下：&quot;&gt;&lt;/a&gt;异常信息如下：&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;2019-02-13 19:33:46.931 ERROR 1992 --- [p-
       
     
     </summary>
