@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-02-24T03:37:53.378Z</updated>
+  <updated>2020-02-26T13:40:25.978Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[JAVA]easyexcel导出</title>
+    <link href="http://zx21.xyz/2020/02/26/JAVA-easyexcel%E5%AF%BC%E5%87%BA/"/>
+    <id>http://zx21.xyz/2020/02/26/JAVA-easyexcel导出/</id>
+    <published>2020-02-26T13:29:59.000Z</published>
+    <updated>2020-02-26T13:40:25.978Z</updated>
+    
+    <content type="html"><![CDATA[<p>阿里的表格工具，简单了解了一下。</p><h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><pre><code>&lt;dependency&gt;    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;    &lt;artifactId&gt;easyexcel&lt;/artifactId&gt;    &lt;version&gt;2.1.2&lt;/version&gt;&lt;/dependency&gt;</code></pre><hr><h2 id="新增一个实体类"><a href="#新增一个实体类" class="headerlink" title="新增一个实体类"></a>新增一个实体类</h2><pre><code>@Data@ContentRowHeight()@HeadRowHeight()@ColumnWidth()public class Student {    @ExcelProperty(&quot;学生姓名&quot;)    private String name;    @ExcelProperty(&quot;学生年龄&quot;)    private int age;    @ExcelProperty(value = &quot;性别&quot;)    private String sex;    @DateTimeFormat(&quot;yyyy年MM月dd日HH时mm分ss秒&quot;)    @ExcelProperty(value = &quot;日期&quot;,index = 5)    private Date date;}</code></pre><p><strong>解释：</strong></p><p>@Data：lombok的注解，可以省略@get/@set等等。</p><p>@ContentRowHeight()/@HeadRowHeight()/@ColumnWidth()：可修改列宽、行高。</p><p>@ExcelProperty：定义列名称或者index位置，默认0开始。</p><p>@DateTimeFormat：日期转换</p><hr><h2 id="ExcelTest-java"><a href="#ExcelTest-java" class="headerlink" title="ExcelTest.java"></a>ExcelTest.java</h2><pre><code>@RunWith(SpringRunner.class)@SpringBootTestpublic class ExcelTest {    /**     * 最简单的导出     */    @Test    public void simpleWrite01() throws IOException {        // 写法1        String fileName = (new File(&quot;&quot;).getCanonicalPath()) + &quot;/simpleWrite&quot; + System.currentTimeMillis() + &quot;.xlsx&quot;;        // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭        // 如果这里想使用03 则 传入excelType参数即可        EasyExcel.write(fileName, Student.class).sheet(&quot;模板&quot;).doWrite(getData());        // 写法2/*        fileName = (new File(&quot;&quot;).getCanonicalPath()) + &quot;/simpleWrite&quot; + System.currentTimeMillis() + &quot;.xlsx&quot;;        // 这里 需要指定写用哪个class去写        ExcelWriter excelWriter = EasyExcel.write(fileName, Student.class).build();        WriteSheet writeSheet = EasyExcel.writerSheet(&quot;模板&quot;).build();        excelWriter.write(getData(), writeSheet);        // 千万别忘记finish 会帮忙关闭流        excelWriter.finish();*/    }    /**     * 指定列名导出     */    @Test    public void simpleWrite02() throws IOException {        String fileName = (new File(&quot;&quot;).getCanonicalPath()) + &quot;/simpleWrite&quot; + System.currentTimeMillis() + &quot;.xlsx&quot;;        // 根据用户传入字段 假设我们要忽略 date        Set&lt;String&gt; columnFiledNames = new HashSet&lt;String&gt;();        columnFiledNames.add(&quot;age&quot;);        columnFiledNames.add(&quot;sex&quot;);        //1、需要忽略的列名//        EasyExcel.write(fileName, Student.class).excludeColumnFiledNames(columnFiledNames).sheet(&quot;模板&quot;).doWrite(getData());        //2、需要保留的列名        EasyExcel.write(fileName, Student.class).includeColumnFiledNames(columnFiledNames).sheet(&quot;模板&quot;).doWrite(getData());    }    private List&lt;Student&gt; getData() {        List&lt;Student&gt; list = new ArrayList&lt;&gt;();        for (int i = 0; i &lt; 10; i++) {            Student student = new Student();            student.setName(&quot;小信&quot; + i);            student.setAge(22);            student.setSex(&quot;男&quot;);            student.setDate(new Date());            list.add(student);        }        return list;    }}</code></pre><hr><h2 id="web下载导出"><a href="#web下载导出" class="headerlink" title="web下载导出"></a>web下载导出</h2><pre><code>@RestControllerpublic class WebExcelTest {    /**     * web中写入     */    @GetMapping(&quot;get&quot;)    public void getExcel(HttpServletResponse response) {        try {            response.setContentType(&quot;application/vnd.ms-excel&quot;);            response.setCharacterEncoding(&quot;utf-8&quot;);            response.setHeader(&quot;Content-disposition&quot;, &quot;attachment;filename=&quot; + System.currentTimeMillis() + &quot;.xlsx&quot;);            // 这里需要设置不关闭流            EasyExcel.write(response.getOutputStream(), Student.class).autoCloseStream(Boolean.FALSE).sheet(&quot;模板&quot;)                    .doWrite(getData());        } catch (IOException e) {            e.printStackTrace();        }    }    private List&lt;Student&gt; getData() {        List&lt;Student&gt; list = new ArrayList&lt;&gt;();        for (int i = 0; i &lt; 10; i++) {            Student student = new Student();            student.setName(&quot;小信&quot; + i);            student.setAge(22);            student.setSex(&quot;男&quot;);            student.setDate(new Date());            list.add(student);        }        return list;    }</code></pre><hr><p><strong>官方文档：<a href="https://alibaba-easyexcel.github.io/quickstart/write.html" target="_blank" rel="noopener">点击</a></strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;阿里的表格工具，简单了解了一下。&lt;/p&gt;
+&lt;h2 id=&quot;依赖&quot;&gt;&lt;a href=&quot;#依赖&quot; class=&quot;headerlink&quot; title=&quot;依赖&quot;&gt;&lt;/a&gt;依赖&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>[JAVA]抓取淘宝商品信息</title>
@@ -533,32 +561,6 @@
     
     
       <category term="java" scheme="http://zx21.xyz/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[ERROR]SpringBoot+Mybatis一个错误</title>
-    <link href="http://zx21.xyz/2019/10/27/ERROR-SpringBoot-Mybatis%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF/"/>
-    <id>http://zx21.xyz/2019/10/27/ERROR-SpringBoot-Mybatis一个错误/</id>
-    <published>2019-10-27T01:37:46.000Z</published>
-    <updated>2019-10-27T01:40:11.166Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="异常信息如下"><a href="#异常信息如下" class="headerlink" title="异常信息如下"></a>异常信息如下</h3><pre><code>java.sql.SQLNonTransientConnectionException: CLIENT_PLUGIN_AUTH is required</code></pre><p>image<br><img src="http://image.xiaoxinyes.club/Snipaste_2019-02-13_19-50-35.png" alt></p><hr><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>降低mysql-connector-java的版本即可，我自己试了下5.x的似乎都没问题。</p><h4 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h4><p>将pom.xml中的jdbc数据库驱动修改下。<br>原</p><pre><code> &lt;dependency&gt;    &lt;groupId&gt;mysql&lt;/groupId&gt;    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;    &lt;scope&gt;provided&lt;/scope&gt;&lt;/dependency&gt;</code></pre><p>修改为</p><pre><code> &lt;dependency&gt;    &lt;groupId&gt;mysql&lt;/groupId&gt;    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;    &lt;version&gt;5.1.25&lt;/version&gt;&lt;/dependency&gt;</code></pre><h4 id="关于application-properties配置修改"><a href="#关于application-properties配置修改" class="headerlink" title="关于application.properties配置修改"></a>关于application.properties配置修改</h4><p>原来(mysql6版本以上)</p><pre><code>spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver</code></pre><p>修改为(mysql5)</p><pre><code>spring.datasource.driver-class-name=com.mysql.jdbc.Driver</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;异常信息如下&quot;&gt;&lt;a href=&quot;#异常信息如下&quot; class=&quot;headerlink&quot; title=&quot;异常信息如下&quot;&gt;&lt;/a&gt;异常信息如下&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;java.sql.SQLNonTransientConnectionException: C
-      
-    
-    </summary>
-    
-    
-      <category term="ERROR" scheme="http://zx21.xyz/categories/ERROR/"/>
-    
-    
-      <category term="error" scheme="http://zx21.xyz/tags/error/"/>
     
   </entry>
   
