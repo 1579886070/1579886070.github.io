@@ -1,7 +1,7 @@
 ---
-title: '[Ohter]IDEA上传github'
+title: '[Other]IDEA上传github'
 date: 2019-10-11 20:20:43
-categories: Ohter
+categories: Other
 tags: github
 ---
 

@@ -1,7 +1,7 @@
 ---
-title: '[Ohter]重装系统后恢复Hexo博客'
+title: '[Other]重装系统后恢复Hexo博客'
 date: 2019-12-20 11:15:25
-categories: Ohter
+categories: Other
 tags: github
 ---
 

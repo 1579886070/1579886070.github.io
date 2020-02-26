@@ -1,7 +1,7 @@
 ---
-title: '[Ohter]github修改显示语言'
+title: '[Other]github修改显示语言'
 date: 2019-10-11 20:24:16
-categories: Ohter
+categories: Other
 tags: github
 ---
 
