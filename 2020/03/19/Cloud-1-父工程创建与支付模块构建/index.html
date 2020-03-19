@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[Angular]表单及双向数据绑定 | 周信的博客</title>
-  <meta name="keywords" content=" Angular ">
-  <meta name="description" content="[Angular]表单及双向数据绑定 | 周信的博客">
+  <title>[Cloud]1-父工程创建与支付模块构建 | 周信的博客</title>
+  <meta name="keywords" content=" SptingCloud ">
+  <meta name="description" content="[Cloud]1-父工程创建与支付模块构建 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -878,9 +878,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Angular-表单及双向数据绑定" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cloud-1-父工程创建与支付模块构建" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[Angular]表单及双向数据绑定</h1>
+        <h1 class="article-title">[Cloud]1-父工程创建与支付模块构建</h1>
     
     <div class="article-meta">
         
@@ -888,26 +888,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Web">Web</a>
+                <a href="javascript:" data-rel="JAVA">JAVA</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">Angular</a>
+            <a href="javascript:" class="color2">SptingCloud</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-12 21:00:47'>2020-02-12 20:43</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-19 15:49:15'>2020-03-19 13:28</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:475</span>
+        <span>字数:2k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -937,7 +937,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入表单相关模块"><span class="toc-text">引入表单相关模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建一个form组件"><span class="toc-text">新建一个form组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写页面"><span class="toc-text">编写页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css样式"><span class="toc-text">css样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块代码"><span class="toc-text">模块代码</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#工程步骤"><span class="toc-text">工程步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目创建"><span class="toc-text">项目创建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#idea创建project工作空间"><span class="toc-text">idea创建project工作空间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#本章模块"><span class="toc-text">本章模块</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#构建步骤"><span class="toc-text">构建步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建-cloud-provider-payment8001-模块"><span class="toc-text">创建 cloud-provider-payment8001 模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建数据库"><span class="toc-text">建数据库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编码"><span class="toc-text">编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据封装体CommonResult"><span class="toc-text">数据封装体CommonResult</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#contorller"><span class="toc-text">contorller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#service"><span class="toc-text">service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#impl"><span class="toc-text">impl</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dao"><span class="toc-text">dao</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dao映射的xml"><span class="toc-text">dao映射的xml</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#postman接口测试"><span class="toc-text">postman接口测试</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -953,115 +953,374 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="引入表单相关模块"><a href="#引入表单相关模块" class="headerlink" title="引入表单相关模块"></a>引入表单相关模块</h2><p>引入表单相关模块，才可以使用双向数据绑定。</p>
-<p>app.module.ts</p>
-<pre><code>//引入表单相关模块
-import { FormsModule } from &#39;@angular/forms&#39;;</code></pre><h2 id="新建一个form组件"><a href="#新建一个form组件" class="headerlink" title="新建一个form组件"></a>新建一个form组件</h2><pre><code>ng g component components/form</code></pre><h2 id="编写页面"><a href="#编写页面" class="headerlink" title="编写页面"></a>编写页面</h2><p>form.component.html</p>
-<pre><code>&lt;h2&gt;表单演示&lt;/h2&gt;
+        <p><strong>约定 &gt; 配置 &gt; 编码</strong></p>
+<hr>
+<h1 id="工程步骤"><a href="#工程步骤" class="headerlink" title="工程步骤"></a>工程步骤</h1><pre><code>1、New Project
+2、聚合总父工程名字
+3、Maven选版本
+4、工程名字
+5、字符编码-UTF-8
+6、注解生效激活
+7、java编译版本选择8
+8、File Type过滤(可选)</code></pre><h1 id="项目创建"><a href="#项目创建" class="headerlink" title="项目创建"></a>项目创建</h1><h2 id="idea创建project工作空间"><a href="#idea创建project工作空间" class="headerlink" title="idea创建project工作空间"></a>idea创建project工作空间</h2><p>新建一个maven工程，工程名：cloud2020,删除src目录，只留下pom。<br>修改pom.xml</p>
+<pre><code>&lt;packaging&gt;pom&lt;/packaging&gt;</code></pre><p>完整的pom</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 
-&lt;div class=&quot;form&quot;&gt;
-    &lt;ul&gt;
-        &lt;li&gt;
-            姓名：&lt;input type=&quot;text&quot; [(ngModel)]=&quot;formInfo.inputValue&quot; /&gt;
-        &lt;/li&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-        &lt;li&gt;
-            性别：
-            &lt;input type=&quot;radio&quot; value=&quot;1&quot; name=&quot;sex&quot; id=&quot;sex1&quot; [(ngModel)]=&quot;formInfo.sex&quot;&gt;&lt;label for=&quot;sex1&quot;&gt; 男&lt;/label&gt;
-            &lt;input type=&quot;radio&quot; value=&quot;2&quot; name=&quot;sex&quot; id=&quot;sex2&quot; [(ngModel)]=&quot;formInfo.sex&quot;&gt;&lt;label for=&quot;sex2&quot;&gt; 女&lt;/label&gt;
-        &lt;/li&gt;
+  &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;
+  &lt;artifactId&gt;cloud2020&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;pom&lt;/packaging&gt;
 
-        &lt;li&gt;
-            城市：
-            &lt;select [(ngModel)]=&quot;formInfo.defaultCity&quot;&gt;
-                &lt;option *ngFor=&quot;let item of formInfo.city&quot; [value]=&quot;item&quot;&gt;{{item}}&lt;/option&gt;
-            &lt;/select&gt;
-        &lt;/li&gt;
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;junit.version&gt;4.12&lt;/junit.version&gt;
+    &lt;log4j.version&gt;1.2.17&lt;/log4j.version&gt;
+    &lt;lombok.version&gt;1.16.18&lt;/lombok.version&gt;
+    &lt;mysql.version&gt;5.1.47&lt;/mysql.version&gt;
+    &lt;druid.version&gt;1.1.16&lt;/druid.version&gt;
+    &lt;mybatis.spring.boot.version&gt;1.3.2&lt;/mybatis.spring.boot.version&gt;
+  &lt;/properties&gt;
 
-        &lt;li&gt;
-            爱好：
-            &lt;span *ngFor=&quot;let item of formInfo.hobby;let key=index;&quot;&gt;
-                &lt;input type=&quot;checkbox&quot; [id]=&quot;&#39;check&#39;+key&quot; [(ngModel)]=&quot;item.cheked&quot;/&gt;&lt;label [for]=&quot;&#39;check&#39;+key&quot;&gt; {{item.title}}&lt;/label&gt;
-            &lt;/span&gt;
+  &lt;!-- 子模块继承之后，提供作用：锁定版本+子模块不用写groupId和version  --&gt;
+  &lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+      &lt;!--  springboot 2.2.2    --&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;
+        &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;
+        &lt;type&gt;pom&lt;/type&gt;
+        &lt;scope&gt;import&lt;/scope&gt;
+      &lt;/dependency&gt;
+      &lt;!--  springcloud cloud Hoxton.SR1   --&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
+        &lt;version&gt;Hoxton.SR1&lt;/version&gt;
+        &lt;type&gt;pom&lt;/type&gt;
+        &lt;scope&gt;import&lt;/scope&gt;
+      &lt;/dependency&gt;
+      &lt;!--  springcloud cloud alibaba 2.1.0.RELEASE    --&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;
+        &lt;version&gt;2.1.0.RELEASE&lt;/version&gt;
+        &lt;type&gt;pom&lt;/type&gt;
+        &lt;scope&gt;import&lt;/scope&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;version&gt;${mysql.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+        &lt;artifactId&gt;druid&lt;/artifactId&gt;
+        &lt;version&gt;${druid.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;${mybatis.spring.boot.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+        &lt;version&gt;${log4j.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;${junit.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+        &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+        &lt;version&gt;${lombok.version}&lt;/version&gt;
+        &lt;optional&gt;true&lt;/optional&gt;
+      &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+  &lt;/dependencyManagement&gt;
 
-        &lt;/li&gt;
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+        &lt;configuration&gt;
+          &lt;fork&gt;true&lt;/fork&gt;
+          &lt;addResources&gt;true&lt;/addResources&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
 
-        &lt;li&gt;
-            &lt;textarea name=&quot;mark&quot; id=&quot;&quot; cols=&quot;30&quot; rows=&quot;10&quot; [(ngModel)]=&quot;formInfo.mark&quot;&gt;&lt;/textarea&gt;
-        &lt;/li&gt;
-    &lt;/ul&gt;
+&lt;/project&gt;</code></pre><hr>
+<h1 id="本章模块"><a href="#本章模块" class="headerlink" title="本章模块"></a>本章模块</h1><p>order(客户端消费者80) -&gt; payment(微服务提供者8001)</p>
+<hr>
+<h2 id="构建步骤"><a href="#构建步骤" class="headerlink" title="构建步骤"></a>构建步骤</h2><pre><code>1、建module
+2、改pom
+3、写yml
+4、主启动
+5、业务类</code></pre><h3 id="创建-cloud-provider-payment8001-模块"><a href="#创建-cloud-provider-payment8001-模块" class="headerlink" title="创建 cloud-provider-payment8001 模块"></a>创建 cloud-provider-payment8001 模块</h3><p>pom.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;cloud2020&lt;/artifactId&gt;
+        &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-    &lt;button (click)=&quot;dosubmit()&quot;&gt;获取内容&lt;/button&gt;
+    &lt;artifactId&gt;cloud-provider-payment8001&lt;/artifactId&gt;
 
-    &lt;br /&gt;
 
-    &lt;pre&gt;
-        {{formInfo|json}}
-    &lt;/pre&gt;
-&lt;/div&gt;</code></pre><h2 id="css样式"><a href="#css样式" class="headerlink" title="css样式"></a>css样式</h2><p>form.component.css</p>
-<pre><code>h2{
-    text-align: center;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
+            &lt;version&gt;1.1.10&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+&lt;/project&gt;</code></pre><h2 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h2><pre><code>server:
+  port: 8001
+
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db2019?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
+    username: root
+    password: 123456
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.com.springcloud.entities</code></pre><h2 id="建数据库"><a href="#建数据库" class="headerlink" title="建数据库"></a>建数据库</h2><p>db2019<br>sql如下</p>
+<pre><code>CREATE TABLE `payment` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;ID&#39;,
+  `serial` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</code></pre><hr>
+<h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><p>实体类Payment</p>
+<pre><code>package xyz.zx21.springcloud.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:20
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Payment implements Serializable {
+    private Long id;
+    private String serial;
 }
+</code></pre><h2 id="数据封装体CommonResult"><a href="#数据封装体CommonResult" class="headerlink" title="数据封装体CommonResult"></a>数据封装体CommonResult</h2><p>用于给前端返回统一格式的数据</p>
+<pre><code>package xyz.zx21.springcloud.entities;
 
-.form{
-    width: 400px;
-    margin: auto;
-    border: 2px solid #000;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:24
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CommonResult&lt;T&gt; {
+    private Integer code;
+    private String message;
+    private T data;
+
+    public CommonResult(Integer code, String message) {
+        this(code, message, null);
+    }
+}</code></pre><h2 id="contorller"><a href="#contorller" class="headerlink" title="contorller"></a>contorller</h2><pre><code>package xyz.zx21.springcloud.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+import xyz.zx21.springcloud.entities.CommonResult;
+import xyz.zx21.springcloud.entities.Payment;
+import xyz.zx21.springcloud.service.PaymentService;
+
+import javax.annotation.Resource;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:28
+ */
+@RestController
+@Slf4j
+public class PaymentController {
+    @Resource
+    private PaymentService paymentService;
+
+    @PostMapping(value = &quot;/payment/create&quot;)
+    public CommonResult create(Payment payment) {
+        int result = paymentService.create(payment);
+        log.info(&quot;插入结果:&quot; + result);
+        if (result &gt; 0) {
+            return new CommonResult(200, &quot;插入成功&quot;, result);
+        } else {
+            return new CommonResult(444, &quot;插入失败&quot;, null);
+        }
+    }
+
+    @GetMapping(value = &quot;/payment/get/{id}&quot;)
+    public CommonResult getPaymentById(@PathVariable(&quot;id&quot;) Long id) {
+        Payment paymentById = paymentService.getPaymentById(id);
+        log.info(&quot;查询结果:&quot; + paymentById);
+        if (paymentById != null) {
+            return new CommonResult(200, &quot;查询成功&quot;, paymentById);
+        } else {
+            return new CommonResult(444, &quot;没有对应记录，查询id:&quot; + id, null);
+        }
+    }
 }
+</code></pre><h2 id="service"><a href="#service" class="headerlink" title="service"></a>service</h2><pre><code>package xyz.zx21.springcloud.service;
 
-button{
-    width: 100px;
-    float: right;
+import xyz.zx21.springcloud.entities.Payment;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:32
+ */
+public interface PaymentService {
+    int create(Payment payment);
+
+    Payment getPaymentById(Long id);
 }
+</code></pre><h2 id="impl"><a href="#impl" class="headerlink" title="impl"></a>impl</h2><pre><code>package xyz.zx21.springcloud.service.impl;
 
-ul{
-    list-style-type: none;
+import org.springframework.stereotype.Service;
+import xyz.zx21.springcloud.dao.PaymentDao;
+import xyz.zx21.springcloud.entities.Payment;
+import xyz.zx21.springcloud.service.PaymentService;
+
+import javax.annotation.Resource;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:33
+ */
+@Service
+public class PaymentServiceImpl implements PaymentService {
+
+    @Resource
+    private PaymentDao paymentDao;
+
+    @Override
+    public int create(Payment payment) {
+        return paymentDao.create(payment);
+    }
+
+    @Override
+    public Payment getPaymentById(Long id) {
+        return paymentDao.getPaymentById(id);
+    }
 }
+</code></pre><h2 id="dao"><a href="#dao" class="headerlink" title="dao"></a>dao</h2><pre><code>package xyz.zx21.springcloud.dao;
 
-li{
-    line-height: 50px;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import xyz.zx21.springcloud.entities.Payment;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:34
+ */
+@Mapper
+public interface PaymentDao {
+    int create(Payment payment);
+
+    Payment getPaymentById(@Param(&quot;id&quot;) Long id);
 }
-</code></pre><h2 id="模块代码"><a href="#模块代码" class="headerlink" title="模块代码"></a>模块代码</h2><p>form.component.ts</p>
-<pre><code>import { Component, OnInit } from &#39;@angular/core&#39;;
-
-@Component({
-  selector: &#39;app-form&#39;,
-  templateUrl: &#39;./form.component.html&#39;,
-  styleUrls: [&#39;./form.component.css&#39;]
-})
-export class FormComponent implements OnInit {
-  public citys: any[] = [&#39;长沙&#39;, &#39;杭州&#39;, &#39;苏州&#39;];
-
-  public formInfo: any = {
-    inputValue: &#39;&#39;,
-    sex: &#39;1&#39;,
-    city: this.citys,
-    defaultCity:this.citys[0],
-
-    hobby:[{
-      title:&#39;画画&#39;,
-      cheked:false
-    },{
-      title:&#39;弹吉他&#39;,
-      cheked:false
-    },{
-      title:&#39;运动&#39;,
-      cheked:false
-    },],
-
-    mark:&#39;&#39;
-  }
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  dosubmit() {
-      console.log(this.formInfo);
-  }
-}
-</code></pre>
+</code></pre><h2 id="dao映射的xml"><a href="#dao映射的xml" class="headerlink" title="dao映射的xml"></a>dao映射的xml</h2><p>在resources下新建mapper文件夹<br>PaymentMapper.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;xyz.zx21.springcloud.dao.PaymentDao&quot;&gt;
+    &lt;insert id=&quot;create&quot; parameterType=&quot;xyz.zx21.springcloud.entities.Payment&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;id&quot;&gt;
+        insert into payment(serial) values(#{serial});
+    &lt;/insert&gt;
+    &lt;resultMap id=&quot;BaseResultMap&quot; type=&quot;xyz.zx21.springcloud.entities.Payment&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot; jdbcType=&quot;BIGINT&quot;&gt;&lt;/id&gt;
+        &lt;id column=&quot;serial&quot; property=&quot;serial&quot; jdbcType=&quot;VARCHAR&quot;&gt;&lt;/id&gt;
+    &lt;/resultMap&gt;
+    &lt;select id=&quot;getPaymentById&quot; parameterType=&quot;java.lang.Long&quot; resultMap=&quot;BaseResultMap&quot;&gt;
+        select * from payment where id = #{id};
+    &lt;/select&gt;
+&lt;/mapper&gt;</code></pre><hr>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><h2 id="postman接口测试"><a href="#postman接口测试" class="headerlink" title="postman接口测试"></a>postman接口测试</h2><p>get<br>url：<a href="http://127.0.0.1:8001/payment/get/1" target="_blank" rel="noopener">http://127.0.0.1:8001/payment/get/1</a></p>
+<p>返回：</p>
+<pre><code>{
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;查询成功&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;serial&quot;: &quot;小信&quot;
+    }
+}</code></pre><p>post<br>url：<a href="http://127.0.0.1:8001/payment/create?serial=测试" target="_blank" rel="noopener">http://127.0.0.1:8001/payment/create?serial=测试</a></p>
+<p>返回：</p>
+<pre><code>{
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;插入成功&quot;,
+    &quot;data&quot;: 1
+}</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -1074,12 +1333,12 @@ export class FormComponent implements OnInit {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[Angular]表单及双向数据绑定</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">475</span></p>
+    <p><span class="copy-title">文章标题:</span>[Cloud]1-父工程创建与支付模块构建</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">2k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-02-12, 20:43:47</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-12, 21:00:47</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/02/12/Angular-表单及双向数据绑定/" title="[Angular]表单及双向数据绑定">http://zx21.xyz/2020/02/12/Angular-表单及双向数据绑定/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-19, 13:28:06</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-19, 15:49:15</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/19/Cloud-1-父工程创建与支付模块构建/" title="[Cloud]1-父工程创建与支付模块构建">http://zx21.xyz/2020/03/19/Cloud-1-父工程创建与支付模块构建/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
