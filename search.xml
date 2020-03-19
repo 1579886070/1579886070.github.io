@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>[Cloud]2-支付模块与工程重构</title>
+      <link href="/2020/03/19/Cloud-2-%E6%94%AF%E4%BB%98%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%B7%A5%E7%A8%8B%E9%87%8D%E6%9E%84/"/>
+      <url>/2020/03/19/Cloud-2-%E6%94%AF%E4%BB%98%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%B7%A5%E7%A8%8B%E9%87%8D%E6%9E%84/</url>
+      
+        <content type="html"><![CDATA[<p><strong>创建消费者模块cloud-comsumer-order80调用上篇文章的支付模块cloud-provider-payment8001。</strong></p><h1 id="构建步骤"><a href="#构建步骤" class="headerlink" title="构建步骤"></a>构建步骤</h1><pre><code>1、建module2、改pom3、写yml4、主启动5、业务类</code></pre><h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h2 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h2><pre><code>server:  port: 80</code></pre><h2 id="主启动类"><a href="#主启动类" class="headerlink" title="主启动类"></a>主启动类</h2><pre><code>package xyz.zx21.springcloud;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;/** * @author Administrator * @date 2020/3/19 15:53 */@SpringBootApplicationpublic class OrderMain80 {    public static void main(String[] args) {        SpringApplication.run(OrderMain80.class, args);    }}</code></pre><h2 id="业务类"><a href="#业务类" class="headerlink" title="业务类"></a>业务类</h2><p><strong>注入RestTemplate，文档地址</strong>：<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html" target="_blank" rel="noopener">点击访问</a></p><pre><code>package xyz.zx21.springcloud.config;import org.springframework.context.annotation.Bean;import org.springframework.context.annotation.Configuration;import org.springframework.web.client.RestTemplate;/** * @author Administrator * @date 2020/3/19 16:39 */@Configurationpublic class ApplicationContextConfig {    /**     * //appLicationcontext.xml &lt;bean id=&quot;&quot;class=&quot;&quot;&gt;     *     */    @Bean    public RestTemplate getRestTemplate() {        return new RestTemplate();    }}</code></pre><h2 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h2><pre><code>package xyz.zx21.springcloud.controller;import lombok.extern.slf4j.Slf4j;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PathVariable;import org.springframework.web.bind.annotation.RestController;import org.springframework.web.client.RestTemplate;import xyz.zx21.springcloud.entities.CommonResult;import xyz.zx21.springcloud.entities.Payment;import javax.annotation.Resource;/** * @author Administrator * @date 2020/3/19 16:37 */@RestController@Slf4jpublic class OrderController {    public static final String PAYMENT_URL = &quot;http://localhost:8001&quot;;    @Resource    private RestTemplate restTemplate;    @GetMapping(&quot;/consumer/payment/create&quot;)    public CommonResult&lt;Payment&gt; create(Payment payment) {        return restTemplate.postForObject(PAYMENT_URL + &quot;/payment/create&quot;, payment, CommonResult.class);    }    @GetMapping(&quot;/consumer/payment/get/{id}&quot;)    public CommonResult&lt;Payment&gt; getPayment(@PathVariable(&quot;id&quot;) Long id) {        return restTemplate.getForObject(PAYMENT_URL + &quot;/payment/get/&quot; + id, CommonResult.class);    }}</code></pre><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>启动PaymentMain8001和OrderMain80，测试OrderMain80调用PaymentMain8001服务。</p><hr><h1 id="工程重构"><a href="#工程重构" class="headerlink" title="工程重构"></a>工程重构</h1><p><strong>将多余的代码，单独放到一个模块，提供给各个服务，避免冗余，比如实体类</strong></p><h2 id="新建cloud-api-commons模块"><a href="#新建cloud-api-commons模块" class="headerlink" title="新建cloud-api-commons模块"></a>新建cloud-api-commons模块</h2><p>pom.xml</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;    &lt;parent&gt;        &lt;artifactId&gt;cloud2020&lt;/artifactId&gt;        &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;    &lt;/parent&gt;    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;    &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;    &lt;dependencies&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;            &lt;scope&gt;runtime&lt;/scope&gt;            &lt;optional&gt;true&lt;/optional&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;            &lt;artifactId&gt;lombok&lt;/artifactId&gt;            &lt;!--        当optional为true则说明该依赖禁止依赖传递    &lt;optional&gt;true&lt;/optional&gt;--&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;cn.hutool&lt;/groupId&gt;            &lt;artifactId&gt;hutool-all&lt;/artifactId&gt;            &lt;version&gt;5.1.1&lt;/version&gt;        &lt;/dependency&gt;    &lt;/dependencies&gt;&lt;/project&gt;</code></pre><h2 id="将其他服务的实体类拷贝"><a href="#将其他服务的实体类拷贝" class="headerlink" title="将其他服务的实体类拷贝"></a>将其他服务的实体类拷贝</h2><h2 id="maven-clean-install-安装"><a href="#maven-clean-install-安装" class="headerlink" title="maven clean install 安装"></a>maven clean install 安装</h2><h2 id="删除其他模块下的实体包"><a href="#删除其他模块下的实体包" class="headerlink" title="删除其他模块下的实体包"></a>删除其他模块下的实体包</h2><h2 id="新增依赖"><a href="#新增依赖" class="headerlink" title="新增依赖"></a>新增依赖</h2><pre><code>&lt;dependency&gt;    &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;    &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;&lt;/dependency&gt;</code></pre><hr><h1 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h1><p>关于调用/consumer/payment/create接口，插入数据为null的情况，需要在cloud-provider-payment8001服务对应的controller添加@RequestBody注解</p><pre><code>@PostMapping(value = &quot;/payment/create&quot;)public CommonResult create(@RequestBody Payment payment) {...}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> JAVA </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringCloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[Cloud]1-父工程创建与支付模块构建</title>
       <link href="/2020/03/19/Cloud-1-%E7%88%B6%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA%E4%B8%8E%E6%94%AF%E4%BB%98%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA/"/>
       <url>/2020/03/19/Cloud-1-%E7%88%B6%E5%B7%A5%E7%A8%8B%E5%88%9B%E5%BB%BA%E4%B8%8E%E6%94%AF%E4%BB%98%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA/</url>
@@ -20,7 +45,7 @@
       
         <tags>
             
-            <tag> SptingCloud </tag>
+            <tag> SpringCloud </tag>
             
         </tags>
       

@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]SpringBoot整合Servlet | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]SpringBoot整合Servlet | 周信的博客">
+  <title>[Cloud]2-支付模块与工程重构 | 周信的博客</title>
+  <meta name="keywords" content=" SpringCloud ">
+  <meta name="description" content="[Cloud]2-支付模块与工程重构 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -886,9 +886,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-SpringBoot整合Servlet" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cloud-2-支付模块与工程重构" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]SpringBoot整合Servlet</h1>
+        <h1 class="article-title">[Cloud]2-支付模块与工程重构</h1>
     
     <div class="article-meta">
         
@@ -903,19 +903,19 @@
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color2">SpringCloud</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-22 22:35:20'>2019-10-22 22:34</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-19 17:08:46'>2020-03-19 16:29</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:477</span>
+        <span>字数:691</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -945,7 +945,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-注解扫描"><span class="toc-text">1.注解扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-通过编写一个方法"><span class="toc-text">2.通过编写一个方法</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#构建步骤"><span class="toc-text">构建步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编码"><span class="toc-text">编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主启动类"><span class="toc-text">主启动类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务类"><span class="toc-text">业务类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#controller"><span class="toc-text">controller</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#工程重构"><span class="toc-text">工程重构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#新建cloud-api-commons模块"><span class="toc-text">新建cloud-api-commons模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将其他服务的实体类拷贝"><span class="toc-text">将其他服务的实体类拷贝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#maven-clean-install-安装"><span class="toc-text">maven clean install 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除其他模块下的实体包"><span class="toc-text">删除其他模块下的实体包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新增依赖"><span class="toc-text">新增依赖</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TIPS"><span class="toc-text">TIPS</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -961,123 +961,126 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Spring Boot整合Servlet有两种方式。<a id="more"></a></p>
-<p>1.通过注解扫描.</p>
-<p>2.通过编写一个方法.</p>
-<p>&nbsp;</p>
-<h2 id="1-注解扫描"><a href="#1-注解扫描" class="headerlink" title="1.注解扫描"></a>1.注解扫描</h2><p>以前我们在web写select，需要在web.xml配置&lt;servlet&gt;&lt;/servlet&gt;和&lt;servlet-mapping&gt;&lt;/servlet-mapping&gt;等信息。那么使用springboot不必了。</p>
-<p><span style="font-size: 10pt;">AnnotationServlet.java</span></p>
-<p>这里我们设置的路径是/hello</p>
-<pre class="lang:java decode:true" title="AnnotationServlet">package xyz.xioaxin12.springboot01servlet.servlet;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-@WebServlet(name="AnnotationServlet",urlPatterns = "/hello")
-public class AnnotationServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=utf-8");
-        resp.getWriter().append("这是springboot整合servlet注解的方式!");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
-}
-</pre>
-<p>&nbsp;</p>
-<p><span style="font-size: 10pt;">SpringBoot01ServletApplication.java</span></p>
-<p>启动类，这里能看到加了@ServletComponentScan注解，它会自动注册带有@WebServlet的注解。</p>
-<pre class="lang:default decode:true">package xyz.xioaxin12.springboot01servlet;
+        <p><strong>创建消费者模块cloud-comsumer-order80调用上篇文章的支付模块cloud-provider-payment8001。</strong></p>
+<h1 id="构建步骤"><a href="#构建步骤" class="headerlink" title="构建步骤"></a>构建步骤</h1><pre><code>1、建module
+2、改pom
+3、写yml
+4、主启动
+5、业务类</code></pre><h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h2 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h2><pre><code>server:
+  port: 80</code></pre><h2 id="主启动类"><a href="#主启动类" class="headerlink" title="主启动类"></a>主启动类</h2><pre><code>package xyz.zx21.springcloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 
+/**
+ * @author Administrator
+ * @date 2020/3/19 15:53
+ */
 @SpringBootApplication
-@ServletComponentScan
-public class SpringBoot01ServletApplication {
-
+public class OrderMain80 {
     public static void main(String[] args) {
-        SpringApplication.run(SpringBoot01ServletApplication.class, args);
+        SpringApplication.run(OrderMain80.class, args);
     }
+}</code></pre><h2 id="业务类"><a href="#业务类" class="headerlink" title="业务类"></a>业务类</h2><p><strong>注入RestTemplate，文档地址</strong>：<a href="https://docs.spring.io/spring-framework/docs/5.2.2.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html" target="_blank" rel="noopener">点击访问</a></p>
+<pre><code>package xyz.zx21.springcloud.config;
 
-}
-
-</pre>
-<p>&nbsp;</p>
-<p>由于我的8080被占用了，我在application.properties修改成8081端口。</p>
-<pre class="lang:default decode:true ">server.port=8081</pre>
-<p>&nbsp;</p>
-<p>启动访问localhost:8081/hello</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-06_112731.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-06_112731.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2 id="2-通过编写一个方法"><a href="#2-通过编写一个方法" class="headerlink" title="2.通过编写一个方法"></a>2.通过编写一个方法</h2><p>为了测试明显，不在原类上修改，重写一个servlet与启动类。</p>
-<p><span style="font-size: 10pt;">DeployServlet.java </span></p>
-<p>去除了注解。</p>
-<pre class="lang:java decode:true">package xyz.xioaxin12.springboot01servlet.servlet;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-public class DeployServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=utf-8");
-        resp.getWriter().append("这是springboot整合servlet另一种方式!");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
-}
-</pre>
-<p>&nbsp;</p>
-<p><span style="font-size: 10pt;">SpringBoot01ServletApplication2.java</span></p>
-<p>一定要添加@Bean</p>
-<pre class="lang:java decode:true " title="SpringBoot01ServletApplication2 ">package xyz.xioaxin12.springboot01servlet;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import xyz.xioaxin12.springboot01servlet.servlet.DeployServlet;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
-@SpringBootApplication
-public class SpringBoot01ServletApplication2 {
-
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBoot01ServletApplication2.class, args);
-    }
-
+/**
+ * @author Administrator
+ * @date 2020/3/19 16:39
+ */
+@Configuration
+public class ApplicationContextConfig {
+    /**
+     * //appLicationcontext.xml &lt;bean id=&quot;&quot;class=&quot;&quot;&gt;
+     *
+     */
     @Bean
-    public ServletRegistrationBean getRegistrationBean(){
-        ServletRegistrationBean bean = new ServletRegistrationBean(new DeployServlet());
-        bean.addUrlMappings("/hello2");
-        return bean;
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
+}</code></pre><h2 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h2><pre><code>package xyz.zx21.springcloud.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import xyz.zx21.springcloud.entities.CommonResult;
+import xyz.zx21.springcloud.entities.Payment;
+
+import javax.annotation.Resource;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 16:37
+ */
+@RestController
+@Slf4j
+public class OrderController {
+
+    public static final String PAYMENT_URL = &quot;http://localhost:8001&quot;;
+
+    @Resource
+    private RestTemplate restTemplate;
+
+    @GetMapping(&quot;/consumer/payment/create&quot;)
+    public CommonResult&lt;Payment&gt; create(Payment payment) {
+        return restTemplate.postForObject(PAYMENT_URL + &quot;/payment/create&quot;, payment, CommonResult.class);
     }
 
+    @GetMapping(&quot;/consumer/payment/get/{id}&quot;)
+    public CommonResult&lt;Payment&gt; getPayment(@PathVariable(&quot;id&quot;) Long id) {
+        return restTemplate.getForObject(PAYMENT_URL + &quot;/payment/get/&quot; + id, CommonResult.class);
+    }
 }
+</code></pre><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>启动PaymentMain8001和OrderMain80，测试OrderMain80调用PaymentMain8001服务。</p>
+<hr>
+<h1 id="工程重构"><a href="#工程重构" class="headerlink" title="工程重构"></a>工程重构</h1><p><strong>将多余的代码，单独放到一个模块，提供给各个服务，避免冗余，比如实体类</strong></p>
+<h2 id="新建cloud-api-commons模块"><a href="#新建cloud-api-commons模块" class="headerlink" title="新建cloud-api-commons模块"></a>新建cloud-api-commons模块</h2><p>pom.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;cloud2020&lt;/artifactId&gt;
+        &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-</pre>
-<p>&nbsp;</p>
-<p>启动访问localhost:8081/hello2</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-06_113424.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-06_113424.png" alt></a></p>
+    &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;
 
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;!--        当optional为true则说明该依赖禁止依赖传递    &lt;optional&gt;true&lt;/optional&gt;--&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;cn.hutool&lt;/groupId&gt;
+            &lt;artifactId&gt;hutool-all&lt;/artifactId&gt;
+            &lt;version&gt;5.1.1&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+&lt;/project&gt;</code></pre><h2 id="将其他服务的实体类拷贝"><a href="#将其他服务的实体类拷贝" class="headerlink" title="将其他服务的实体类拷贝"></a>将其他服务的实体类拷贝</h2><h2 id="maven-clean-install-安装"><a href="#maven-clean-install-安装" class="headerlink" title="maven clean install 安装"></a>maven clean install 安装</h2><h2 id="删除其他模块下的实体包"><a href="#删除其他模块下的实体包" class="headerlink" title="删除其他模块下的实体包"></a>删除其他模块下的实体包</h2><h2 id="新增依赖"><a href="#新增依赖" class="headerlink" title="新增依赖"></a>新增依赖</h2><pre><code>&lt;dependency&gt;
+    &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;
+    &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;</code></pre><hr>
+<h1 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h1><p>关于调用/consumer/payment/create接口，插入数据为null的情况，需要在cloud-provider-payment8001服务对应的controller添加@RequestBody注解</p>
+<pre><code>@PostMapping(value = &quot;/payment/create&quot;)
+public CommonResult create(@RequestBody Payment payment) {...}</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -1090,12 +1093,12 @@ public class SpringBoot01ServletApplication2 {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]SpringBoot整合Servlet</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">477</span></p>
+    <p><span class="copy-title">文章标题:</span>[Cloud]2-支付模块与工程重构</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">691</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-22, 22:34:48</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-22, 22:35:20</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/22/JAVA-SpringBoot整合Servlet/" title="[JAVA]SpringBoot整合Servlet">http://zx21.xyz/2019/10/22/JAVA-SpringBoot整合Servlet/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-19, 16:29:40</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-19, 17:08:46</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/19/Cloud-2-支付模块与工程重构/" title="[Cloud]2-支付模块与工程重构">http://zx21.xyz/2020/03/19/Cloud-2-支付模块与工程重构/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
