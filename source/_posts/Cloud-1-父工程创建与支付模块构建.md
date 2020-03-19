@@ -1,8 +1,8 @@
 ---
-title: '[Cloud]父工程创建与支付模块构建-1'
+title: '[Cloud]1-父工程创建与支付模块构建'
 date: 2020-03-19 13:28:06
 categories: JAVA
-tags: SptingCloud
+tags: SpringCloud
 ---
 
 **约定 > 配置 > 编码**
