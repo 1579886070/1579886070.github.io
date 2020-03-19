@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[Oracle]基本操作-2 | 周信的博客</title>
-  <meta name="keywords" content=" Oracle ">
-  <meta name="description" content="[Oracle]基本操作-2 | 周信的博客">
+  <title>[Cloud]父工程创建与支付模块构建-1 | 周信的博客</title>
+  <meta name="keywords" content=" SptingCloud ">
+  <meta name="description" content="[Cloud]父工程创建与支付模块构建-1 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -878,9 +878,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Oracle-基本操作-2" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cloud-父工程创建与支付模块构建-1" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[Oracle]基本操作-2</h1>
+        <h1 class="article-title">[Cloud]父工程创建与支付模块构建-1</h1>
     
     <div class="article-meta">
         
@@ -888,26 +888,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Sql">Sql</a>
+                <a href="javascript:" data-rel="JAVA">JAVA</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color2">Oracle</a>
+            <a href="javascript:" class="color2">SptingCloud</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-09 23:38:09'>2019-10-09 23:02</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-19 14:49:11'>2020-03-19 13:28</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:773</span>
+        <span>字数:2k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -937,7 +937,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">select语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">1.查询全部列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">2.查询特定的列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">3.别名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">4.算术运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">5.字符串连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">6.消除重复行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">7.where限定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">8.逻辑运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">9.排序查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">10.等值连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">11.子查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">分组函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">1.统计函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">2.分组查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">3.过滤分组</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">1.创建视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">2.查询视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null"><span class="toc-text">3.删除视图</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#工程步骤"><span class="toc-text">工程步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目创建"><span class="toc-text">项目创建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#idea创建project工作空间"><span class="toc-text">idea创建project工作空间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#本章模块"><span class="toc-text">本章模块</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#构建步骤"><span class="toc-text">构建步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建-cloud-provider-payment8001-模块"><span class="toc-text">创建 cloud-provider-payment8001 模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建数据库"><span class="toc-text">建数据库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编码"><span class="toc-text">编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据封装体CommonResult"><span class="toc-text">数据封装体CommonResult</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#contorller"><span class="toc-text">contorller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#service"><span class="toc-text">service</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#impl"><span class="toc-text">impl</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dao"><span class="toc-text">dao</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dao映射的xml"><span class="toc-text">dao映射的xml</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#postman接口测试"><span class="toc-text">postman接口测试</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -953,227 +953,374 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>继<span style="text-decoration: underline;"><a href="http://zx21.xyz/2019/10/09/Oracle-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C-1/">Oracle基本操作-1</a></span>该篇文章的后续与补充！<a id="more"></a></p>
-<h2>select语句</h2>
-<h3>1.查询全部列</h3>
-<pre class="lang:default decode:true " title="a_table表">select * from a_table</pre>
-[caption id="" align="aligncenter" width="296"]<a href="http://image.xiaoxinyes.club/2019-01-04_092517.png" target="_blank" rel="noopener"><img class="size-medium" src="http://image.xiaoxinyes.club/2019-01-04_092517.png" width="296" height="74"></a> a_table[/caption]
-
-<p>&nbsp;</p>
-<h3>2.查询特定的列</h3>
-<pre class="lang:default decode:true" title="b_table">select b_id,b_name,a_id from b_table</pre>
-[caption id="" align="aligncenter" width="224"]<a href="http://image.xiaoxinyes.club/2019-01-04_092912.png" target="_blank" rel="noopener"><img class="size-medium" src="http://image.xiaoxinyes.club/2019-01-04_092912.png" width="224" height="77"></a> b_table[/caption]
-
-<p>&nbsp;</p>
-<h3>3.别名</h3>
-在查询中，给查询结果的列起一个自定义名称。
-<pre class="lang:default decode:true">select a_money as "月薪" from a_table</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_093250.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_093250.png" width="99" height="77"></a>
-
-<p>&nbsp;</p>
-<h3>4.算术运算符</h3>
-<table class=" aligncenter" style="height: 157px;" width="177">
-<tbody>
-<tr>
-<td style="width: 80.15px;">运算符</td>
-<td style="width: 80.15px;">描述</td>
-</tr>
-<tr>
-<td style="width: 80.15px;">+</td>
-<td style="width: 80.15px;">加</td>
-</tr>
-<tr>
-<td style="width: 80.15px;">-</td>
-<td style="width: 80.15px;">减</td>
-</tr>
-<tr>
-<td style="width: 80.15px;">*</td>
-<td style="width: 80.15px;">乘</td>
-</tr>
-<tr>
-<td style="width: 80.15px;">/</td>
-<td style="width: 80.15px;">除</td>
-</tr>
-</tbody>
-</table>
-举例：计算年薪
-<pre class="lang:default decode:true ">select a_id,a_name,a_age,a_money*12 as "年薪" from a_table</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_093732.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_093732.png" width="275" height="79"></a>
-
-<p>&nbsp;</p>
-<h3>5.字符串连接</h3>
-能将指定的列进行连接。
-<pre class="lang:default decode:true ">select a_id,a_name ||'-'|| a_money as "姓名与工资" from a_table</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_094122.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_094122.png" width="205" height="81"></a>
-
-<p>&nbsp;</p>
-<h3>6.消除重复行</h3>
-先查询下a_table表
-<pre class="lang:default decode:true ">select a_money from a_table</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_094651.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_094651.png" width="124" height="74"></a>
-
-<p>能看到有相同的数额，现在使用关键字<span style="color: #ff0000;">distinct</span></p>
-<pre class="lang:default decode:true ">select distinct a_money from a_table</pre>
-<p><a href="http://image.xiaoxinyes.club/2019-01-04_094830.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_094830.png" width="125" height="66"></a></p>
-<p>&nbsp;</p>
-<h3>7.where限定</h3>
-我们可以使用where进行过滤。
-
-<p>1).查询工资大于4000的所有信息。</p>
-<pre class="lang:default decode:true">select * from a_table where a_money&gt;4000</pre>
-<p><a href="http://image.xiaoxinyes.club/2019-01-04_095212.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_095212.png" width="292" height="35"></a></p>
-<p>&nbsp;</p>
-<p>2).查询姓名为“wangwu”的信息。</p>
-<pre class="lang:default decode:true ">select * from a_table where a_name='wangwu'</pre>
-<p><a href="http://image.xiaoxinyes.club/2019-01-04_095419.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_095419.png" width="298" height="34"></a></p>
-<p>&nbsp;</p>
-<p>除了常用的&gt;、&lt;、&gt;=等等这类比较运算符还包括下列的：</p>
-<table class="NormalTable aligncenter" style="width: 239.35px;">
-<tbody>
-<tr>
-<td style="width: 90px;"><span class="fontstyle0">操作符</span></td>
-<td style="width: 133.35px;"><span class="fontstyle0">含义</span></td>
-</tr>
-<tr>
-<td style="width: 90px;"><span class="fontstyle1">BETWEEN
-...AND...</span></td>
-<td style="width: 133.35px;"><span class="fontstyle0">在两个值之间 </span><span class="fontstyle3">(</span><span class="fontstyle0">包含边界</span><span class="fontstyle3">)</span></td>
-</tr>
-<tr>
-<td style="width: 90px;"><span class="fontstyle1">IN(set)</span></td>
-<td style="width: 133.35px;"><span class="fontstyle0">等于值列表中的一个</span></td>
-</tr>
-<tr>
-<td style="width: 90px;"><span class="fontstyle1">LIKE</span></td>
-<td style="width: 133.35px;"><span class="fontstyle0">模糊查询</span></td>
-</tr>
-<tr>
-<td style="width: 90px;"><span class="fontstyle1">IS NULL</span></td>
-<td style="width: 133.35px;"><span class="fontstyle0">空值</span></td>
-</tr>
-</tbody>
-</table>
-&nbsp;
-
-<p>3).查询年龄在20-28之间的信息。</p>
-<pre class="lang:default decode:true" title="between...and">select * from a_table where a_age between 20 and 28</pre>
-<p><a href="http://image.xiaoxinyes.club/2019-01-04_100247.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_100247.png" width="301" height="65"></a></p>
-<p>&nbsp;</p>
-<p>4).查询金额是3400与3500。</p>
-<pre class="lang:default decode:true" title="in">select * from a_table where a_money in(3400,3500)</pre>
-<p>&nbsp;</p>
-<p>5).模糊查询姓名以w开头的人的信息。</p>
-<pre class="lang:default decode:true" title="like">select * from a_table where a_name like 'w%'</pre>
-<p>&nbsp;</p>
-<p>6).模糊查询倒数第二个字母的姓名为o的人的信息。</p>
-<pre class="lang:default decode:true" title="like">select * from a_table where a_name like '%o_'</pre>
-<p>&nbsp;</p>
-<p>7).查询姓名中包含0的所有人的信息。</p>
-<pre class="lang:default decode:true " title="like">select * from a_table where a_name like '%o%'</pre>
-<p>&nbsp;</p>
-<p>8).查询是否为空和不为空。</p>
-<pre class="lang:default decode:true ">select * from a_table where a_name is null
-select * from a_table where a_name is not null</pre>
-<p>&nbsp;</p>
-<h3>8.逻辑运算</h3>
-<table class="NormalTable">
-<tbody>
-<tr>
-<td width="43"><span class="fontstyle0">操作符</span></td>
-<td width="43"><span class="fontstyle0">含义</span></td>
-</tr>
-<tr>
-<td width="91"><span class="fontstyle1">AND</span></td>
-<td width="91"><span class="fontstyle0">逻辑并</span></td>
-</tr>
-<tr>
-<td width="86"><span class="fontstyle1">OR</span></td>
-<td width="86"><span class="fontstyle0">逻辑或</span></td>
-</tr>
-<tr>
-<td width="82"><span class="fontstyle1">NOT</span></td>
-<td width="82"><span class="fontstyle0">逻辑否</span></td>
-</tr>
-</tbody>
-</table>
-&nbsp;
-
-<p>1).查询年龄大于20并且工资大于4000的人。</p>
-<pre class="lang:default decode:true" title="and">select * from a_table where a_age &gt; 20 and a_money &gt; 4000</pre>
-<p><a href="http://image.xiaoxinyes.club/2019-01-04_101628.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_101628.png" width="286" height="30"></a></p>
-<p>&nbsp;</p>
-<p>2).查询年龄为20或者工资大于4000的人。</p>
-<pre class="lang:default decode:true ">select * from a_table where a_age = 20 or a_money &gt; 4000</pre>
-<p><a href="http://image.xiaoxinyes.club/2019-01-04_101839.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_101839.png" width="288" height="47"></a></p>
-<p>&nbsp;</p>
-<h3>9.排序查询</h3>
-<p style="padding-left: 30px;"><span style="color: #ff0000;"> <span class="fontstyle0">使用 </span><span class="fontstyle2">ORDER BY </span><span class="fontstyle0">子句排序
-</span><span class="fontstyle3">– </span><span class="fontstyle4">ASC: </span><span class="fontstyle0">升序
-</span><span class="fontstyle3">– </span><span class="fontstyle4">DESC: </span><span class="fontstyle0">降序
-</span><span class="fontstyle3">• </span><span class="fontstyle2">ORDER BY </span><span class="fontstyle0">子句在</span><span class="fontstyle4">SELECT</span><span class="fontstyle0">语句的结尾</span></span></p>
-
-<pre class="lang:default decode:true ">select * from a_table  order by a_money desc</pre>
-<p>&nbsp;</p>
-<h3>10.等值连接</h3>
-可以从多张表中取出数据，但是表中必须要有所关联。
-<pre class="lang:default decode:true ">select * from b_table b,a_table a where b.a_id=a.a_id</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_103033.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_103033.png" width="470" height="77"></a>
-
-<p>&nbsp;</p>
-<h3>11.子查询</h3>
-查询谁的工资高于wangwu。
-<pre class="lang:default decode:true ">select a_name from a_table where a_money&gt;(
-       select a_money  from a_table where a_name='wangwu' )</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_103655.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_103655.png" width="112" height="31"></a>
-
+        <p><strong>约定 &gt; 配置 &gt; 编码</strong></p>
 <hr>
+<h1 id="工程步骤"><a href="#工程步骤" class="headerlink" title="工程步骤"></a>工程步骤</h1><pre><code>1、New Project
+2、聚合总父工程名字
+3、Maven选版本
+4、工程名字
+5、字符编码-UTF-8
+6、注解生效激活
+7、java编译版本选择8
+8、File Type过滤(可选)</code></pre><h1 id="项目创建"><a href="#项目创建" class="headerlink" title="项目创建"></a>项目创建</h1><h2 id="idea创建project工作空间"><a href="#idea创建project工作空间" class="headerlink" title="idea创建project工作空间"></a>idea创建project工作空间</h2><p>新建一个maven工程，工程名：cloud2020,删除src目录，只留下pom。<br>修改pom.xml</p>
+<pre><code>&lt;packaging&gt;pom&lt;/packaging&gt;</code></pre><p>完整的pom</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 
-<p>&nbsp;</p>
-<h2>分组函数</h2>
-<h3>1.统计函数</h3>
-<p style="padding-left: 30px;"><span style="color: #ff0000;"> <span class="fontstyle0">• </span><span class="fontstyle2">AVG
-</span><span class="fontstyle0">• </span><span class="fontstyle2">COUNT
-</span><span class="fontstyle0">• </span><span class="fontstyle2">MAX
-</span><span class="fontstyle0">• </span><span class="fontstyle2">MIN
-</span><span class="fontstyle0">• </span><span class="fontstyle2">STDDEV
-</span><span class="fontstyle0">• </span><span class="fontstyle2">SUM</span></span></p>
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-<pre class="lang:default decode:true ">select max(a_money),min(a_money),avg(a_money),sum(a_money) from a_table</pre>
-<p>&nbsp;</p>
-<p>查询年龄大于20的人数。(<span style="color: #ff0000;"> <span class="fontstyle0">COUNT(DISTINCT expr) </span><span class="fontstyle2">返回 </span><span class="fontstyle3">expr</span><span class="fontstyle2">非空且不重复的记录总数</span></span> )</p>
-<pre class="lang:default decode:true ">select count(*) from a_table where a_age&gt;20</pre>
-<p><a href="http://image.xiaoxinyes.club/2019-01-04_104441.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_104441.png" width="124" height="34"></a></p>
-<p>&nbsp;</p>
-<h3>2.分组查询</h3>
-<pre class="lang:default decode:true " title="group by">select a_id,avg(a_money) from a_table group by a_id</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_105327.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_105327.png" width="197" height="77"></a>
+  &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;
+  &lt;artifactId&gt;cloud2020&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;pom&lt;/packaging&gt;
 
-<p>&nbsp;</p>
-<h3>3.过滤分组</h3>
-<span class="fontstyle0" style="color: #ff0000;">having</span>
-<pre class="lang:default decode:true " title="having">select a_id,max(a_money) from a_table group by a_id
-       having max(a_money) &gt;= 3500</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_105718.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_105718.png" width="202" height="66"></a>
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+    &lt;junit.version&gt;4.12&lt;/junit.version&gt;
+    &lt;log4j.version&gt;1.2.17&lt;/log4j.version&gt;
+    &lt;lombok.version&gt;1.16.18&lt;/lombok.version&gt;
+    &lt;mysql.version&gt;5.1.47&lt;/mysql.version&gt;
+    &lt;druid.version&gt;1.1.16&lt;/druid.version&gt;
+    &lt;mybatis.spring.boot.version&gt;1.3.2&lt;/mybatis.spring.boot.version&gt;
+  &lt;/properties&gt;
 
+  &lt;!-- 子模块继承之后，提供作用：锁定版本+子模块不用写groupId和version  --&gt;
+  &lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+      &lt;!--  springboot 2.2.2    --&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;
+        &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;
+        &lt;type&gt;pom&lt;/type&gt;
+        &lt;scope&gt;import&lt;/scope&gt;
+      &lt;/dependency&gt;
+      &lt;!--  springcloud cloud Hoxton.SR1   --&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
+        &lt;version&gt;Hoxton.SR1&lt;/version&gt;
+        &lt;type&gt;pom&lt;/type&gt;
+        &lt;scope&gt;import&lt;/scope&gt;
+      &lt;/dependency&gt;
+      &lt;!--  springcloud cloud alibaba 2.1.0.RELEASE    --&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;
+        &lt;version&gt;2.1.0.RELEASE&lt;/version&gt;
+        &lt;type&gt;pom&lt;/type&gt;
+        &lt;scope&gt;import&lt;/scope&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;version&gt;${mysql.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+        &lt;artifactId&gt;druid&lt;/artifactId&gt;
+        &lt;version&gt;${druid.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;${mybatis.spring.boot.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+        &lt;version&gt;${log4j.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;${junit.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+        &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+        &lt;version&gt;${lombok.version}&lt;/version&gt;
+        &lt;optional&gt;true&lt;/optional&gt;
+      &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+  &lt;/dependencyManagement&gt;
+
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+        &lt;configuration&gt;
+          &lt;fork&gt;true&lt;/fork&gt;
+          &lt;addResources&gt;true&lt;/addResources&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+
+&lt;/project&gt;</code></pre><hr>
+<h1 id="本章模块"><a href="#本章模块" class="headerlink" title="本章模块"></a>本章模块</h1><p>order(客户端消费者80) -&gt; payment(微服务提供者8001)</p>
 <hr>
+<h2 id="构建步骤"><a href="#构建步骤" class="headerlink" title="构建步骤"></a>构建步骤</h2><pre><code>1、建module
+2、改pom
+3、写yml
+4、主启动
+5、业务类</code></pre><h3 id="创建-cloud-provider-payment8001-模块"><a href="#创建-cloud-provider-payment8001-模块" class="headerlink" title="创建 cloud-provider-payment8001 模块"></a>创建 cloud-provider-payment8001 模块</h3><p>pom.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;cloud2020&lt;/artifactId&gt;
+        &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-<p>&nbsp;</p>
-<h2>视图</h2>
-<h3>1.创建视图</h3>
-<pre class="lang:default decode:true">create view a_view
-as(
-   select a.a_id,a.a_name,a.a_age,a.a_money from a_table a
-)</pre>
-&nbsp;
-<h3>2.查询视图</h3>
-<pre class="lang:default decode:true ">select * from a_view</pre>
-<a href="http://image.xiaoxinyes.club/2019-01-04_110303.png" target="_blank" rel="noopener"><img class="aligncenter size-medium" src="http://image.xiaoxinyes.club/2019-01-04_110303.png" width="293" height="76"></a>
+    &lt;artifactId&gt;cloud-provider-payment8001&lt;/artifactId&gt;
 
-<p>&nbsp;</p>
-<h3>3.删除视图</h3>
-<pre class="lang:default decode:true ">drop view a_view</pre>
-&nbsp;
 
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
+            &lt;version&gt;1.1.10&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+&lt;/project&gt;</code></pre><h2 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h2><pre><code>server:
+  port: 8001
+
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db2019?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
+    username: root
+    password: 123456
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.com.springcloud.entities</code></pre><h2 id="建数据库"><a href="#建数据库" class="headerlink" title="建数据库"></a>建数据库</h2><p>db2019<br>sql如下</p>
+<pre><code>CREATE TABLE `payment` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;ID&#39;,
+  `serial` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</code></pre><hr>
+<h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><p>实体类Payment</p>
+<pre><code>package xyz.zx21.springcloud.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:20
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Payment implements Serializable {
+    private Long id;
+    private String serial;
+}
+</code></pre><h2 id="数据封装体CommonResult"><a href="#数据封装体CommonResult" class="headerlink" title="数据封装体CommonResult"></a>数据封装体CommonResult</h2><p>用于给前端返回统一格式的数据</p>
+<pre><code>package xyz.zx21.springcloud.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:24
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class CommonResult&lt;T&gt; {
+    private Integer code;
+    private String message;
+    private T data;
+
+    public CommonResult(Integer code, String message) {
+        this(code, message, null);
+    }
+}</code></pre><h2 id="contorller"><a href="#contorller" class="headerlink" title="contorller"></a>contorller</h2><pre><code>package xyz.zx21.springcloud.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+import xyz.zx21.springcloud.entities.CommonResult;
+import xyz.zx21.springcloud.entities.Payment;
+import xyz.zx21.springcloud.service.PaymentService;
+
+import javax.annotation.Resource;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:28
+ */
+@RestController
+@Slf4j
+public class PaymentController {
+    @Resource
+    private PaymentService paymentService;
+
+    @PostMapping(value = &quot;/payment/create&quot;)
+    public CommonResult create(Payment payment) {
+        int result = paymentService.create(payment);
+        log.info(&quot;插入结果:&quot; + result);
+        if (result &gt; 0) {
+            return new CommonResult(200, &quot;插入成功&quot;, result);
+        } else {
+            return new CommonResult(444, &quot;插入失败&quot;, null);
+        }
+    }
+
+    @GetMapping(value = &quot;/payment/get/{id}&quot;)
+    public CommonResult getPaymentById(@PathVariable(&quot;id&quot;) Long id) {
+        Payment paymentById = paymentService.getPaymentById(id);
+        log.info(&quot;查询结果:&quot; + paymentById);
+        if (paymentById != null) {
+            return new CommonResult(200, &quot;查询成功&quot;, paymentById);
+        } else {
+            return new CommonResult(444, &quot;没有对应记录，查询id:&quot; + id, null);
+        }
+    }
+}
+</code></pre><h2 id="service"><a href="#service" class="headerlink" title="service"></a>service</h2><pre><code>package xyz.zx21.springcloud.service;
+
+import xyz.zx21.springcloud.entities.Payment;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:32
+ */
+public interface PaymentService {
+    int create(Payment payment);
+
+    Payment getPaymentById(Long id);
+}
+</code></pre><h2 id="impl"><a href="#impl" class="headerlink" title="impl"></a>impl</h2><pre><code>package xyz.zx21.springcloud.service.impl;
+
+import org.springframework.stereotype.Service;
+import xyz.zx21.springcloud.dao.PaymentDao;
+import xyz.zx21.springcloud.entities.Payment;
+import xyz.zx21.springcloud.service.PaymentService;
+
+import javax.annotation.Resource;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:33
+ */
+@Service
+public class PaymentServiceImpl implements PaymentService {
+
+    @Resource
+    private PaymentDao paymentDao;
+
+    @Override
+    public int create(Payment payment) {
+        return paymentDao.create(payment);
+    }
+
+    @Override
+    public Payment getPaymentById(Long id) {
+        return paymentDao.getPaymentById(id);
+    }
+}
+</code></pre><h2 id="dao"><a href="#dao" class="headerlink" title="dao"></a>dao</h2><pre><code>package xyz.zx21.springcloud.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import xyz.zx21.springcloud.entities.Payment;
+
+/**
+ * @author Administrator
+ * @date 2020/3/19 14:34
+ */
+@Mapper
+public interface PaymentDao {
+    int create(Payment payment);
+
+    Payment getPaymentById(@Param(&quot;id&quot;) Long id);
+}
+</code></pre><h2 id="dao映射的xml"><a href="#dao映射的xml" class="headerlink" title="dao映射的xml"></a>dao映射的xml</h2><p>在resources下新建mapper文件夹<br>PaymentMapper.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;xyz.zx21.springcloud.dao.PaymentDao&quot;&gt;
+    &lt;insert id=&quot;create&quot; parameterType=&quot;xyz.zx21.springcloud.entities.Payment&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;id&quot;&gt;
+        insert into payment(serial) values(#{serial});
+    &lt;/insert&gt;
+    &lt;resultMap id=&quot;BaseResultMap&quot; type=&quot;xyz.zx21.springcloud.entities.Payment&quot;&gt;
+        &lt;id column=&quot;id&quot; property=&quot;id&quot; jdbcType=&quot;BIGINT&quot;&gt;&lt;/id&gt;
+        &lt;id column=&quot;serial&quot; property=&quot;serial&quot; jdbcType=&quot;VARCHAR&quot;&gt;&lt;/id&gt;
+    &lt;/resultMap&gt;
+    &lt;select id=&quot;getPaymentById&quot; parameterType=&quot;java.lang.Long&quot; resultMap=&quot;BaseResultMap&quot;&gt;
+        select * from payment where id = #{id};
+    &lt;/select&gt;
+&lt;/mapper&gt;</code></pre><hr>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><h2 id="postman接口测试"><a href="#postman接口测试" class="headerlink" title="postman接口测试"></a>postman接口测试</h2><p>get<br>url：<a href="http://127.0.0.1:8001/payment/get/1" target="_blank" rel="noopener">http://127.0.0.1:8001/payment/get/1</a></p>
+<p>返回：</p>
+<pre><code>{
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;查询成功&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;serial&quot;: &quot;小信&quot;
+    }
+}</code></pre><p>post<br>url：<a href="http://127.0.0.1:8001/payment/create?serial=测试" target="_blank" rel="noopener">http://127.0.0.1:8001/payment/create?serial=测试</a></p>
+<p>返回：</p>
+<pre><code>{
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;插入成功&quot;,
+    &quot;data&quot;: 1
+}</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -1186,12 +1333,12 @@ as(
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[Oracle]基本操作-2</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">773</span></p>
+    <p><span class="copy-title">文章标题:</span>[Cloud]父工程创建与支付模块构建-1</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">2k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-09, 23:02:51</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-09, 23:38:09</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/09/Oracle-基本操作-2/" title="[Oracle]基本操作-2">http://zx21.xyz/2019/10/09/Oracle-基本操作-2/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-19, 13:28:06</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-19, 14:49:11</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/19/Cloud-父工程创建与支付模块构建-1/" title="[Cloud]父工程创建与支付模块构建-1">http://zx21.xyz/2020/03/19/Cloud-父工程创建与支付模块构建-1/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
