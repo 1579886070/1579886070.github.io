@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>[Cloud]5-集成Consul</title>
+      <link href="/2020/03/21/Cloud-5-%E9%9B%86%E6%88%90Consul/"/>
+      <url>/2020/03/21/Cloud-5-%E9%9B%86%E6%88%90Consul/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Consul"><a href="#Consul" class="headerlink" title="Consul"></a>Consul</h1><h2 id="安装与启动"><a href="#安装与启动" class="headerlink" title="安装与启动"></a>安装与启动</h2><p>下载地址：<a href="https://www.consul.io/downloads.html" target="_blank" rel="noopener">点击</a></p><p>我用windows测试的，解压有一个exe程序， cmd</p><p>启动：<strong>consul agent -dev</strong></p><p>访问：<strong><a href="http://127.0.0.1:8500/ui/dc1/services" target="_blank" rel="noopener">http://127.0.0.1:8500/ui/dc1/services</a></strong></p><hr><h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h2 id="服务提供者"><a href="#服务提供者" class="headerlink" title="服务提供者"></a>服务提供者</h2><p>新增cloud-provider-payment8006</p><h3 id="pom"><a href="#pom" class="headerlink" title="pom"></a>pom</h3><pre><code>&lt;dependency&gt;    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;&lt;/dependency&gt;</code></pre><h3 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h3><pre><code>server:  port: 8006# 服务别名---consul注册中心名称spring:  application:    name: consul-provider-payment  cloud:    consul:      host: localhost      port: 8500      discovery:        service-name: ${spring.application.name}</code></pre><h3 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h3><pre><code>@RestController@Slf4jpublic class PaymentController {    @Value(&quot;${server.port}&quot;)    private String serverPort;    @GetMapping(value = &quot;/payment/consul&quot;)    public String paymentzk() {        return &quot;springcloud with consul: &quot; + serverPort + &quot;\t&quot; + UUID.randomUUID().toString();    }}</code></pre><hr><h2 id="服务消费者"><a href="#服务消费者" class="headerlink" title="服务消费者"></a>服务消费者</h2><p>新增cloud-consumerconsul-order80</p><h3 id="pom-1"><a href="#pom-1" class="headerlink" title="pom"></a>pom</h3><p>跟提供者服务一致</p><h3 id="application-yml-1"><a href="#application-yml-1" class="headerlink" title="application.yml"></a>application.yml</h3><pre><code>server:  port: 80# 服务别名---consul注册中心名称spring:  application:    name: consul-consumer-order  cloud:    consul:      host: localhost      port: 8500      discovery:        service-name: ${spring.application.name}</code></pre><h3 id="controller-1"><a href="#controller-1" class="headerlink" title="controller"></a>controller</h3><pre><code>@RestController@Slf4jpublic class OrderConsulController {    private static final String INVOKE_URL = &quot;http://consul-provider-payment&quot;;    @Resource    private RestTemplate restTemplate;    @GetMapping(value = &quot;/consumer/payment/consul&quot;)    public String paymentInfo(){        String result = restTemplate.getForObject(INVOKE_URL + &quot;/payment/consul&quot;, String.class);        return result;    }}</code></pre><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>访问<a href="http://127.0.0.1/consumer/payment/consul" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/consul</a> 可以调用成功！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JAVA </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringCloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[Cloud]4-集成ZooKeeper</title>
       <link href="/2020/03/21/Cloud-4-%E9%9B%86%E6%88%90ZooKeeper/"/>
       <url>/2020/03/21/Cloud-4-%E9%9B%86%E6%88%90ZooKeeper/</url>

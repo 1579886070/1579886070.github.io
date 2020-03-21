@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]Mybatis增删改查 | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]Mybatis增删改查 | 周信的博客">
+  <title>[Cloud]5-集成Consul | 周信的博客</title>
+  <meta name="keywords" content=" SpringCloud ">
+  <meta name="description" content="[Cloud]5-集成Consul | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="本机与虚拟机测试，注意：保证本机与虚拟机能互相ping通 zookeepper命令1. 启动ZK服务:       zkServer.sh start 2. 查看ZK服务状态:   zkServer.sh status 3. 停止ZK服务:       zkServer.sh stop 4. 重启ZK服务:       zkServer.sh restart 5. ZK服务连接:       zk">
 <meta name="keywords" content="SpringCloud">
@@ -910,9 +910,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-Mybatis增删改查" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cloud-5-集成Consul" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]Mybatis增删改查</h1>
+        <h1 class="article-title">[Cloud]5-集成Consul</h1>
     
     <div class="article-meta">
         
@@ -927,19 +927,19 @@
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color2">SpringCloud</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-20 11:52:21'>2019-10-21 18:51</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-21 18:18:02'>2020-03-21 17:53</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:993</span>
+        <span>字数:265</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -969,7 +969,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#sql"><span class="toc-text">sql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义实体类Student-java"><span class="toc-text">定义实体类Student.java</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义StudentDao接口，含增删改查方法"><span class="toc-text">定义StudentDao接口，含增删改查方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#StudentDao的实现类StudentDaoImpl"><span class="toc-text">StudentDao的实现类StudentDaoImpl</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#映射文件mapper-xml-放在dao包下"><span class="toc-text">映射文件mapper.xml,放在dao包下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主配置文件mybatis-xml"><span class="toc-text">主配置文件mybatis.xml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#logo4j-properties日志文件"><span class="toc-text">logo4j.properties日志文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试类TestMybaties-java"><span class="toc-text">测试类TestMybaties.java</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Consul"><span class="toc-text">Consul</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装与启动"><span class="toc-text">安装与启动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编码"><span class="toc-text">编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务提供者"><span class="toc-text">服务提供者</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pom"><span class="toc-text">pom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#application-yml"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#controller"><span class="toc-text">controller</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务消费者"><span class="toc-text">服务消费者</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pom-1"><span class="toc-text">pom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#application-yml-1"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#controller-1"><span class="toc-text">controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -985,264 +985,66 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>建立test数据库，student_数据表，含有id，name，age字段。<a id="more"></a></p>
-<h2 id="sql"><a href="#sql" class="headerlink" title="sql"></a>sql</h2><pre><code>CREATE TABLE `student_`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `age` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-)</code></pre><hr>
-<p>&nbsp;</p>
-<h2 id="定义实体类Student-java"><a href="#定义实体类Student-java" class="headerlink" title="定义实体类Student.java"></a>定义实体类Student.java</h2><pre><code>package xyz.xioaxin12.bean;
-
-/**
- * @author 小信
- */
-public class Student {
-    private Integer id;
-    private String name;
-    private int age;
-
-    public Student() {
-    }
-
-    public Student(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-}</code></pre><hr>
-<p>&nbsp;</p>
-<h2 id="定义StudentDao接口，含增删改查方法"><a href="#定义StudentDao接口，含增删改查方法" class="headerlink" title="定义StudentDao接口，含增删改查方法"></a>定义StudentDao接口，含增删改查方法</h2><pre><code>package xyz.xioaxin12.dao;
-
-import xyz.xioaxin12.bean.Student;
-
-/**
- * @author 小信
- */
-public interface StudentDao {
-
-    void insertStudent(Student student);
-
-    void deleteStudent(int id);
-
-    void updateStudent(Student student);
-
-    List&amp;lt;Student&amp;gt; selectStudent();
-}</code></pre><hr>
-<p>&nbsp;</p>
-<h2 id="StudentDao的实现类StudentDaoImpl"><a href="#StudentDao的实现类StudentDaoImpl" class="headerlink" title="StudentDao的实现类StudentDaoImpl"></a>StudentDao的实现类StudentDaoImpl</h2><pre><code>package xyz.xioaxin12.dao;
-
-/**
- * @author 小信
- */
-public class StudentDaoImpl implements StudentDao {
-
-    private SqlSession sqlSession;
-
-    @Override
-    public void insertStudent(Student student) {
-        try {
-            InputStream inputStream = Resources.getResourceAsStream(&quot;mybatis.xml&quot;);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            sqlSession=sqlSessionFactory.openSession();
-            sqlSession.insert(&quot;insertStudent&quot;,student);
-            sqlSession.commit();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            if(sqlSession != null){
-                sqlSession.close();
-            }
-        }
-
-    }
-
-    @Override
-    public void deleteStudent(int id) {
-        try {
-            InputStream inputStream = Resources.getResourceAsStream(&quot;mybatis.xml&quot;);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            sqlSession=sqlSessionFactory.openSession();
-            sqlSession.insert(&quot;deleteStudent&quot;,id);
-            sqlSession.commit();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            if(sqlSession != null){
-                sqlSession.close();
-            }
-        }
-    }
-
-    @Override
-    public void updateStudent(Student student) {
-        try {
-            InputStream inputStream = Resources.getResourceAsStream(&quot;mybatis.xml&quot;);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            sqlSession=sqlSessionFactory.openSession();
-            sqlSession.update(&quot;updateStudent&quot;,student);
-            sqlSession.commit();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            if(sqlSession != null){
-                sqlSession.close();
-            }
-        }
-    }
-
-    @Override
-    public List&amp;lt;Student&amp;gt; selectStudent() {
-        List&amp;lt;Student&amp;gt; students = null;
-        try {
-            InputStream inputStream = Resources.getResourceAsStream(&quot;mybatis.xml&quot;);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            sqlSession=sqlSessionFactory.openSession();
-            students = sqlSession.selectList(&quot;selectStudent&quot;);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            if(sqlSession != null){
-                sqlSession.close();
-            }
-        }
-        return students;
-    }
-}</code></pre><hr>
-<p>&nbsp;</p>
-<h2 id="映射文件mapper-xml-放在dao包下"><a href="#映射文件mapper-xml-放在dao包下" class="headerlink" title="映射文件mapper.xml,放在dao包下"></a>映射文件mapper.xml,放在dao包下</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE mapper
-        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-&lt;mapper namespace=&quot;xyz.xioaxin12.dao.StudentDao&quot;&gt;
-    &lt;insert id=&quot;insertStudent&quot; parameterType=&quot;Student&quot;&gt;
-        insert into student_(name,age) values (#{name},#{age})
-    &lt;/insert&gt;
-    &lt;delete id=&quot;deleteStudent&quot;&gt;
-        delete from student_ where id=#{id}
-    &lt;/delete&gt;
-    &lt;update id=&quot;updateStudent&quot;&gt;
-        update student_ set name=#{name},age=#{age} where id=#{id}
-    &lt;/update&gt;
-    &lt;select id=&quot;selectStudentId&quot; resultType=&quot;Student&quot;&gt;
-        select id,name,age from student_ where id=#{id}
-    &lt;/select&gt;
-    &lt;select id=&quot;selectStudent&quot; resultType=&quot;Student&quot;&gt;
-        select * from student_
-    &lt;/select&gt;
-&lt;/mapper&gt;</code></pre><p><strong><span style="font-size: 10pt;">id跟StudentDaoImpl中的参数一致</span></strong></p>
+        <h1 id="Consul"><a href="#Consul" class="headerlink" title="Consul"></a>Consul</h1><h2 id="安装与启动"><a href="#安装与启动" class="headerlink" title="安装与启动"></a>安装与启动</h2><p>下载地址：<a href="https://www.consul.io/downloads.html" target="_blank" rel="noopener">点击</a></p>
+<p>我用windows测试的，解压有一个exe程序， cmd</p>
+<p>启动：<strong>consul agent -dev</strong></p>
+<p>访问：<strong><a href="http://127.0.0.1:8500/ui/dc1/services" target="_blank" rel="noopener">http://127.0.0.1:8500/ui/dc1/services</a></strong></p>
 <hr>
-<p>&nbsp;</p>
-<h2 id="主配置文件mybatis-xml"><a href="#主配置文件mybatis-xml" class="headerlink" title="主配置文件mybatis.xml"></a>主配置文件mybatis.xml</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE mapper
-        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
-        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-&lt;mapper namespace=&quot;xyz.xioaxin12.dao.StudentDao&quot;&gt;
-    &lt;insert id=&quot;insertStudent&quot; parameterType=&quot;Student&quot;&gt;
-        insert into student_(name,age) values (#{name},#{age})
-    &lt;/insert&gt;
-    &lt;delete id=&quot;deleteStudent&quot;&gt;
-        delete from student_ where id=#{id}
-    &lt;/delete&gt;
-    &lt;update id=&quot;updateStudent&quot;&gt;
-        update student_ set name=#{name},age=#{age} where id=#{id}
-    &lt;/update&gt;
-    &lt;select id=&quot;selectStudentId&quot; resultType=&quot;Student&quot;&gt;
-        select id,name,age from student_ where id=#{id}
-    &lt;/select&gt;
-    &lt;select id=&quot;selectStudent&quot; resultType=&quot;Student&quot;&gt;
-        select * from student_
-    &lt;/select&gt;
-&lt;/mapper&gt;</code></pre><p><strong><span style="font-size: 10pt;">&lt;package name=”xyz.xioaxin12.bean”/&gt; ：定义别名，该包中的实体类简单类名作为别名</span></strong></p>
-<p><strong><span style="font-size: 10pt;">&lt;environments&gt;…&lt;/environments&gt;：运行环境，提供驱动，账号，密码，数据库信息。</span></strong></p>
-<p><strong><span style="font-size: 10pt;">&lt;mapper resource=”xyz/xioaxin12/dao/mapper.xml”/&gt;： 映射到mapper.xml文件</span></strong></p>
-<hr>
-<p>&nbsp;</p>
-<h2 id="logo4j-properties日志文件"><a href="#logo4j-properties日志文件" class="headerlink" title="logo4j.properties日志文件"></a>logo4j.properties日志文件</h2><pre><code>log4j.logger.xyz.xioaxin12.dao.StudentDao=DEBUG, stdout  
+<h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h2 id="服务提供者"><a href="#服务提供者" class="headerlink" title="服务提供者"></a>服务提供者</h2><p>新增cloud-provider-payment8006</p>
+<h3 id="pom"><a href="#pom" class="headerlink" title="pom"></a>pom</h3><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre><h3 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h3><pre><code>server:
+  port: 8006
 
-log4j.appender.stdout=org.apache.log4j.ConsoleAppender  
-log4j.appender.stdout.layout=org.apache.log4j.PatternLayout  
-log4j.appender.stdout.layout.ConversionPattern=%d [%-5p] %c - %m%n
-#show sql
-log4j.logger.java.sql.ResultSet=INFO   
-log4j.logger.org.apache=INFO   
-log4j.logger.java.sql.Connection=DEBUG   
-log4j.logger.java.sql.Statement=DEBUG   
-log4j.logger.java.sql.PreparedStatement=DEBUG</code></pre><hr>
-<p>&nbsp;</p>
-<h2 id="测试类TestMybaties-java"><a href="#测试类TestMybaties-java" class="headerlink" title="测试类TestMybaties.java"></a>测试类TestMybaties.java</h2><pre><code>package xyz.xioaxin12.test;
+# 服务别名---consul注册中心名称
+spring:
+  application:
+    name: consul-provider-payment
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}</code></pre><h3 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h3><pre><code>@RestController
+@Slf4j
+public class PaymentController {
+    @Value(&quot;${server.port}&quot;)
+    private String serverPort;
 
-import xyz.xioaxin12.bean.Student;
-import xyz.xioaxin12.dao.StudentDao;
-import xyz.xioaxin12.dao.StudentDaoImpl;
-
-/**
- * @author 小信
- */
-public class TestMybatis {
-    private static StudentDao dao;
-    static{
-        dao = new StudentDaoImpl();
+    @GetMapping(value = &quot;/payment/consul&quot;)
+    public String paymentzk() {
+        return &quot;springcloud with consul: &quot; + serverPort + &quot;\t&quot; + UUID.randomUUID().toString();
     }
-    public static void main(String[] args) {
-        //增
-        addStu();
-        //删
-//        deleteStu();
-        //改
-//        updateStu();
-        //查
-//       selectStu();
-    }
-    public static void addStu(){
-        Student student = new Student(&quot;小信&quot;,19);
-        dao.insertStudent(student);
-    }
+}</code></pre><hr>
+<h2 id="服务消费者"><a href="#服务消费者" class="headerlink" title="服务消费者"></a>服务消费者</h2><p>新增cloud-consumerconsul-order80</p>
+<h3 id="pom-1"><a href="#pom-1" class="headerlink" title="pom"></a>pom</h3><p>跟提供者服务一致</p>
+<h3 id="application-yml-1"><a href="#application-yml-1" class="headerlink" title="application.yml"></a>application.yml</h3><pre><code>server:
+  port: 80
 
-    public static void deleteStu(){
-        dao.deleteStudent(1);
-    }
+# 服务别名---consul注册中心名称
+spring:
+  application:
+    name: consul-consumer-order
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}</code></pre><h3 id="controller-1"><a href="#controller-1" class="headerlink" title="controller"></a>controller</h3><pre><code>@RestController
+@Slf4j
+public class OrderConsulController {
+    private static final String INVOKE_URL = &quot;http://consul-provider-payment&quot;;
 
-    public static void updateStu(){
-        Student student = new Student(&quot;阿六&quot;,20);
-        student.setId(2);
-        dao.updateStudent(student);
-    }
+    @Resource
+    private RestTemplate restTemplate;
 
-    public static void selectStu(){
-        List&amp;lt;Student&amp;gt; students = dao.selectStudent();
-        for (Student student: students
-             ) {
-            System.out.println(student.getId()+&quot;-&quot;+student.getName()+&quot;-&quot;+student.getAge());
-        }
-
+    @GetMapping(value = &quot;/consumer/payment/consul&quot;)
+    public String paymentInfo(){
+        String result = restTemplate.getForObject(INVOKE_URL + &quot;/payment/consul&quot;, String.class);
+        return result;
     }
-}</code></pre><p>&nbsp;</p>
-<p><span style="font-size: 12pt;"><em>本案例用了dao接口的实现类。可以删除以mapper动态代理的方式完成，无需实现dao接口。</em></span></p>
+}</code></pre><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>访问<a href="http://127.0.0.1/consumer/payment/consul" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/consul</a> 可以调用成功！</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
@@ -1256,12 +1058,12 @@ public class TestMybatis {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]Mybatis增删改查</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">993</span></p>
+    <p><span class="copy-title">文章标题:</span>[Cloud]5-集成Consul</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">265</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-21, 18:51:44</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-20, 11:52:21</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/21/JAVA-Mybatis增删改查/" title="[JAVA]Mybatis增删改查">http://zx21.xyz/2019/10/21/JAVA-Mybatis增删改查/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-21, 17:53:36</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-21, 18:18:02</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/21/Cloud-5-集成Consul/" title="[Cloud]5-集成Consul">http://zx21.xyz/2020/03/21/Cloud-5-集成Consul/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-03-21T05:20:58.012Z</updated>
+  <updated>2020-03-21T10:18:02.583Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Cloud]5-集成Consul</title>
+    <link href="http://zx21.xyz/2020/03/21/Cloud-5-%E9%9B%86%E6%88%90Consul/"/>
+    <id>http://zx21.xyz/2020/03/21/Cloud-5-集成Consul/</id>
+    <published>2020-03-21T09:53:36.000Z</published>
+    <updated>2020-03-21T10:18:02.583Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Consul"><a href="#Consul" class="headerlink" title="Consul"></a>Consul</h1><h2 id="安装与启动"><a href="#安装与启动" class="headerlink" title="安装与启动"></a>安装与启动</h2><p>下载地址：<a href="https://www.consul.io/downloads.html" target="_blank" rel="noopener">点击</a></p><p>我用windows测试的，解压有一个exe程序， cmd</p><p>启动：<strong>consul agent -dev</strong></p><p>访问：<strong><a href="http://127.0.0.1:8500/ui/dc1/services" target="_blank" rel="noopener">http://127.0.0.1:8500/ui/dc1/services</a></strong></p><hr><h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><h2 id="服务提供者"><a href="#服务提供者" class="headerlink" title="服务提供者"></a>服务提供者</h2><p>新增cloud-provider-payment8006</p><h3 id="pom"><a href="#pom" class="headerlink" title="pom"></a>pom</h3><pre><code>&lt;dependency&gt;    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;    &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;&lt;/dependency&gt;</code></pre><h3 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h3><pre><code>server:  port: 8006# 服务别名---consul注册中心名称spring:  application:    name: consul-provider-payment  cloud:    consul:      host: localhost      port: 8500      discovery:        service-name: ${spring.application.name}</code></pre><h3 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h3><pre><code>@RestController@Slf4jpublic class PaymentController {    @Value(&quot;${server.port}&quot;)    private String serverPort;    @GetMapping(value = &quot;/payment/consul&quot;)    public String paymentzk() {        return &quot;springcloud with consul: &quot; + serverPort + &quot;\t&quot; + UUID.randomUUID().toString();    }}</code></pre><hr><h2 id="服务消费者"><a href="#服务消费者" class="headerlink" title="服务消费者"></a>服务消费者</h2><p>新增cloud-consumerconsul-order80</p><h3 id="pom-1"><a href="#pom-1" class="headerlink" title="pom"></a>pom</h3><p>跟提供者服务一致</p><h3 id="application-yml-1"><a href="#application-yml-1" class="headerlink" title="application.yml"></a>application.yml</h3><pre><code>server:  port: 80# 服务别名---consul注册中心名称spring:  application:    name: consul-consumer-order  cloud:    consul:      host: localhost      port: 8500      discovery:        service-name: ${spring.application.name}</code></pre><h3 id="controller-1"><a href="#controller-1" class="headerlink" title="controller"></a>controller</h3><pre><code>@RestController@Slf4jpublic class OrderConsulController {    private static final String INVOKE_URL = &quot;http://consul-provider-payment&quot;;    @Resource    private RestTemplate restTemplate;    @GetMapping(value = &quot;/consumer/payment/consul&quot;)    public String paymentInfo(){        String result = restTemplate.getForObject(INVOKE_URL + &quot;/payment/consul&quot;, String.class);        return result;    }}</code></pre><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>访问<a href="http://127.0.0.1/consumer/payment/consul" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/consul</a> 可以调用成功！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Consul&quot;&gt;&lt;a href=&quot;#Consul&quot; class=&quot;headerlink&quot; title=&quot;Consul&quot;&gt;&lt;/a&gt;Consul&lt;/h1&gt;&lt;h2 id=&quot;安装与启动&quot;&gt;&lt;a href=&quot;#安装与启动&quot; class=&quot;headerlink&quot; title=
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="SpringCloud" scheme="http://zx21.xyz/tags/SpringCloud/"/>
+    
+  </entry>
   
   <entry>
     <title>[Cloud]4-集成ZooKeeper</title>
@@ -532,32 +558,6 @@
     
     
       <category term="maven" scheme="http://zx21.xyz/tags/maven/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JAVA]Mybatis注解操作表数据</title>
-    <link href="http://zx21.xyz/2019/11/21/JAVA-Mybatis%E6%B3%A8%E8%A7%A3%E6%93%8D%E4%BD%9C%E8%A1%A8%E6%95%B0%E6%8D%AE/"/>
-    <id>http://zx21.xyz/2019/11/21/JAVA-Mybatis注解操作表数据/</id>
-    <published>2019-11-21T14:24:04.000Z</published>
-    <updated>2019-11-21T14:25:22.721Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="springboot-mybatis演示"><a href="#springboot-mybatis演示" class="headerlink" title="springboot+mybatis演示"></a>springboot+mybatis演示</h1><p>@Insert/@Delete/@Select/@Update</p><hr><h2 id="一、依赖"><a href="#一、依赖" class="headerlink" title="一、依赖"></a>一、依赖</h2><pre><code>        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;            &lt;version&gt;2.0.0&lt;/version&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;mysql&lt;/groupId&gt;            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;            &lt;version&gt;5.1.25&lt;/version&gt;        &lt;/dependency&gt;</code></pre><h2 id="二、启动类"><a href="#二、启动类" class="headerlink" title="二、启动类"></a>二、启动类</h2><pre><code>@SpringBootApplicationpublic class DemoApplication {    public static void main(String[] args) {        SpringApplication app = new SpringApplication(DemoApplication.class);        app.run(args);    }}</code></pre><h2 id="三、application-yml"><a href="#三、application-yml" class="headerlink" title="三、application,yml"></a>三、application,yml</h2><pre><code>spring:  datasource:    password: 1579886070    username: root    driver-class-name: com.mysql.jdbc.Driver    url: jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=falsemybatis:  configuration:    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql</code></pre><h2 id="四、student数据表"><a href="#四、student数据表" class="headerlink" title="四、student数据表"></a>四、student数据表</h2><pre><code>CREATE TABLE `student` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `name` varchar(255) DEFAULT NULL,  `age` int(11) DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;</code></pre><h2 id="五、来一个实体类"><a href="#五、来一个实体类" class="headerlink" title="五、来一个实体类"></a>五、来一个实体类</h2><pre><code>public class Student {    public Student() {    }    public Student(Integer id, String name, Integer age) {        this.id = id;        this.name = name;        this.age = age;    }    private Integer id;    private String name;    private Integer age;    //get    //set}</code></pre><h2 id="六、service和它的实现类"><a href="#六、service和它的实现类" class="headerlink" title="六、service和它的实现类"></a>六、service和它的实现类</h2><pre><code>public interface StudentService {    int add(Student student);    boolean deleteById(int id);    List&lt;Student&gt; selectAll();    boolean updateStudent(Student s);}</code></pre><pre><code>@Servicepublic class StudentServiceImlp implements StudentService {    @Autowired    private StudentMapper studentMapper;    @Override    public int add(Student student) {        return studentMapper.insertStudent(student);    }    @Override    public boolean deleteById(int id) {        return studentMapper.deleteStudent(id);    }    @Override    public List&lt;Student&gt; selectAll() {        return studentMapper.selectStudentAll();    }    @Override    public boolean updateStudent(Student s) {        return studentMapper.update(s);    }}</code></pre><h2 id="七、注入mapper"><a href="#七、注入mapper" class="headerlink" title="七、注入mapper"></a>七、注入mapper</h2><p>包含增删改查，类上加了@mapper,则不用再启动类上@MapperScan()</p><pre><code>@Mapperpublic interface StudentMapper {    @Insert(&quot;insert into student(name,age) values (#{name},#{age})&quot;)    int insertStudent(Student student);    @Delete(&quot;delete from student where id = #{id}&quot;)    boolean deleteStudent(int id);    @Select(&quot;select * from student&quot;)    List&lt;Student&gt; selectStudentAll();    @Update(&quot;update student set name=#{name},age = #{age} where id = #{id}&quot;)    boolean update(Student student);}</code></pre><h2 id="八、最后controller"><a href="#八、最后controller" class="headerlink" title="八、最后controller"></a>八、最后controller</h2><pre><code>@RestController@RequestMappingpublic class StudentController {    @Autowired    private StudentService studentService;    /**     * 添加数据     *     * @param name     * @param age     * @return     */    @GetMapping(&quot;addStu&quot;)    public Object insertStudent(@Param(&quot;name&quot;) String name, @Param(&quot;age&quot;) int age) {        Student student = new Student(null, name, age);        int index = studentService.add(student);        return index;    }    /**     * 根据id删除数据     *     * @param id     * @return     */    @GetMapping(&quot;delete&quot;)    public Object delete(@Param(&quot;id&quot;) int id) {        return studentService.deleteById(id);    }    /**     * 查询所有数据     *     * @return     */    @GetMapping(&quot;select&quot;)    public Object select() {        return studentService.selectAll();    }    /**     * 修改数据     *     * @param id     * @param name     * @param age     * @return     */    @GetMapping(&quot;update&quot;)    public Object update(int id, String name, int age) {        Student s = new Student(id, name, age);        return studentService.updateStudent(s);    }}</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;springboot-mybatis演示&quot;&gt;&lt;a href=&quot;#springboot-mybatis演示&quot; class=&quot;headerlink&quot; title=&quot;springboot+mybatis演示&quot;&gt;&lt;/a&gt;springboot+mybatis演示&lt;/h1&gt;&lt;
-      
-    
-    </summary>
-    
-    
-      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
-    
-    
-      <category term="mybatis" scheme="http://zx21.xyz/tags/mybatis/"/>
     
   </entry>
   
