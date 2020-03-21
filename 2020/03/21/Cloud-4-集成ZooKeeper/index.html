@@ -6,18 +6,18 @@
   <meta name="keywords" content=" SpringCloud ">
   <meta name="description" content="[Cloud]4-集成ZooKeeper | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="创建消费者模块cloud-comsumer-order80调用上篇文章的支付模块cloud-provider-payment8001。 构建步骤1、建module 2、改pom 3、写yml 4、主启动 5、业务类编码application.ymlserver:   port: 80主启动类package xyz.zx21.springcloud;  import org.springframew">
-<meta name="keywords" content="SpringCloud">
-<meta property="og:type" content="article">
-<meta property="og:title" content="[Cloud]2-支付模块与工程重构">
-<meta property="og:url" content="http://zx21.xyz/2020/03/19/Cloud-2-支付模块与工程重构/index.html">
+<meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
+<meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="http://zx21.xyz/about/index.html">
 <meta property="og:site_name" content="周信的博客">
-<meta property="og:description" content="创建消费者模块cloud-comsumer-order80调用上篇文章的支付模块cloud-provider-payment8001。 构建步骤1、建module 2、改pom 3、写yml 4、主启动 5、业务类编码application.ymlserver:   port: 80主启动类package xyz.zx21.springcloud;  import org.springframew">
+<meta property="og:description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-19T09:08:46.587Z">
+<meta property="og:updated_time" content="2019-10-27T02:41:18.204Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[Cloud]2-支付模块与工程重构">
-<meta name="twitter:description" content="创建消费者模块cloud-comsumer-order80调用上篇文章的支付模块cloud-provider-payment8001。 构建步骤1、建module 2、改pom 3、写yml 4、主启动 5、业务类编码application.ymlserver:   port: 80主启动类package xyz.zx21.springcloud;  import org.springframew">
+<meta name="twitter:title" content="about">
+<meta name="twitter:description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -926,7 +926,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-03-21 13:17:35'>2020-03-21 11:08</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-21 13:20:58'>2020-03-21 11:08</time>
         
     </div>
     <div class="article-meta">
@@ -961,7 +961,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#zookeepper命令"><span class="toc-text">zookeepper命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#新建服务提供者"><span class="toc-text">新建服务提供者</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cloud-provider-payment8004"><span class="toc-text">cloud-provider-payment8004</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#controller测试"><span class="toc-text">controller测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主启动类"><span class="toc-text">主启动类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#新建消费者cloud-consumerzk-order80"><span class="toc-text">新建消费者cloud-consumerzk-order80</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml-1"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务类"><span class="toc-text">业务类</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#zookeepper命令"><span class="toc-text">zookeepper命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#新建服务提供者"><span class="toc-text">新建服务提供者</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cloud-provider-payment8004"><span class="toc-text">cloud-provider-payment8004</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#controller测试"><span class="toc-text">controller测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主启动类"><span class="toc-text">主启动类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#新建消费者cloud-consumerzk-order80"><span class="toc-text">新建消费者cloud-consumerzk-order80</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml-1"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务类"><span class="toc-text">业务类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zookeeper查看"><span class="toc-text">zookeeper查看</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1154,7 +1154,9 @@ public class OrderZKController {
         String result = restTemplate.getForObject(INVOKE_URL + &quot;/payment/zk&quot;, String.class);
         return result;
     }
-}</code></pre><p>启动后访问<a href="http://127.0.0.1/consumer/payment/zk" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/zk</a></p>
+}</code></pre><h2 id="zookeeper查看"><a href="#zookeeper查看" class="headerlink" title="zookeeper查看"></a>zookeeper查看</h2><pre><code>[zk: localhost:2181(CONNECTED) 4] ls /services
+[cloud-provider-payment, cloud-consumer-order]
+</code></pre><p>启动后访问<a href="http://127.0.0.1/consumer/payment/zk" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/zk</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
@@ -1172,7 +1174,7 @@ public class OrderZKController {
     <p><span class="copy-title">文章字数:</span><span class="post-count">1.1k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
     <p><span class="copy-title">发布时间:</span>2020-03-21, 11:08:48</p>
-    <p><span class="copy-title">最后更新:</span>2020-03-21, 13:17:35</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-21, 13:20:58</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/21/Cloud-4-集成ZooKeeper/" title="[Cloud]4-集成ZooKeeper">http://zx21.xyz/2020/03/21/Cloud-4-集成ZooKeeper/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
