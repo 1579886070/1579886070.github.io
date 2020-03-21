@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-03-20T08:37:55.237Z</updated>
+  <updated>2020-03-21T05:17:35.058Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Cloud]4-集成ZooKeeper</title>
+    <link href="http://zx21.xyz/2020/03/21/Cloud-4-%E9%9B%86%E6%88%90ZooKeeper/"/>
+    <id>http://zx21.xyz/2020/03/21/Cloud-4-集成ZooKeeper/</id>
+    <published>2020-03-21T03:08:48.000Z</published>
+    <updated>2020-03-21T05:17:35.058Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>本机与虚拟机测试，注意：保证本机与虚拟机能互相ping通</strong></p><h1 id="zookeepper命令"><a href="#zookeepper命令" class="headerlink" title="zookeepper命令"></a>zookeepper命令</h1><pre><code>1. 启动ZK服务:       zkServer.sh start2. 查看ZK服务状态:   zkServer.sh status3. 停止ZK服务:       zkServer.sh stop4. 重启ZK服务:       zkServer.sh restart5. ZK服务连接:       zkCli.sh</code></pre><hr><h1 id="新建服务提供者"><a href="#新建服务提供者" class="headerlink" title="新建服务提供者"></a>新建服务提供者</h1><h2 id="cloud-provider-payment8004"><a href="#cloud-provider-payment8004" class="headerlink" title="cloud-provider-payment8004"></a>cloud-provider-payment8004</h2><p>引入zookeeper相关的依赖</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;    &lt;parent&gt;        &lt;artifactId&gt;cloud2020&lt;/artifactId&gt;        &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;    &lt;/parent&gt;    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;    &lt;artifactId&gt;cloud-provider-payment8004&lt;/artifactId&gt;    &lt;dependencies&gt;        &lt;dependency&gt;            &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;            &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;            &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;            &lt;version&gt;1.1.10&lt;/version&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;mysql&lt;/groupId&gt;            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;            &lt;scope&gt;test&lt;/scope&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;            &lt;scope&gt;runtime&lt;/scope&gt;            &lt;optional&gt;true&lt;/optional&gt;        &lt;/dependency&gt;        &lt;!--   引入zookeeper客户端     --&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;            &lt;artifactId&gt;spring-cloud-starter-zookeeper-discovery&lt;/artifactId&gt;            &lt;exclusions&gt;                &lt;exclusion&gt;                    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;                    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;                &lt;/exclusion&gt;            &lt;/exclusions&gt;        &lt;/dependency&gt;        &lt;dependency&gt;            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;            &lt;version&gt;3.4.10&lt;/version&gt;        &lt;/dependency&gt;    &lt;/dependencies&gt;&lt;/project&gt;</code></pre><h2 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h2><pre><code>server:  port: 8004# 服务别名---注册zookeeper到注册中心名称spring:  application:    name: cloud-provider-payment  cloud:    zookeeper:      connect-string: 192.168.8.208:2181      max-retries: 10  datasource:    type: com.alibaba.druid.pool.DruidDataSource    driver-class-name: org.gjt.mm.mysql.Driver    url: jdbc:mysql://127.0.0.1:3306/db2019?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false    username: root    password: 123456</code></pre><h2 id="controller测试"><a href="#controller测试" class="headerlink" title="controller测试"></a>controller测试</h2><pre><code>@RestController@Slf4jpublic class PaymentController {    @Value(&quot;${server.port}&quot;)    private String serverPort;    @GetMapping(value = &quot;/payment/zk&quot;)    public String paymentzk() {        return &quot;springcloud with zookeeper: &quot; + serverPort + &quot;\t&quot; + UUID.randomUUID().toString();    }}</code></pre><h2 id="主启动类"><a href="#主启动类" class="headerlink" title="主启动类"></a>主启动类</h2><pre><code>/** * @author Administrator * @date 2020/3/19 14:10 * * //@EnableDiscoveryClient该注解用于向使用consul或 zookeeper作为法册中心时注册服务 */@SpringBootApplication@EnableDiscoveryClientpublic class PaymentMain8004 {    public static void main(String[] args) {        SpringApplication.run(PaymentMain8004.class, args);    }}</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>启动zookeeper，运行微服务。</p><pre><code>[zk: localhost:2181(CONNECTED) 25] ls /                                                                     [services, zookeeper][zk: localhost:2181(CONNECTED) 26] ls /services                                                             [cloud-provider-payment][zk: localhost:2181(CONNECTED) 27] ls /services/cloud-provider-payment[c0ca3c06-7384-42a1-bfa2-63ed8e6f3a1e][zk: localhost:2181(CONNECTED) 28] [zk: localhost:2181(CONNECTED) 28] get /services/cloud-provider-payment/c0ca3c06-7384-42a1-bfa2-63ed8e6f3a1e{&quot;name&quot;:&quot;cloud-provider-payment&quot;,&quot;id&quot;:&quot;c0ca3c06-7384-42a1-bfa2-63ed8e6f3a1e&quot;,&quot;address&quot;:&quot;DESKTOP-T08AAHT&quot;,&quot;port&quot;:8004,&quot;sslPort&quot;:null,&quot;payload&quot;:{&quot;@class&quot;:&quot;org.springframework.cloud.zookeeper.discovery.ZookeeperInstance&quot;,&quot;id&quot;:&quot;application-1&quot;,&quot;name&quot;:&quot;cloud-provider-payment&quot;,&quot;metadata&quot;:{}},&quot;registrationTimeUTC&quot;:1584766408452,&quot;serviceType&quot;:&quot;DYNAMIC&quot;,&quot;uriSpec&quot;:{&quot;parts&quot;:[{&quot;value&quot;:&quot;scheme&quot;,&quot;variable&quot;:true},{&quot;value&quot;:&quot;://&quot;,&quot;variable&quot;:false},{&quot;value&quot;:&quot;address&quot;,&quot;variable&quot;:true},{&quot;value&quot;:&quot;:&quot;,&quot;variable&quot;:false},{&quot;value&quot;:&quot;port&quot;,&quot;variable&quot;:true}]}}cZxid = 0x36ctime = Sat Mar 21 20:47:00 CST 2020mZxid = 0x36mtime = Sat Mar 21 20:47:00 CST 2020pZxid = 0x36cversion = 0dataVersion = 0aclVersion = 0ephemeralOwner = 0x170fd2061fe0002dataLength = 536numChildren = 0</code></pre><hr><h1 id="新建消费者cloud-consumerzk-order80"><a href="#新建消费者cloud-consumerzk-order80" class="headerlink" title="新建消费者cloud-consumerzk-order80"></a>新建消费者cloud-consumerzk-order80</h1><h2 id="application-yml-1"><a href="#application-yml-1" class="headerlink" title="application.yml"></a>application.yml</h2><pre><code>server:  port: 80spring:  application:    name: cloud-consumer-order  cloud:    zookeeper:      connect-string: 192.168.8.208:2181      max-retries: 10  datasource:    type: com.alibaba.druid.pool.DruidDataSource    driver-class-name: org.gjt.mm.mysql.Driver    url: jdbc:mysql://127.0.0.1:3306/db2019?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false    username: root    password: 123456</code></pre><h2 id="业务类"><a href="#业务类" class="headerlink" title="业务类"></a>业务类</h2><pre><code>@Configurationpublic class ApplicationContextConfig {    /**     * //appLicationcontext.xml &lt;bean id=&quot;&quot;class=&quot;&quot;&gt;     *     * 使用@LoapBalanced注解赋于RestTemplate负载均衡的能力     */    @Bean    @LoadBalanced    public RestTemplate getRestTemplate() {        return new RestTemplate();    }}</code></pre><pre><code>@RestController@Slf4jpublic class OrderZKController {    private static final String INVOKE_URL = &quot;http://cloud-provider-payment&quot;;    @Resource    private RestTemplate restTemplate;    @GetMapping(value = &quot;/consumer/payment/zk&quot;)    public String paymentInfo(){        String result = restTemplate.getForObject(INVOKE_URL + &quot;/payment/zk&quot;, String.class);        return result;    }}</code></pre><p>启动后访问<a href="http://127.0.0.1/consumer/payment/zk" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/zk</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;本机与虚拟机测试，注意：保证本机与虚拟机能互相ping通&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&quot;zookeepper命令&quot;&gt;&lt;a href=&quot;#zookeepper命令&quot; class=&quot;headerlink&quot; title=&quot;zookeepper命令&quot;&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="SpringCloud" scheme="http://zx21.xyz/tags/SpringCloud/"/>
+    
+  </entry>
   
   <entry>
     <title>[Cloud]3-集成Eureka</title>
@@ -531,32 +558,6 @@
     
     
       <category term="mybatis" scheme="http://zx21.xyz/tags/mybatis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JAVA]MVC请求映射</title>
-    <link href="http://zx21.xyz/2019/11/10/JAVA-MVC%E8%AF%B7%E6%B1%82%E6%98%A0%E5%B0%84/"/>
-    <id>http://zx21.xyz/2019/11/10/JAVA-MVC请求映射/</id>
-    <published>2019-11-10T12:50:49.000Z</published>
-    <updated>2019-11-10T13:16:34.001Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="一、-RequestMapping方式"><a href="#一、-RequestMapping方式" class="headerlink" title="一、@RequestMapping方式"></a>一、@RequestMapping方式</h2><p>以前我们controller写请求路劲都是如下格式,指定每个http方法，如get、post等。</p><pre><code>@RequestMapping(value = &quot;v1/get&quot;,method = RequestMethod.GET)</code></pre><p>点击方法，进入源代码中查看一下，可以看到方法包含如下多种：<br><img src="http://image.xiaoxinyes.club/2019-11-10_205659.png" alt="源码"></p><hr><h2 id="二、更简洁的方式"><a href="#二、更简洁的方式" class="headerlink" title="二、更简洁的方式"></a>二、更简洁的方式</h2><p>很多以前的老项目的格式都是上面的那种，而现在新增了@GetMapping，@PostMapping，@PutMapping，@DeleteMapping，@PatchMapping。</p><pre><code>    @GetMapping(&quot;get&quot;)    public String get(){        return &quot;get请求!&quot;;    }    @PostMapping(&quot;post&quot;)    public String post(){        return &quot;post请求!&quot;;    }    @DeleteMapping(&quot;delete&quot;)    public String delete(){        return &quot;delete请求!&quot;;    }    @PutMapping(&quot;put&quot;)    public String put(){        return &quot;put请求!&quot;;    }</code></pre><p>点击任意一个注解进入源码里面，可以看到组合注解。只是简化了，而依旧调用的是RequestMethod。<br><img src="http://image.xiaoxinyes.club/2019-11-10_210259.png" alt="源码"></p><hr><h2 id="三、基于restful接口开发"><a href="#三、基于restful接口开发" class="headerlink" title="三、基于restful接口开发"></a>三、基于restful接口开发</h2><p>Get:对应查询<br>post：对应新增<br>put:对应更新<br>delete:对应删除</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;一、-RequestMapping方式&quot;&gt;&lt;a href=&quot;#一、-RequestMapping方式&quot; class=&quot;headerlink&quot; title=&quot;一、@RequestMapping方式&quot;&gt;&lt;/a&gt;一、@RequestMapping方式&lt;/h2&gt;&lt;p&gt;以前
-      
-    
-    </summary>
-    
-    
-      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
-    
-    
-      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
     
   </entry>
   

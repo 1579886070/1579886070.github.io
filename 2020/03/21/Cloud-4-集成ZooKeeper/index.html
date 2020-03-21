@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]IDEA部署web项目添加tomcat | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]IDEA部署web项目添加tomcat | 周信的博客">
+  <title>[Cloud]4-集成ZooKeeper | 周信的博客</title>
+  <meta name="keywords" content=" SpringCloud ">
+  <meta name="description" content="[Cloud]4-集成ZooKeeper | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="创建消费者模块cloud-comsumer-order80调用上篇文章的支付模块cloud-provider-payment8001。 构建步骤1、建module 2、改pom 3、写yml 4、主启动 5、业务类编码application.ymlserver:   port: 80主启动类package xyz.zx21.springcloud;  import org.springframew">
 <meta name="keywords" content="SpringCloud">
@@ -902,9 +902,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-IDEA部署web项目添加tomcat" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cloud-4-集成ZooKeeper" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]IDEA部署web项目添加tomcat</h1>
+        <h1 class="article-title">[Cloud]4-集成ZooKeeper</h1>
     
     <div class="article-meta">
         
@@ -919,19 +919,19 @@
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color2">SpringCloud</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-14 19:09:18'>2019-10-14 19:07</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-21 13:17:35'>2020-03-21 11:08</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:146</span>
+        <span>字数:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -961,7 +961,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一步，进入Intellij-Idea。点击！"><span class="toc-text">第一步，进入Intellij Idea。点击！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二步，按图步骤勾选。"><span class="toc-text">第二步，按图步骤勾选。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三步，选择路径名称。"><span class="toc-text">第三步，选择路径名称。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#到此之后，一个空项目就完成了。默认的index-jsp如下"><span class="toc-text">到此之后，一个空项目就完成了。默认的index.jsp如下:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接下来将项目部署Tomcat。"><span class="toc-text">接下来将项目部署Tomcat。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加Tomcat步骤如下列图"><span class="toc-text">添加Tomcat步骤如下列图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Server界面根据自己情况配置"><span class="toc-text">Server界面根据自己情况配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加项目"><span class="toc-text">添加项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后，全部完成测试运行看下。"><span class="toc-text">最后，全部完成测试运行看下。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#显示如下，完成！"><span class="toc-text">显示如下，完成！</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#zookeepper命令"><span class="toc-text">zookeepper命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#新建服务提供者"><span class="toc-text">新建服务提供者</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cloud-provider-payment8004"><span class="toc-text">cloud-provider-payment8004</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#controller测试"><span class="toc-text">controller测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主启动类"><span class="toc-text">主启动类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#新建消费者cloud-consumerzk-order80"><span class="toc-text">新建消费者cloud-consumerzk-order80</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#application-yml-1"><span class="toc-text">application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#业务类"><span class="toc-text">业务类</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -977,42 +977,184 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="第一步，进入Intellij-Idea。点击！"><a href="#第一步，进入Intellij-Idea。点击！" class="headerlink" title="第一步，进入Intellij Idea。点击！"></a>第一步，进入Intellij Idea。点击！</h2><p><a href="http://image.xiaoxinyes.club/2018-08-07_1.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-07_1.png" alt></a></p>
-<hr>
-<h2 id="第二步，按图步骤勾选。"><a href="#第二步，按图步骤勾选。" class="headerlink" title="第二步，按图步骤勾选。"></a>第二步，按图步骤勾选。</h2><h2 id><a href="#" class="headerlink" title></a><a href="http://image.xiaoxinyes.club/2018-08-07_2.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-07_2.png" alt></a></h2><hr>
-<p>&nbsp;</p>
-<h2 id="第三步，选择路径名称。"><a href="#第三步，选择路径名称。" class="headerlink" title="第三步，选择路径名称。"></a>第三步，选择路径名称。</h2><p><a href="http://image.xiaoxinyes.club/2018-08-07_3.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-07_3.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<h2 id="到此之后，一个空项目就完成了。默认的index-jsp如下"><a href="#到此之后，一个空项目就完成了。默认的index-jsp如下" class="headerlink" title="到此之后，一个空项目就完成了。默认的index.jsp如下:"></a>到此之后，一个空项目就完成了。默认的index.jsp如下:</h2><pre class="lang:default decode:true ">&lt;%@ page contentType="text/html;charset=UTF-8" language="java" %&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;$Title$&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-  $END$
-  &lt;/body&gt;
-&lt;/html&gt;</pre>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2 id="接下来将项目部署Tomcat。"><a href="#接下来将项目部署Tomcat。" class="headerlink" title="接下来将项目部署Tomcat。"></a>接下来将项目部署Tomcat。</h2><p><a href="http://image.xiaoxinyes.club/2018-08-07_4.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-07_4.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<h2 id="添加Tomcat步骤如下列图"><a href="#添加Tomcat步骤如下列图" class="headerlink" title="添加Tomcat步骤如下列图"></a>添加Tomcat步骤如下列图</h2><p><a href="http://image.xiaoxinyes.club/2018-08-08_1.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-08_1.png" alt></a></p>
-<p>&nbsp;</p>
-<p><a href="http://image.xiaoxinyes.club/2018-08-08_2.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-08_2.png" alt></a></p>
-<p>&nbsp;</p>
-<p><a href="http://image.xiaoxinyes.club/2018-08-08_3.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-08_3.png" alt></a></p>
-<p>&nbsp;</p>
-<h2 id="Server界面根据自己情况配置"><a href="#Server界面根据自己情况配置" class="headerlink" title="Server界面根据自己情况配置"></a>Server界面根据自己情况配置</h2><p><a href="http://image.xiaoxinyes.club/2018-08-08_4.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-08_4.png" alt></a></p>
-<p>&nbsp;</p>
-<h2 id="添加项目"><a href="#添加项目" class="headerlink" title="添加项目"></a>添加项目</h2><p><a href="http://image.xiaoxinyes.club/2018-08-08_5.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-08_5.png" alt></a></p>
-<p>&nbsp;</p>
-<p><img src="http://image.xiaoxinyes.club/2018-08-08_6.png" alt></p>
-<hr>
-<h2 id="最后，全部完成测试运行看下。"><a href="#最后，全部完成测试运行看下。" class="headerlink" title="最后，全部完成测试运行看下。"></a>最后，全部完成测试运行看下。</h2><p><a href="http://image.xiaoxinyes.club/2018-08-07_5.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-07_5.png" alt></a></p>
-<p>&nbsp;</p>
-<h2 id="显示如下，完成！"><a href="#显示如下，完成！" class="headerlink" title="显示如下，完成！"></a>显示如下，完成！</h2><p><a href="http://image.xiaoxinyes.club/2018-08-07_61.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2018-08-07_61.png" alt></a></p>
+        <p><strong>本机与虚拟机测试，注意：保证本机与虚拟机能互相ping通</strong></p>
+<h1 id="zookeepper命令"><a href="#zookeepper命令" class="headerlink" title="zookeepper命令"></a>zookeepper命令</h1><pre><code>1. 启动ZK服务:       zkServer.sh start
+2. 查看ZK服务状态:   zkServer.sh status
+3. 停止ZK服务:       zkServer.sh stop
+4. 重启ZK服务:       zkServer.sh restart
+5. ZK服务连接:       zkCli.sh</code></pre><hr>
+<h1 id="新建服务提供者"><a href="#新建服务提供者" class="headerlink" title="新建服务提供者"></a>新建服务提供者</h1><h2 id="cloud-provider-payment8004"><a href="#cloud-provider-payment8004" class="headerlink" title="cloud-provider-payment8004"></a>cloud-provider-payment8004</h2><p>引入zookeeper相关的依赖</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;cloud2020&lt;/artifactId&gt;
+        &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;artifactId&gt;cloud-provider-payment8004&lt;/artifactId&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;artifactId&gt;cloud-api-commons&lt;/artifactId&gt;
+            &lt;groupId&gt;xyz.zx21.springcloud&lt;/groupId&gt;
+            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
+            &lt;version&gt;1.1.10&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;!--   引入zookeeper客户端     --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-zookeeper-discovery&lt;/artifactId&gt;
+            &lt;exclusions&gt;
+                &lt;exclusion&gt;
+                    &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
+                    &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
+                &lt;/exclusion&gt;
+            &lt;/exclusions&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.zookeeper&lt;/groupId&gt;
+            &lt;artifactId&gt;zookeeper&lt;/artifactId&gt;
+            &lt;version&gt;3.4.10&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre><h2 id="application-yml"><a href="#application-yml" class="headerlink" title="application.yml"></a>application.yml</h2><pre><code>server:
+  port: 8004
+
+# 服务别名---注册zookeeper到注册中心名称
+spring:
+  application:
+    name: cloud-provider-payment
+  cloud:
+    zookeeper:
+      connect-string: 192.168.8.208:2181
+      max-retries: 10
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db2019?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
+    username: root
+    password: 123456</code></pre><h2 id="controller测试"><a href="#controller测试" class="headerlink" title="controller测试"></a>controller测试</h2><pre><code>@RestController
+@Slf4j
+public class PaymentController {
+    @Value(&quot;${server.port}&quot;)
+    private String serverPort;
+
+    @GetMapping(value = &quot;/payment/zk&quot;)
+    public String paymentzk() {
+        return &quot;springcloud with zookeeper: &quot; + serverPort + &quot;\t&quot; + UUID.randomUUID().toString();
+    }
+}</code></pre><h2 id="主启动类"><a href="#主启动类" class="headerlink" title="主启动类"></a>主启动类</h2><pre><code>/**
+ * @author Administrator
+ * @date 2020/3/19 14:10
+ *
+ * //@EnableDiscoveryClient该注解用于向使用consul或 zookeeper作为法册中心时注册服务
+ */
+@SpringBootApplication
+@EnableDiscoveryClient
+public class PaymentMain8004 {
+    public static void main(String[] args) {
+        SpringApplication.run(PaymentMain8004.class, args);
+    }
+}</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>启动zookeeper，运行微服务。</p>
+<pre><code>[zk: localhost:2181(CONNECTED) 25] ls /                                                                     
+[services, zookeeper]
+[zk: localhost:2181(CONNECTED) 26] ls /services                                                             
+[cloud-provider-payment]
+[zk: localhost:2181(CONNECTED) 27] ls /services/cloud-provider-payment
+[c0ca3c06-7384-42a1-bfa2-63ed8e6f3a1e]
+[zk: localhost:2181(CONNECTED) 28] 
+[zk: localhost:2181(CONNECTED) 28] get /services/cloud-provider-payment/c0ca3c06-7384-42a1-bfa2-63ed8e6f3a1e
+{&quot;name&quot;:&quot;cloud-provider-payment&quot;,&quot;id&quot;:&quot;c0ca3c06-7384-42a1-bfa2-63ed8e6f3a1e&quot;,&quot;address&quot;:&quot;DESKTOP-T08AAHT&quot;,&quot;port&quot;:8004,&quot;sslPort&quot;:null,&quot;payload&quot;:{&quot;@class&quot;:&quot;org.springframework.cloud.zookeeper.discovery.ZookeeperInstance&quot;,&quot;id&quot;:&quot;application-1&quot;,&quot;name&quot;:&quot;cloud-provider-payment&quot;,&quot;metadata&quot;:{}},&quot;registrationTimeUTC&quot;:1584766408452,&quot;serviceType&quot;:&quot;DYNAMIC&quot;,&quot;uriSpec&quot;:{&quot;parts&quot;:[{&quot;value&quot;:&quot;scheme&quot;,&quot;variable&quot;:true},{&quot;value&quot;:&quot;://&quot;,&quot;variable&quot;:false},{&quot;value&quot;:&quot;address&quot;,&quot;variable&quot;:true},{&quot;value&quot;:&quot;:&quot;,&quot;variable&quot;:false},{&quot;value&quot;:&quot;port&quot;,&quot;variable&quot;:true}]}}
+cZxid = 0x36
+ctime = Sat Mar 21 20:47:00 CST 2020
+mZxid = 0x36
+mtime = Sat Mar 21 20:47:00 CST 2020
+pZxid = 0x36
+cversion = 0
+dataVersion = 0
+aclVersion = 0
+ephemeralOwner = 0x170fd2061fe0002
+dataLength = 536
+numChildren = 0</code></pre><hr>
+<h1 id="新建消费者cloud-consumerzk-order80"><a href="#新建消费者cloud-consumerzk-order80" class="headerlink" title="新建消费者cloud-consumerzk-order80"></a>新建消费者cloud-consumerzk-order80</h1><h2 id="application-yml-1"><a href="#application-yml-1" class="headerlink" title="application.yml"></a>application.yml</h2><pre><code>server:
+  port: 80
+
+spring:
+  application:
+    name: cloud-consumer-order
+  cloud:
+    zookeeper:
+      connect-string: 192.168.8.208:2181
+      max-retries: 10
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db2019?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
+    username: root
+    password: 123456</code></pre><h2 id="业务类"><a href="#业务类" class="headerlink" title="业务类"></a>业务类</h2><pre><code>@Configuration
+public class ApplicationContextConfig {
+    /**
+     * //appLicationcontext.xml &lt;bean id=&quot;&quot;class=&quot;&quot;&gt;
+     *
+     * 使用@LoapBalanced注解赋于RestTemplate负载均衡的能力
+     */
+    @Bean
+    @LoadBalanced
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
+}</code></pre><pre><code>@RestController
+@Slf4j
+public class OrderZKController {
+    private static final String INVOKE_URL = &quot;http://cloud-provider-payment&quot;;
+
+    @Resource
+    private RestTemplate restTemplate;
+
+    @GetMapping(value = &quot;/consumer/payment/zk&quot;)
+    public String paymentInfo(){
+        String result = restTemplate.getForObject(INVOKE_URL + &quot;/payment/zk&quot;, String.class);
+        return result;
+    }
+}</code></pre><p>启动后访问<a href="http://127.0.0.1/consumer/payment/zk" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/zk</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
@@ -1026,12 +1168,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]IDEA部署web项目添加tomcat</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">146</span></p>
+    <p><span class="copy-title">文章标题:</span>[Cloud]4-集成ZooKeeper</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.1k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-14, 19:07:05</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-14, 19:09:18</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/14/JAVA-IDEA部署web项目添加tomcat/" title="[JAVA]IDEA部署web项目添加tomcat">http://zx21.xyz/2019/10/14/JAVA-IDEA部署web项目添加tomcat/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-21, 11:08:48</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-21, 13:17:35</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/21/Cloud-4-集成ZooKeeper/" title="[Cloud]4-集成ZooKeeper">http://zx21.xyz/2020/03/21/Cloud-4-集成ZooKeeper/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
