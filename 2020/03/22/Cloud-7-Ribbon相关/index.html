@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]Statement与PreparedStatement | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]Statement与PreparedStatement | 周信的博客">
+  <title>[Cloud]7-Ribbon相关 | 周信的博客</title>
+  <meta name="keywords" content=" SringCloud ">
+  <meta name="description" content="[Cloud]7-Ribbon相关 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -930,9 +930,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-Statement与PreparedStatement" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cloud-7-Ribbon相关" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]Statement与PreparedStatement</h1>
+        <h1 class="article-title">[Cloud]7-Ribbon相关</h1>
     
     <div class="article-meta">
         
@@ -947,19 +947,19 @@
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color1">SringCloud</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-16 18:43:41'>2019-10-16 18:43</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-22 14:06:18'>2020-03-22 13:02</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:344</span>
+        <span>字数:902</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -989,7 +989,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Statement"><span class="toc-text">Statement</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PreparedStatement"><span class="toc-text">PreparedStatement</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#是什么？"><span class="toc-text">是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IRule"><span class="toc-text">IRule</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ribbon负载"><span class="toc-text">Ribbon负载</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#负载规则替换"><span class="toc-text">负载规则替换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建MySelfRule类"><span class="toc-text">新建MySelfRule类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改主启动类"><span class="toc-text">修改主启动类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#负载轮询算法"><span class="toc-text">负载轮询算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源码"><span class="toc-text">源码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手写轮询算法"><span class="toc-text">手写轮询算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8001-8002"><span class="toc-text">8001/8002</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释掉消费端的-LoadBalanced"><span class="toc-text">注释掉消费端的@LoadBalanced</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义接口LoadBalance"><span class="toc-text">定义接口LoadBalance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口实现类"><span class="toc-text">接口实现类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改controller"><span class="toc-text">修改controller</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试-1"><span class="toc-text">测试</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1005,102 +1005,126 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Statement和PreparedStatement都是用来执行sql语句的,那我们在使用的时候选择谁呢？</p>
-<h3 id="Statement"><a href="#Statement" class="headerlink" title="Statement"></a>Statement</h3><pre class="lang:java decode:true ">public class JdbcDemo {
-    public static void main(String[] args) {
-        Connection connection = null;
-        Statement statement = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8",
-                    "root", "1579886070");
-            statement = connection.createStatement();
-            String sql = "insert into student values(null,"+"'小信'"+","+"18)";
-            statement.execute(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(statement != null){
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><h2 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h2><blockquote>
+<p>Spring Cloud Ribbon是基于Netflix Ribbon实现的一套客户端负载均衡的工具。<br>简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供客户端的软件负载均衡算法和服务调用。Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。简单的说，就是在配置文件中列出Load Balancer（简称LB）后面所有的机器，Ribbon会自动的帮助你基于某种规则（如简单轮询，随机连接等）去连接这些机器。我们很容易使用Ribbon实现自定义的负载均衡算法。</p>
+</blockquote>
+<p><strong>负载均衡+ResTemplate调用</strong></p>
+<h2 id="IRule"><a href="#IRule" class="headerlink" title="IRule"></a>IRule</h2><p>特定算法：</p>
+<pre><code>com.netflix.loadbalancer.RoundRobinRule -轮询
+com.netflix.loadbalancer.RandomRule-随机
+com.netflix.loadbalance.RetryRule-先按照RoundRobinRule的策略获取服务，如果获取服务失败则在指定时间内会进行重试
+WeightedResponseTimeRule-对RoundRobinRule的扩展，响应速度越快的实例选择权重越大，越容易被选择
+BestAvailableRule-会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务
+AvailabilityFilteringRule-先过滤掉故障实例，再选择并发较小的实例
+ZoneAvoidanceRule-默认规则，复合判断server所在区域的性能和server的可用性选择服务器</code></pre><hr>
+<h1 id="Ribbon负载"><a href="#Ribbon负载" class="headerlink" title="Ribbon负载"></a>Ribbon负载</h1><h2 id="负载规则替换"><a href="#负载规则替换" class="headerlink" title="负载规则替换"></a>负载规则替换</h2><p>注意：这个自定义配置类不能放在@ComponentScan所扫描的当前包下以及子包下，否则我们自定义的这个配置类就会被所有的Ribbon客户端所共享，达不到特殊化定制的目的了。</p>
+<h3 id="新建MySelfRule类"><a href="#新建MySelfRule类" class="headerlink" title="新建MySelfRule类"></a>新建MySelfRule类</h3><pre><code>@Configuration
+public class MySelfRule {
+    @Bean
+    public IRule myRule() {
+        //定义为随机
+        return new RandomRule();    
     }
-}
-</pre>
-
-<hr>
-<p>&nbsp;</p>
-<h3 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h3><pre class="lang:java decode:true ">public class JdbcDemo {
+}</code></pre><h3 id="修改主启动类"><a href="#修改主启动类" class="headerlink" title="修改主启动类"></a>修改主启动类</h3><p>添加注解@RibbonClient</p>
+<pre><code>@SpringBootApplication
+@EnableEurekaClient
+@RibbonClient(name = &quot;CLOUD-PAYMENT-SERVICE&quot;,configuration = MySelfRule.class)
+public class OrderMain80 {
     public static void main(String[] args) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8",
-                    "root", "1579886070");
-            String sql = "insert into student values(null,?,?)";
-            preparedStatement = connection.prepareStatement(sql);
-
-            //设置参数值
-            preparedStatement.setString(1,"小天");
-            preparedStatement.setInt(2,20);
-            //执行
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(preparedStatement != null){
-                try {
-                    preparedStatement.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        SpringApplication.run(OrderMain80.class, args);
     }
-}</pre>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>以上分别用Statement和PreparedStatement实现数据库插入数据的案例。</p>
-<p>对比明显总结：</p>
-<ul>
-<li><p><span style="font-size: 12pt;"><strong>Statement使用繁琐的字符串拼接，不但不易阅读，当字段比较多时容易出错。可读性与维护性都不好;</strong></span></p>
-</li>
-<li><p><span style="font-size: 12pt;"><strong>PreparedStatement使用设置参数的形式，简单易读，不易出错。</strong></span><br>其他优点：</p>
-</li>
-<li><p><strong>PreparedStatement执行效率高于Statement，假设一次要插入10条数据，那么Statement需要执行10次，把10次全部传输到数据库端。</strong></p>
-</li>
-<li><p><strong>PreparedStatement防止Sql注入。</strong></p>
-</li>
-</ul>
+}</code></pre><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>访问<a href="http://127.0.0.1/consumer/payment/getForEntity/1" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/getForEntity/1</a> ,这个时候轮询变成了随机。</p>
+<h2 id="负载轮询算法"><a href="#负载轮询算法" class="headerlink" title="负载轮询算法"></a>负载轮询算法</h2><pre><code>负载轮询算法：rest接口第几次请求数%服务器集群总数量=实际调用服务器位置下标，每次服务重启动后rest接口计数从1开始。</code></pre><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><p>RoundRobinRule</p>
+<pre><code>    public Server choose(ILoadBalancer lb, Object key) {
+        if (lb == null) {
+            log.warn(&quot;no load balancer&quot;);
+            return null;
+        }
+
+        Server server = null;
+        int count = 0;
+        while (server == null &amp;&amp; count++ &lt; 10) {
+            List&lt;Server&gt; reachableServers = lb.getReachableServers();
+            List&lt;Server&gt; allServers = lb.getAllServers();
+            int upCount = reachableServers.size();
+            int serverCount = allServers.size();
+
+            if ((upCount == 0) || (serverCount == 0)) {
+                log.warn(&quot;No up servers available from load balancer: &quot; + lb);
+                return null;
+            }
+
+            int nextServerIndex = incrementAndGetModulo(serverCount);
+            server = allServers.get(nextServerIndex);
+
+            if (server == null) {
+                /* Transient. */
+                Thread.yield();
+                continue;
+            }
+
+            if (server.isAlive() &amp;&amp; (server.isReadyToServe())) {
+                return (server);
+            }
+
+            // Next.
+            server = null;
+        }
+
+        if (count &gt;= 10) {
+            log.warn(&quot;No available alive servers after 10 tries from load balancer: &quot;
+                    + lb);
+        }
+        return server;
+    }</code></pre><h2 id="手写轮询算法"><a href="#手写轮询算法" class="headerlink" title="手写轮询算法"></a>手写轮询算法</h2><h3 id="8001-8002"><a href="#8001-8002" class="headerlink" title="8001/8002"></a>8001/8002</h3><p>controller添加如下,方便测试。</p>
+<pre><code>    @GetMapping(value = &quot;/payment/lb&quot;)
+    public String getPaymentLB(){
+        return serverPort;
+    }</code></pre><h3 id="注释掉消费端的-LoadBalanced"><a href="#注释掉消费端的-LoadBalanced" class="headerlink" title="注释掉消费端的@LoadBalanced"></a>注释掉消费端的@LoadBalanced</h3><p>测试自己写的负载均衡是否生效。</p>
+<h3 id="定义接口LoadBalance"><a href="#定义接口LoadBalance" class="headerlink" title="定义接口LoadBalance"></a>定义接口LoadBalance</h3><pre><code>public interface LoadBalance {
+    ServiceInstance instance(List&lt;ServiceInstance&gt; serviceInstances);
+}</code></pre><h3 id="接口实现类"><a href="#接口实现类" class="headerlink" title="接口实现类"></a>接口实现类</h3><pre><code>@Component
+public class MyLB implements LoadBalance {
+
+    private AtomicInteger atomicInteger = new AtomicInteger(0);
+
+    public final int getAndIncrement() {
+        int current;
+        int next;
+        do {
+            current = this.atomicInteger.get();
+            next = current &gt;= 2147483647 ? 0 : current + 1;
+        } while (!this.atomicInteger.compareAndSet(current, next)); //CAS
+        System.out.println(&quot;*****第几次访问，次数next: &quot; + next);
+        return next;
+    }
+
+    @Override
+    public ServiceInstance instance(List&lt;ServiceInstance&gt; serviceInstances) {
+        int index = getAndIncrement() % serviceInstances.size();
+
+        return serviceInstances.get(index);
+    }
+}</code></pre><h3 id="修改controller"><a href="#修改controller" class="headerlink" title="修改controller"></a>修改controller</h3><pre><code>    @Resource
+    private RestTemplate restTemplate;
+
+    @Resource
+    private LoadBalance loadBalance;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
+
+    @GetMapping(&quot;/consumer/payment/lb&quot;)
+    public String getPaymentLB() {
+        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(&quot;CLOUD-PAYMENT-SERVICE&quot;);
+        if (instances == null || instances.size() &lt;= 0) {
+            return null;
+        }
+        ServiceInstance serviceInstance = loadBalance.instance(instances);
+        URI uri = serviceInstance.getUri();
+
+        return restTemplate.getForObject(uri + &quot;/payment/lb&quot;, String.class);
+    }</code></pre><h3 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h3><p>访问<a href="http://localhost//consumer/payment/lb" target="_blank" rel="noopener">http://localhost//consumer/payment/lb</a> ，发现每次访问端口都在变化。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
@@ -1114,12 +1138,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]Statement与PreparedStatement</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">344</span></p>
+    <p><span class="copy-title">文章标题:</span>[Cloud]7-Ribbon相关</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">902</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-16, 18:43:08</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-16, 18:43:41</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/16/JAVA-Statement与PreparedStatement/" title="[JAVA]Statement与PreparedStatement">http://zx21.xyz/2019/10/16/JAVA-Statement与PreparedStatement/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-22, 13:02:23</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-22, 14:06:18</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/22/Cloud-7-Ribbon相关/" title="[Cloud]7-Ribbon相关">http://zx21.xyz/2020/03/22/Cloud-7-Ribbon相关/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
