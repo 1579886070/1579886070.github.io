@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]JDBC-ResultSet查询数据 | 周信的博客</title>
-  <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]JDBC-ResultSet查询数据 | 周信的博客">
+  <title>[Cloud]6-三个注册中心异同点 | 周信的博客</title>
+  <meta name="keywords" content=" SpringCloud ">
+  <meta name="description" content="[Cloud]6-三个注册中心异同点 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -918,9 +918,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-JDBC-ResultSet查询数据" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cloud-6-三个注册中心异同点" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]JDBC-ResultSet查询数据</h1>
+        <h1 class="article-title">[Cloud]6-三个注册中心异同点</h1>
     
     <div class="article-meta">
         
@@ -935,19 +935,19 @@
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">java</a>
+            <a href="javascript:" class="color2">SpringCloud</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-20 11:46:11'>2019-10-17 19:35</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-22 09:52:19'>2020-03-21 22:37</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:187</span>
+        <span>字数:248</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -977,7 +977,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#异同点"><span class="toc-text">异同点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CAP"><span class="toc-text">CAP</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -993,56 +993,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>executeQuery 执行SQL语句</p>
-<pre><code>public class JdbcDemo {
-    public static void main(String[] args) {
-        Connection connection = null;
-        Statement Statement = null;
-        try {
-//注册驱动
-            Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-//获取连接
-            connection = DriverManager.getConnection(&quot;jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8&quot;,
-                    &quot;root&quot;, &quot;1579886070&quot;);
-            Statement = connection.createStatement();
-            String sql = &quot;select *from student&quot;;
-            //返回结果集
-            ResultSet resultSet = Statement.executeQuery(sql);
-//遍历集合
-            while (resultSet.next()){
-                //可以用字段名
-                int id = resultSet.getInt(&quot;id&quot;);
-                //可以用字段的位置
-                String name = resultSet.getString(2);
-                int age = resultSet.getInt(&quot;age&quot;);
-                System.out.println(&quot;id:&quot;+id+&quot;,name:&quot;+name+&quot;,age:&quot;+age);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(Statement != null){
-                try {
-                    Statement.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-}</code></pre><p>&nbsp;</p>
-<p>遍历时可以使用字段名或者字段的顺序。</p>
+        <h1 id="异同点"><a href="#异同点" class="headerlink" title="异同点"></a>异同点</h1><p>|组件名|语言|CAP|服务健康检查|对外暴露接口|<br>|:—–  |:—–|:—–<br>|Eureka |Java|AP|可配支持|HTTP|<br>|Consul |Go|CP|支持|HTTP/DNS|<br>|ZooKeeper |java|CP|支持|客户端</p>
+<h1 id="CAP"><a href="#CAP" class="headerlink" title="CAP"></a>CAP</h1><p>CAP理论关注粒度是数据，而不是整体系统设计的策略</p>
+<blockquote>
+<p><strong>C:Consistency（强一致性）</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>A:Availability（可用性）</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>P:Partition tolerance（分区容错性）</strong></p>
+</blockquote>
+<p>最多只能同时较好的满足两个。<br>CAP理论的核心是：一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求，因此，根据 CAP原理将NoSQL数据库分成了满足CA原则、满足CP原则和满足AP原则三大类： </p>
+<p>CA-单点集群，满足一致性，可用性的系统，通常在可扩展性上不太强大。</p>
+<p>CP-满足一致性，分区容忍性的系统，通常性能不是特别高。</p>
+<p>AP-满足可用性，分区容忍性的系统，通常可能对一致性要求低一些。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
@@ -1056,12 +1021,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]JDBC-ResultSet查询数据</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">187</span></p>
+    <p><span class="copy-title">文章标题:</span>[Cloud]6-三个注册中心异同点</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">248</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-17, 19:35:34</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-20, 11:46:11</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/17/JAVA-JDBC-ResultSet查询数据/" title="[JAVA]JDBC-ResultSet查询数据">http://zx21.xyz/2019/10/17/JAVA-JDBC-ResultSet查询数据/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-21, 22:37:12</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-22, 09:52:19</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/21/Cloud-6-三个注册中心异同点/" title="[Cloud]6-三个注册中心异同点">http://zx21.xyz/2020/03/21/Cloud-6-三个注册中心异同点/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

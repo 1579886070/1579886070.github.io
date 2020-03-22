@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-03-21T10:18:02.583Z</updated>
+  <updated>2020-03-22T01:52:19.628Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Cloud]6-三个注册中心异同点</title>
+    <link href="http://zx21.xyz/2020/03/21/Cloud-6-%E4%B8%89%E4%B8%AA%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E5%BC%82%E5%90%8C%E7%82%B9/"/>
+    <id>http://zx21.xyz/2020/03/21/Cloud-6-三个注册中心异同点/</id>
+    <published>2020-03-21T14:37:12.000Z</published>
+    <updated>2020-03-22T01:52:19.628Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="异同点"><a href="#异同点" class="headerlink" title="异同点"></a>异同点</h1><p>|组件名|语言|CAP|服务健康检查|对外暴露接口|<br>|:—–  |:—–|:—–<br>|Eureka |Java|AP|可配支持|HTTP|<br>|Consul |Go|CP|支持|HTTP/DNS|<br>|ZooKeeper |java|CP|支持|客户端</p><h1 id="CAP"><a href="#CAP" class="headerlink" title="CAP"></a>CAP</h1><p>CAP理论关注粒度是数据，而不是整体系统设计的策略</p><blockquote><p><strong>C:Consistency（强一致性）</strong></p></blockquote><blockquote><p><strong>A:Availability（可用性）</strong></p></blockquote><blockquote><p><strong>P:Partition tolerance（分区容错性）</strong></p></blockquote><p>最多只能同时较好的满足两个。<br>CAP理论的核心是：一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求，因此，根据 CAP原理将NoSQL数据库分成了满足CA原则、满足CP原则和满足AP原则三大类： </p><p>CA-单点集群，满足一致性，可用性的系统，通常在可扩展性上不太强大。</p><p>CP-满足一致性，分区容忍性的系统，通常性能不是特别高。</p><p>AP-满足可用性，分区容忍性的系统，通常可能对一致性要求低一些。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;异同点&quot;&gt;&lt;a href=&quot;#异同点&quot; class=&quot;headerlink&quot; title=&quot;异同点&quot;&gt;&lt;/a&gt;异同点&lt;/h1&gt;&lt;p&gt;|组件名|语言|CAP|服务健康检查|对外暴露接口|&lt;br&gt;|:—–  |:—–|:—–&lt;br&gt;|Eureka |Java|AP|可
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="SpringCloud" scheme="http://zx21.xyz/tags/SpringCloud/"/>
+    
+  </entry>
   
   <entry>
     <title>[Cloud]5-集成Consul</title>
@@ -531,33 +557,6 @@
     
     
       <category term="java" scheme="http://zx21.xyz/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[JAVA]assembly自定义打包</title>
-    <link href="http://zx21.xyz/2019/11/24/JAVA-assembly%E8%87%AA%E5%AE%9A%E4%B9%89%E6%89%93%E5%8C%85/"/>
-    <id>http://zx21.xyz/2019/11/24/JAVA-assembly自定义打包/</id>
-    <published>2019-11-24T01:58:29.000Z</published>
-    <updated>2019-11-24T02:12:35.514Z</updated>
-    
-    <content type="html"><![CDATA[<p>在很多场景下，会有很多shell脚本或者需要操作一些配置，可以使用maven的assembly插件打出结构清晰的架构。</p><p>官网参考：<a href="http://maven.apache.org/plugins/maven-assembly-plugin/assembly.html" target="_blank" rel="noopener">点击进入</a></p><h2 id="一、去掉springboot打包方式"><a href="#一、去掉springboot打包方式" class="headerlink" title="一、去掉springboot打包方式"></a>一、去掉springboot打包方式</h2><pre><code>&lt;build&gt;    &lt;plugins&gt;        &lt;plugin&gt;             &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;             &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;        &lt;/plugin&gt;    &lt;/plugins&gt;&lt;/build&gt;</code></pre><hr><h2 id="二、添加assembly依赖"><a href="#二、添加assembly依赖" class="headerlink" title="二、添加assembly依赖"></a>二、添加assembly依赖</h2><pre><code>    &lt;build&gt;        &lt;finalName&gt;zx-demo&lt;/finalName&gt;        &lt;plugins&gt;            &lt;plugin&gt;                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;                &lt;configuration&gt;                    &lt;source&gt;1.8&lt;/source&gt;                    &lt;target&gt;1.8&lt;/target&gt;                &lt;/configuration&gt;            &lt;/plugin&gt;            &lt;plugin&gt;                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;                &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;                &lt;configuration&gt;                    &lt;archive&gt;                        &lt;manifest&gt;                            &lt;!--运行jar包时运行的主类，要求类全名--&gt;                            &lt;mainClass&gt;com.example.zxdemo.Application&lt;/mainClass&gt;                            &lt;!-- 是否指定项目classpath下的依赖 --&gt;                            &lt;addClasspath&gt;true&lt;/addClasspath&gt;                            &lt;!-- 指定依赖的时候声明前缀 --&gt;                            &lt;classpathPrefix&gt;./&lt;/classpathPrefix&gt;                        &lt;/manifest&gt;                        &lt;manifestEntries&gt;                            &lt;Class-Path&gt;../conf/ ../resources/&lt;/Class-Path&gt;                        &lt;/manifestEntries&gt;                    &lt;/archive&gt;                &lt;/configuration&gt;            &lt;/plugin&gt;            &lt;plugin&gt;                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;                &lt;configuration&gt;                    &lt;descriptors&gt;                        &lt;descriptor&gt;src/main/assembly/assembly.xml&lt;/descriptor&gt;                    &lt;/descriptors&gt;                &lt;/configuration&gt;                &lt;executions&gt;                    &lt;execution&gt;&lt;!-- 配置执行器 --&gt;                        &lt;id&gt;make-assembly&lt;/id&gt;                        &lt;phase&gt;package&lt;/phase&gt;&lt;!-- 绑定到package生命周期阶段上 --&gt;                        &lt;goals&gt;                            &lt;goal&gt;single&lt;/goal&gt;&lt;!-- 只运行一次 --&gt;                        &lt;/goals&gt;                    &lt;/execution&gt;                &lt;/executions&gt;            &lt;/plugin&gt;        &lt;/plugins&gt;    &lt;/build&gt;</code></pre><ul><li><p>可以看到依赖中写了src/main/assembly/assembly.xml，这是配置文件存放的位置。</p><h2 id="三、assembly-xml"><a href="#三、assembly-xml" class="headerlink" title="三、assembly.xml"></a>三、assembly.xml</h2><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;assembly&gt;  &lt;id&gt;zx-demo&lt;/id&gt;  &lt;formats&gt;      &lt;format&gt;tar&lt;/format&gt;&lt;!--打包的文件格式,也可以有：war zip--&gt;  &lt;/formats&gt;  &lt;!--tar.gz压缩包下是否生成和项目名相同的根目录--&gt;  &lt;includeBaseDirectory&gt;false&lt;/includeBaseDirectory&gt;  &lt;dependencySets&gt;      &lt;dependencySet&gt;          &lt;!--是否把本项目添加到依赖文件夹下--&gt;          &lt;useProjectArtifact&gt;true&lt;/useProjectArtifact&gt;          &lt;outputDirectory&gt;lib&lt;/outputDirectory&gt;          &lt;!--将scope为runtime的依赖包打包--&gt;          &lt;scope&gt;runtime&lt;/scope&gt;      &lt;/dependencySet&gt;  &lt;/dependencySets&gt;  &lt;fileSets&gt;      &lt;fileSet&gt;          &lt;directory&gt;src/main/bin&lt;/directory&gt;          &lt;outputDirectory&gt;./&lt;/outputDirectory&gt;      &lt;/fileSet&gt;      &lt;fileSet&gt;          &lt;directory&gt;src/main/resources&lt;/directory&gt;          &lt;outputDirectory&gt;conf&lt;/outputDirectory&gt;      &lt;/fileSet&gt;  &lt;/fileSets&gt;&lt;/assembly&gt;</code></pre></li><li><p>可以看到 src/main/bin 目录，可以自定义启动脚本。</p><h2 id="四、自定义脚本"><a href="#四、自定义脚本" class="headerlink" title="四、自定义脚本"></a>四、自定义脚本</h2><h3 id="start-sh"><a href="#start-sh" class="headerlink" title="start.sh"></a>start.sh</h3><pre><code>nohup java -jar -Dfile.encoding=UTF-8 -Djava.security.egd=file:/dev/urandom ./lib/zx-demo.jar &gt; /dev/null 2&gt;&amp;1 &amp;</code></pre><h3 id="stop-sh"><a href="#stop-sh" class="headerlink" title="stop.sh"></a>stop.sh</h3><pre><code>PID=`ps -ef | grep zx-demo.jar | grep -v grep | awk &#39;{print $2}&#39;`if [ -z $PID ]; then  echo Application is already stoppedelse  echo kill $PID  kill -s 9 $PIDfi</code></pre></li></ul><p>在assembly.xml中可自定义打包格式，打包后，target下会生成相应的压缩文件。<br><img src="http://" alt="图片"></p><p>conf：resources下的文件</p><p>lib：所有依赖的jar包</p><h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p><img src="http://image.xiaoxinyes.club/20191124094523.png" alt="项目"></p><h3 id="解压后结构"><a href="#解压后结构" class="headerlink" title="解压后结构"></a>解压后结构</h3><p><img src="http://image.xiaoxinyes.club/20191124094451.png" alt="目录"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;在很多场景下，会有很多shell脚本或者需要操作一些配置，可以使用maven的assembly插件打出结构清晰的架构。&lt;/p&gt;
-&lt;p&gt;官网参考：&lt;a href=&quot;http://maven.apache.org/plugins/maven-assembly-plugin/as
-      
-    
-    </summary>
-    
-    
-      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
-    
-    
-      <category term="maven" scheme="http://zx21.xyz/tags/maven/"/>
     
   </entry>
   
