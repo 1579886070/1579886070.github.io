@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[Other]IDEA上传github | 周信的博客</title>
-  <meta name="keywords" content=" github ">
-  <meta name="description" content="[Other]IDEA上传github | 周信的博客">
+  <title>[Cloud]8-OpenFeign | 周信的博客</title>
+  <meta name="keywords" content=" SpringCloud ">
+  <meta name="description" content="[Cloud]8-OpenFeign | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -938,9 +938,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-Other-IDEA上传github" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cloud-8-OpenFeign" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[Other]IDEA上传github</h1>
+        <h1 class="article-title">[Cloud]8-OpenFeign</h1>
     
     <div class="article-meta">
         
@@ -948,26 +948,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Other">Other</a>
+                <a href="javascript:" data-rel="JAVA">JAVA</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color2">github</a>
+            <a href="javascript:" class="color2">SpringCloud</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-15 14:36:37'>2019-10-11 20:20</time>
+        创建时间:<time class="date" title='更新时间: 2020-03-22 19:47:31'>2020-03-22 19:01</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:171</span>
+        <span>字数:975</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -997,7 +997,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一"><span class="toc-text">一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二"><span class="toc-text">二</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三"><span class="toc-text">三</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四"><span class="toc-text">四</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五"><span class="toc-text">五</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六"><span class="toc-text">六</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenFeign"><span class="toc-text">OpenFeign</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#是什么？"><span class="toc-text">是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#能干嘛？"><span class="toc-text">能干嘛？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编码"><span class="toc-text">编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建cloud-comsumer-fegin-order80"><span class="toc-text">新建cloud-comsumer-fegin-order80</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yml"><span class="toc-text">yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主启动类"><span class="toc-text">主启动类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#业务类编写"><span class="toc-text">业务类编写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenFeign超时控制"><span class="toc-text">OpenFeign超时控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试-1"><span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#超时解决配置"><span class="toc-text">超时解决配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenFeign日志增强"><span class="toc-text">OpenFeign日志增强</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#日志级别"><span class="toc-text">日志级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加配置类"><span class="toc-text">添加配置类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yml-1"><span class="toc-text">yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试-2"><span class="toc-text">测试</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1013,38 +1013,103 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>关于如何在idea中同步到github上去。</p>
-<a id="more"></a>
+        <h1 id="OpenFeign"><a href="#OpenFeign" class="headerlink" title="OpenFeign"></a>OpenFeign</h1><h2 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h2><blockquote>
+<p>Feign是一个声明式WebService客户端。使用Feign能让编写Web Service客户端更加简单。<br>它的使用方法是定义一个服务接口然后在上面添加注解即可。</p>
+</blockquote>
+<p>github: <a href="https://github.com/spring-cloud/spring-cloud-openfeign" target="_blank" rel="noopener">点击访问</a></p>
+<h2 id="能干嘛？"><a href="#能干嘛？" class="headerlink" title="能干嘛？"></a>能干嘛？</h2><blockquote>
+<p>可以在使编写Java Http客户端变得更容易。</p>
+<p>前面在使用Ribbon+RestTemplate时，利用RestTemplate对http请求的封装处理，形成了一套模版化的调用方法。</p>
+</blockquote>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="新建cloud-comsumer-fegin-order80"><a href="#新建cloud-comsumer-fegin-order80" class="headerlink" title="新建cloud-comsumer-fegin-order80"></a>新建cloud-comsumer-fegin-order80</h3><p>pom新增</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre><h3 id="yml"><a href="#yml" class="headerlink" title="yml"></a>yml</h3><pre><code>server:
+  port: 80
 
-<h2 id="一"><a href="#一" class="headerlink" title="一"></a>一</h2><p>idea安装并且分别配置git和github的信息。</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-05_103516.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_103516.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<h2 id="二"><a href="#二" class="headerlink" title="二"></a>二</h2><p>github–&gt;new repository–&gt;获得链接</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-05_104045.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104045.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<h3 id="三"><a href="#三" class="headerlink" title="三"></a>三</h3><p>创建本地仓库</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-05_104224.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104224.png" alt></a></p>
-<p>ok即可</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-05_104419.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104419.png" alt></a></p>
-<p>我们可以看到项目路径中就有生成的.git文件了。</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-05_104655.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104655.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<h2 id="四"><a href="#四" class="headerlink" title="四"></a>四</h2><p>idea右键项目名–&gt;git–&gt;add。加入本地仓库！</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-05_105200.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_105200.png" alt></a></p>
-<p>然后再Commit Directory。提交项目！<br><a href="http://image.xiaoxinyes.club/2019-01-05_104810.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_104810.png" alt></a><br>&nbsp;<br><a href="http://image.xiaoxinyes.club/2019-01-05_105647.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_105647.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<h2 id="五"><a href="#五" class="headerlink" title="五"></a>五</h2><p>等待一会，接下来会询问你要提交到哪，点击Define remote,把GitHub地址填写上去，push就行了。</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-05_105930.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_105930.png" alt></a></p>
-<hr>
-<p>&nbsp;</p>
-<h2 id="六"><a href="#六" class="headerlink" title="六"></a>六</h2><p>打开github地址，就能看到已经push上去了，如果原项目修改了，需要重新传到GitHub上去，重新Commit Directory即可。</p>
-<p><a href="http://image.xiaoxinyes.club/2019-01-05_110547.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/2019-01-05_110547.png" alt></a></p>
-<p>&nbsp;</p>
+eureka:
+  client:
+    register-with-eureka: false   #是否将自己注册到注册中心,集群必须设置为true配合ribbon
+    service-url:
+      #defaultZone: http://localhost:7001/eureka
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/  #集群版</code></pre><h3 id="主启动类"><a href="#主启动类" class="headerlink" title="主启动类"></a>主启动类</h3><p>@EnableFeignClients</p>
+<pre><code>@SpringBootApplication
+@EnableFeignClients
+public class OrderFeignMain80 {
+    public static void main(String[] args) {
+        SpringApplication.run(OrderFeignMain80.class, args);
+    }
+}</code></pre><h3 id="业务类编写"><a href="#业务类编写" class="headerlink" title="业务类编写"></a>业务类编写</h3><p><strong>定义一个feign接口</strong></p>
+<pre><code>@Configuration
+@FeignClient(value = &quot;CLOUD-PAYMENT-SERVICE&quot;)
+public interface PaymentFeignService {
 
+    @GetMapping(value = &quot;/payment/get/{id}&quot;)
+    CommonResult&lt;Payment&gt; getPaymentById(@PathVariable(&quot;id&quot;) Long id);
+}</code></pre><p><strong>controller</strong></p>
+<pre><code>@RestController
+@Slf4j
+public class OrderFeignController {
+
+    @Resource
+    private PaymentFeignService paymentFeignService;
+
+    @GetMapping(value = &quot;/consumer/payment/get/{id}&quot;)
+    public CommonResult&lt;Payment&gt; getPaymentById(@PathVariable(&quot;id&quot;) Long id) {
+        return paymentFeignService.getPaymentById(id);
+    }
+}</code></pre><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>访问 <a href="http://127.0.0.1/consumer/payment/get/1" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/get/1</a> 即可发现跟前面写的Ribbon+RestTemplate效果一致。</p>
+<hr>
+<h2 id="OpenFeign超时控制"><a href="#OpenFeign超时控制" class="headerlink" title="OpenFeign超时控制"></a>OpenFeign超时控制</h2><p>cloud-provider-payment8001服务新增接口，同时cloud-comsumer-fegin-order80服务的PaymentFeignService接口和controller同样添加调用。</p>
+<pre><code>    @GetMapping(&quot;/payment/feign/timeout&quot;)
+    public String paymentFeignTimeOut(){
+        //测试OpenFeign超时
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        return serverPort;
+    }</code></pre><h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><p>访问<a href="http://127.0.0.1:8001/payment/feign/timeout" target="_blank" rel="noopener">http://127.0.0.1:8001/payment/feign/timeout</a> -正常</p>
+<p>访问<a href="http://127.0.0.1/consumer/payment/feign/timeout" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/feign/timeout</a> -超时</p>
+<pre><code>connect timed out executing GET http://CLOUD-PAYMENT-SERVICE/payment/feign/timeout
+feign.RetryableException: connect timed out executing GET http://CLOUD-PAYMENT-SERVICE/payment/feign/timeout
+    at feign.FeignException.errorExecuting(FeignException.java:213)</code></pre><h3 id="超时解决配置"><a href="#超时解决配置" class="headerlink" title="超时解决配置"></a>超时解决配置</h3><pre><code>#设置feign客户端超时时间
+ribbon:
+  #指的是建立连接后从服务器读取到可用资源所用的时间
+  ReadTimeout: 5000
+  #指的是建立连接所用的时间，适用于网络状况正常的情况下，两端连接所用的时间
+  ConnectTimeout: 5000</code></pre><hr>
+<h2 id="OpenFeign日志增强"><a href="#OpenFeign日志增强" class="headerlink" title="OpenFeign日志增强"></a>OpenFeign日志增强</h2><h3 id="日志级别"><a href="#日志级别" class="headerlink" title="日志级别"></a>日志级别</h3><blockquote>
+<p>NONE：默认的，不显示任何日志；</p>
+<p>BASIC：仅记录请求方法、URL、响应状态码及执行时间；</p>
+<p>HEADERS：除了BASIC中定义的信息之外，还有请求和响应的头信息；</p>
+<p>FULL：除了HEADERS中定义的信息之外，还有请求和响的正文及元数据。</p>
+</blockquote>
+<h3 id="添加配置类"><a href="#添加配置类" class="headerlink" title="添加配置类"></a>添加配置类</h3><pre><code>@Configuration
+public class FeignConfig {
+
+    @Bean
+    Logger.Level feignLoggerLevel(){
+        return Logger.Level.FULL;
+    }
+}</code></pre><h3 id="yml-1"><a href="#yml-1" class="headerlink" title="yml"></a>yml</h3><pre><code>logging:
+  level:
+    #以什么级别监控哪个接口
+    xyz.zx21.springcloud.service.PaymentFeignService: debug</code></pre><h3 id="测试-2"><a href="#测试-2" class="headerlink" title="测试"></a>测试</h3><p>访问 <a href="http://127.0.0.1/consumer/payment/get/1" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/get/1</a></p>
+<p>控制台输出日志</p>
+<pre><code>2020-03-22 19:46:33.369 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] ---&gt; GET http://CLOUD-PAYMENT-SERVICE/payment/get/1 HTTP/1.1
+2020-03-22 19:46:33.370 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] ---&gt; END HTTP (0-byte body)
+2020-03-22 19:46:33.376 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] &lt;--- HTTP/1.1 200 (6ms)
+2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] connection: keep-alive
+2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] content-type: application/json
+2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] date: Sun, 22 Mar 2020 11:46:33 GMT
+2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] keep-alive: timeout=60
+2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] transfer-encoding: chunked
+2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] 
+2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] {&quot;code&quot;:200,&quot;message&quot;:&quot;查询成功,serverPort: 8001&quot;,&quot;data&quot;:{&quot;id&quot;:1,&quot;serial&quot;:&quot;小信&quot;}}
+2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] &lt;--- END HTTP (88-byte body)</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -1057,12 +1122,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[Other]IDEA上传github</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">171</span></p>
+    <p><span class="copy-title">文章标题:</span>[Cloud]8-OpenFeign</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">975</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-11, 20:20:43</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-15, 14:36:37</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/11/Other-IDEA上传github/" title="[Other]IDEA上传github">http://zx21.xyz/2019/10/11/Other-IDEA上传github/</a>
+    <p><span class="copy-title">发布时间:</span>2020-03-22, 19:01:51</p>
+    <p><span class="copy-title">最后更新:</span>2020-03-22, 19:47:31</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/03/22/Cloud-8-OpenFeign/" title="[Cloud]8-OpenFeign">http://zx21.xyz/2020/03/22/Cloud-8-OpenFeign/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

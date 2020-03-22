@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2020-03-22T06:06:18.883Z</updated>
+  <updated>2020-03-22T11:47:31.927Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[Cloud]8-OpenFeign</title>
+    <link href="http://zx21.xyz/2020/03/22/Cloud-8-OpenFeign/"/>
+    <id>http://zx21.xyz/2020/03/22/Cloud-8-OpenFeign/</id>
+    <published>2020-03-22T11:01:51.000Z</published>
+    <updated>2020-03-22T11:47:31.927Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="OpenFeign"><a href="#OpenFeign" class="headerlink" title="OpenFeign"></a>OpenFeign</h1><h2 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h2><blockquote><p>Feign是一个声明式WebService客户端。使用Feign能让编写Web Service客户端更加简单。<br>它的使用方法是定义一个服务接口然后在上面添加注解即可。</p></blockquote><p>github: <a href="https://github.com/spring-cloud/spring-cloud-openfeign" target="_blank" rel="noopener">点击访问</a></p><h2 id="能干嘛？"><a href="#能干嘛？" class="headerlink" title="能干嘛？"></a>能干嘛？</h2><blockquote><p>可以在使编写Java Http客户端变得更容易。</p><p>前面在使用Ribbon+RestTemplate时，利用RestTemplate对http请求的封装处理，形成了一套模版化的调用方法。</p></blockquote><h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="新建cloud-comsumer-fegin-order80"><a href="#新建cloud-comsumer-fegin-order80" class="headerlink" title="新建cloud-comsumer-fegin-order80"></a>新建cloud-comsumer-fegin-order80</h3><p>pom新增</p><pre><code>&lt;dependency&gt;    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;&lt;/dependency&gt;</code></pre><h3 id="yml"><a href="#yml" class="headerlink" title="yml"></a>yml</h3><pre><code>server:  port: 80eureka:  client:    register-with-eureka: false   #是否将自己注册到注册中心,集群必须设置为true配合ribbon    service-url:      #defaultZone: http://localhost:7001/eureka      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/  #集群版</code></pre><h3 id="主启动类"><a href="#主启动类" class="headerlink" title="主启动类"></a>主启动类</h3><p>@EnableFeignClients</p><pre><code>@SpringBootApplication@EnableFeignClientspublic class OrderFeignMain80 {    public static void main(String[] args) {        SpringApplication.run(OrderFeignMain80.class, args);    }}</code></pre><h3 id="业务类编写"><a href="#业务类编写" class="headerlink" title="业务类编写"></a>业务类编写</h3><p><strong>定义一个feign接口</strong></p><pre><code>@Configuration@FeignClient(value = &quot;CLOUD-PAYMENT-SERVICE&quot;)public interface PaymentFeignService {    @GetMapping(value = &quot;/payment/get/{id}&quot;)    CommonResult&lt;Payment&gt; getPaymentById(@PathVariable(&quot;id&quot;) Long id);}</code></pre><p><strong>controller</strong></p><pre><code>@RestController@Slf4jpublic class OrderFeignController {    @Resource    private PaymentFeignService paymentFeignService;    @GetMapping(value = &quot;/consumer/payment/get/{id}&quot;)    public CommonResult&lt;Payment&gt; getPaymentById(@PathVariable(&quot;id&quot;) Long id) {        return paymentFeignService.getPaymentById(id);    }}</code></pre><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>访问 <a href="http://127.0.0.1/consumer/payment/get/1" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/get/1</a> 即可发现跟前面写的Ribbon+RestTemplate效果一致。</p><hr><h2 id="OpenFeign超时控制"><a href="#OpenFeign超时控制" class="headerlink" title="OpenFeign超时控制"></a>OpenFeign超时控制</h2><p>cloud-provider-payment8001服务新增接口，同时cloud-comsumer-fegin-order80服务的PaymentFeignService接口和controller同样添加调用。</p><pre><code>    @GetMapping(&quot;/payment/feign/timeout&quot;)    public String paymentFeignTimeOut(){        //测试OpenFeign超时        try {            TimeUnit.SECONDS.sleep(3);        }catch (InterruptedException e){            e.printStackTrace();        }        return serverPort;    }</code></pre><h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><p>访问<a href="http://127.0.0.1:8001/payment/feign/timeout" target="_blank" rel="noopener">http://127.0.0.1:8001/payment/feign/timeout</a> -正常</p><p>访问<a href="http://127.0.0.1/consumer/payment/feign/timeout" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/feign/timeout</a> -超时</p><pre><code>connect timed out executing GET http://CLOUD-PAYMENT-SERVICE/payment/feign/timeoutfeign.RetryableException: connect timed out executing GET http://CLOUD-PAYMENT-SERVICE/payment/feign/timeout    at feign.FeignException.errorExecuting(FeignException.java:213)</code></pre><h3 id="超时解决配置"><a href="#超时解决配置" class="headerlink" title="超时解决配置"></a>超时解决配置</h3><pre><code>#设置feign客户端超时时间ribbon:  #指的是建立连接后从服务器读取到可用资源所用的时间  ReadTimeout: 5000  #指的是建立连接所用的时间，适用于网络状况正常的情况下，两端连接所用的时间  ConnectTimeout: 5000</code></pre><hr><h2 id="OpenFeign日志增强"><a href="#OpenFeign日志增强" class="headerlink" title="OpenFeign日志增强"></a>OpenFeign日志增强</h2><h3 id="日志级别"><a href="#日志级别" class="headerlink" title="日志级别"></a>日志级别</h3><blockquote><p>NONE：默认的，不显示任何日志；</p><p>BASIC：仅记录请求方法、URL、响应状态码及执行时间；</p><p>HEADERS：除了BASIC中定义的信息之外，还有请求和响应的头信息；</p><p>FULL：除了HEADERS中定义的信息之外，还有请求和响的正文及元数据。</p></blockquote><h3 id="添加配置类"><a href="#添加配置类" class="headerlink" title="添加配置类"></a>添加配置类</h3><pre><code>@Configurationpublic class FeignConfig {    @Bean    Logger.Level feignLoggerLevel(){        return Logger.Level.FULL;    }}</code></pre><h3 id="yml-1"><a href="#yml-1" class="headerlink" title="yml"></a>yml</h3><pre><code>logging:  level:    #以什么级别监控哪个接口    xyz.zx21.springcloud.service.PaymentFeignService: debug</code></pre><h3 id="测试-2"><a href="#测试-2" class="headerlink" title="测试"></a>测试</h3><p>访问 <a href="http://127.0.0.1/consumer/payment/get/1" target="_blank" rel="noopener">http://127.0.0.1/consumer/payment/get/1</a></p><p>控制台输出日志</p><pre><code>2020-03-22 19:46:33.369 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] ---&gt; GET http://CLOUD-PAYMENT-SERVICE/payment/get/1 HTTP/1.12020-03-22 19:46:33.370 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] ---&gt; END HTTP (0-byte body)2020-03-22 19:46:33.376 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] &lt;--- HTTP/1.1 200 (6ms)2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] connection: keep-alive2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] content-type: application/json2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] date: Sun, 22 Mar 2020 11:46:33 GMT2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] keep-alive: timeout=602020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] transfer-encoding: chunked2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] 2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] {&quot;code&quot;:200,&quot;message&quot;:&quot;查询成功,serverPort: 8001&quot;,&quot;data&quot;:{&quot;id&quot;:1,&quot;serial&quot;:&quot;小信&quot;}}2020-03-22 19:46:33.377 DEBUG 3496 --- [p-nio-80-exec-2] x.z.s.service.PaymentFeignService        : [PaymentFeignService#getPaymentById] &lt;--- END HTTP (88-byte body)</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;OpenFeign&quot;&gt;&lt;a href=&quot;#OpenFeign&quot; class=&quot;headerlink&quot; title=&quot;OpenFeign&quot;&gt;&lt;/a&gt;OpenFeign&lt;/h1&gt;&lt;h2 id=&quot;是什么？&quot;&gt;&lt;a href=&quot;#是什么？&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="SpringCloud" scheme="http://zx21.xyz/tags/SpringCloud/"/>
+    
+  </entry>
   
   <entry>
     <title>[Cloud]7-Ribbon相关</title>
@@ -529,33 +555,6 @@
     
     
       <category term="github" scheme="http://zx21.xyz/tags/github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[MySql]关于查询的一次异常排查</title>
-    <link href="http://zx21.xyz/2019/12/05/MySql-%E5%85%B3%E4%BA%8E%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%B8%80%E6%AC%A1%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/"/>
-    <id>http://zx21.xyz/2019/12/05/MySql-关于查询的一次异常排查/</id>
-    <published>2019-12-04T16:20:04.000Z</published>
-    <updated>2019-12-04T16:39:10.965Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近因为一个java项目，其中查询一组数据响应十分慢。后面发现对一张表有40万条左右的数据，单表每次查询速度1S以上。事有蹊跷，开始研究!</p><h2 id="数据40万条"><a href="#数据40万条" class="headerlink" title="数据40万条"></a>数据40万条</h2><pre><code>SELECT count(*) FROM `lz_commodity_info`--条数 350000万左右</code></pre><hr><h2 id="一、SQL查询测试"><a href="#一、SQL查询测试" class="headerlink" title="一、SQL查询测试"></a>一、SQL查询测试</h2><h3 id="执行sql查看执行时间"><a href="#执行sql查看执行时间" class="headerlink" title="执行sql查看执行时间"></a>执行sql查看执行时间</h3><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=544844787596</code></pre><p>** 响应信息如下,发现竟然查询需要1秒以上。虽然不是主键id,但是也不应该这么慢。**</p><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=544844787596OK时间: 1.13s</code></pre><hr><h3 id="添加索引"><a href="#添加索引" class="headerlink" title="添加索引"></a>添加索引</h3><p>查看没有添加索引，先加个索引看看。</p><pre><code>alter table `lz_commodity_info` add INDEX(commodity_id)</code></pre><h3 id="再次查询"><a href="#再次查询" class="headerlink" title="再次查询"></a>再次查询</h3><p>** 响应信息如下,竟然还是这么慢，事情没我想得那么简单。**</p><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=544844787596OK时间: 1.107s</code></pre><hr><h3 id="查看sql"><a href="#查看sql" class="headerlink" title="查看sql"></a>查看sql</h3><p>** 而后查看sql发现，定义的类型是varchar。那么尝试修改下sql语句，加上单引号查询试试。**</p><p><code>`commodity_id` varchar(50)</code></p><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=&#39;544844787596&#39;</code></pre><p>** 响应信息如下，发现从蜗牛直接到火箭了，直接起飞，那么导致慢的原因也浮现出来了。 **</p><pre><code>SELECT * FROM `lz_commodity_info` where commodity_id=&#39;544844787596&#39;OK时间: 0.002s</code></pre><hr><h2 id="二、疑问开始"><a href="#二、疑问开始" class="headerlink" title="二、疑问开始"></a>二、疑问开始</h2><h3 id="删除索引再测试"><a href="#删除索引再测试" class="headerlink" title="删除索引再测试"></a>删除索引再测试</h3><pre><code>alter table `lz_commodity_info` drop INDEX `commodity_id`</code></pre><h3 id="再次查看速度"><a href="#再次查看速度" class="headerlink" title="再次查看速度"></a>再次查看速度</h3><p>** 发现速度竟然基本差不多，都长达1s以上了 **</p><pre><code>时间: 1.099s------------时间: 1.077s------------</code></pre><hr><h3 id="explain测试"><a href="#explain测试" class="headerlink" title="explain测试"></a>explain测试</h3><p>sql前+explain 查询sql的执行情况。</p><ul><li>1、没加索引<br>不管是加上单引号还是不加。返回如下：</li></ul><p><img src="http://image.xiaoxinyes.club/20191205000538.png" alt="查询结果"></p><hr><ul><li>2、加上索引<br>不加单引号，返回结果跟上面的一样。</li></ul><p>加单引号，可以看到这才走了索引。返回结果如下：<br><img src="http://image.xiaoxinyes.club/20191205001000.png" alt="查询结果"></p><h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><blockquote><p>1、查询时添加索引可以极大的优化查询速度；</p><p>2、定义的是varchar类型的字段，添加索引，查询切记要加上单引号；</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近因为一个java项目，其中查询一组数据响应十分慢。后面发现对一张表有40万条左右的数据，单表每次查询速度1S以上。事有蹊跷，开始研究!&lt;/p&gt;
-&lt;h2 id=&quot;数据40万条&quot;&gt;&lt;a href=&quot;#数据40万条&quot; class=&quot;headerlink&quot; title=&quot;数据4
-      
-    
-    </summary>
-    
-    
-      <category term="Sql" scheme="http://zx21.xyz/categories/Sql/"/>
-    
-    
-      <category term="mysql" scheme="http://zx21.xyz/tags/mysql/"/>
     
   </entry>
   
