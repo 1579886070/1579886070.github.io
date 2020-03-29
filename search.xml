@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>[Other]Linux个人常用命令整理</title>
+      <link href="/2020/03/29/Other-Linux%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/"/>
+      <url>/2020/03/29/Other-Linux%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1、查看整体机器性能"><a href="#1、查看整体机器性能" class="headerlink" title="1、查看整体机器性能"></a>1、查看整体机器性能</h2><p>   top</p><pre><code>    --1.1 cpu    --1.2 mem    --1.3 id = idle 空闲率(越大越好)    --1.4 load average 系统负载率(后面三个值分别是1分钟5分钟15分钟的平均负载                        如果这三个值相加除三乘百分之百高于60说明系统负担重，                        高于80说明要gg了)</code></pre><h2 id="2、低配版查看整机性能"><a href="#2、低配版查看整机性能" class="headerlink" title="2、低配版查看整机性能"></a>2、低配版查看整机性能</h2><p>uptime</p><pre><code>    --19:21:23 up 17 min,  2 users,  load average: 0.00, 0.00, 0.00</code></pre><h2 id="3、内存"><a href="#3、内存" class="headerlink" title="3、内存"></a>3、内存</h2><p>free</p><pre><code>    --free -m</code></pre><h2 id="4、硬盘"><a href="#4、硬盘" class="headerlink" title="4、硬盘"></a>4、硬盘</h2><p>df</p><pre><code>    --df -h</code></pre><h2 id="5、cpu"><a href="#5、cpu" class="headerlink" title="5、cpu"></a>5、cpu</h2><p>vmstat(包含但不限于)</p><pre><code>--[root@contOS-1 ~]# vmstat -n 2 3procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu----- r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st 0  0      0 904864  27448  39636    0    0    50     4   22   28  0  1 99  0  0     0  0      0 904848  27448  39632    0    0     0     0   14   13  0  0 100  0  0     0  0      0 904848  27448  39632    0    0     0     0   15   13  0  0 100  0  0    </code></pre><h2 id="6、磁盘-io高很大可能写了大sql"><a href="#6、磁盘-io高很大可能写了大sql" class="headerlink" title="6、磁盘(io高很大可能写了大sql)"></a>6、磁盘(io高很大可能写了大sql)</h2><p>iostat</p><pre><code>    --iostat -xdk 2 3        --r/s     w/s 每s读写</code></pre><p>——————–以上源于周阳哥讲解，我总结的笔记</p><hr><p>其他</p><h2 id="1、获取线程总数"><a href="#1、获取线程总数" class="headerlink" title="1、获取线程总数"></a>1、获取线程总数</h2><pre><code>pstree -p 22704|wc -l</code></pre><h2 id="2、linux相关的参数"><a href="#2、linux相关的参数" class="headerlink" title="2、linux相关的参数"></a>2、linux相关的参数</h2><pre><code>ulimit -a</code></pre><h2 id="3、Logstash"><a href="#3、Logstash" class="headerlink" title="3、Logstash"></a>3、Logstash</h2><pre><code>systemctl start|restart|stop elasticsearch</code></pre><h2 id="4、nginx日志情况"><a href="#4、nginx日志情况" class="headerlink" title="4、nginx日志情况"></a>4、nginx日志情况</h2><pre><code>grep &#39;&quot;responsetime&quot;:2.&#39; /usr/local/nginx/logs/access.log</code></pre><h2 id="5、java堆栈分析"><a href="#5、java堆栈分析" class="headerlink" title="5、java堆栈分析"></a>5、java堆栈分析</h2><pre><code>进程十六进制值printf &quot;%x\n&quot; 22414jstack -l PID &gt; jstack.log</code></pre><blockquote><p>dump 文件里，值得关注的线程状态有：</p><p>死锁，Deadlock（重点关注）</p><p>执行中，Runnable </p><p>等待资源，Waiting on condition（重点关注）</p><p>等待获取监视器，Waiting on monitor entry（重点关注）</p><p>暂停，Suspended</p><p>对象等待中，Object.wait() 或 TIMED_WAITING</p><p>阻塞，Blocked（重点关注） </p><p>停止，Parked</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> Other </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>[Cloud]Hystrix断路器</title>
+      <link href="/2020/03/27/Cloud-Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/"/>
+      <url>/2020/03/27/Cloud-Hystrix%E6%96%AD%E8%B7%AF%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="是什么？"><a href="#是什么？" class="headerlink" title="是什么？"></a>是什么？</h1><blockquote><p>Hystrix是一个用于处理分布式系统的延迟和容错的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，</p><p>Hystrix能够保证在一个依赖出问题的情况下，不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性。</p><p>“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控（类似熔断保险丝），向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。</p></blockquote><hr><h1 id="Hystrix重要概念"><a href="#Hystrix重要概念" class="headerlink" title="Hystrix重要概念"></a>Hystrix重要概念</h1><p>服务降级：服务器忙，请稍后再试，不让客户端等待并立刻返回一个友好提示，fallback</p><p>服务熔断：类比保险丝达到最大服务访问后，直接拒绝访问，拉闸限电，然后调用服务降级的方法并返回友好提示</p><p>服务限流：秒杀高并发等操作，严禁一窝蜂的过来拥挤，大家排队，一秒钟N个，有序进行</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> JAVA </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringCloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[Cloud]8-OpenFeign</title>
       <link href="/2020/03/22/Cloud-8-OpenFeign/"/>
       <url>/2020/03/22/Cloud-8-OpenFeign/</url>
