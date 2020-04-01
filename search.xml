@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>[JAVA]跨域解决方法</title>
+      <link href="/2020/04/01/JAVA-%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+      <url>/2020/04/01/JAVA-%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p><strong>前后端交互出现跨域错误</strong></p><p>error</p><pre><code>home:1 Access to XMLHttpRequest at &#39;http://127.0.0.1:8080/article/list?start=1&amp;limit=5&#39; from origin &#39;http://localhost:4200&#39; has been blocked by CORS policy: No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource.</code></pre><h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="一、-CrossOrigin"><a href="#一、-CrossOrigin" class="headerlink" title="一、@CrossOrigin"></a>一、@CrossOrigin</h2><p>该注解可使用在类或者方法上，针对性的解决部分接口的跨域问题。</p><h2 id="二、拦截器（全局）"><a href="#二、拦截器（全局）" class="headerlink" title="二、拦截器（全局）"></a>二、拦截器（全局）</h2><pre><code>@Configurationpublic class WebMvcConfig implements WebMvcConfigurer {    @Override    public void addCorsMappings(CorsRegistry registry) {        registry.addMapping(&quot;/**&quot;)                .allowedOrigins(&quot;*&quot;)                .allowedMethods(&quot;POST&quot;, &quot;GET&quot;, &quot;PUT&quot;, &quot;OPTIONS&quot;, &quot;DELETE&quot;)                .maxAge(3600)                .allowCredentials(true);    }}</code></pre><h2 id="三、CorsFilter（全局）"><a href="#三、CorsFilter（全局）" class="headerlink" title="三、CorsFilter（全局）"></a>三、CorsFilter（全局）</h2><pre><code>@Configurationpublic class CrossDomainConfig {    @Bean    public CorsFilter corsFilter() {        //1.添加CORS配置信息        CorsConfiguration config = new CorsConfiguration();        //放行哪些原始域        config.addAllowedOrigin(&quot;*&quot;);        //是否发送Cookie信息        config.setAllowCredentials(true);        //放行哪些原始域(请求方式)        config.addAllowedMethod(&quot;*&quot;);        //放行哪些原始域(头部信息)        config.addAllowedHeader(&quot;*&quot;);        //暴露哪些头部信息（因为跨域访问默认不能获取全部头部信息）        config.addExposedHeader(&quot;content-type&quot;);        //2.添加映射路径        UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();        configSource.registerCorsConfiguration(&quot;/**&quot;, config);        //3.返回新的CorsFilter.        return new CorsFilter(configSource);    }}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> JAVA </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[Other]Linux个人常用命令整理</title>
       <link href="/2020/03/29/Other-Linux%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/"/>
       <url>/2020/03/29/Other-Linux%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/</url>

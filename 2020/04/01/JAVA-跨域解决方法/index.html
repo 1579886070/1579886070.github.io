@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JAVA]修改数据库中数据 | 周信的博客</title>
+  <title>[JAVA]跨域解决方法 | 周信的博客</title>
   <meta name="keywords" content=" java ">
-  <meta name="description" content="[JAVA]修改数据库中数据 | 周信的博客">
+  <meta name="description" content="[JAVA]跨域解决方法 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -966,9 +966,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JAVA-修改数据库中数据" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-JAVA-跨域解决方法" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JAVA]修改数据库中数据</h1>
+        <h1 class="article-title">[JAVA]跨域解决方法</h1>
     
     <div class="article-meta">
         
@@ -990,12 +990,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-13 22:56:53'>2019-10-13 22:56</time>
+        创建时间:<time class="date" title='更新时间: 2020-04-01 17:59:52'>2020-04-01 16:43</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:304</span>
+        <span>字数:270</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1025,7 +1025,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#解决"><span class="toc-text">解决</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、-CrossOrigin"><span class="toc-text">一、@CrossOrigin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、拦截器（全局）"><span class="toc-text">二、拦截器（全局）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、CorsFilter（全局）"><span class="toc-text">三、CorsFilter（全局）</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1041,88 +1041,45 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>首先，创建一个名为test的数据库，库中创建一个student的表。将修改表中NAME字段中的”Tom”。</p>
-<p><strong>添加数据</strong></p>
-<p><a href="http://image.xiaoxinyes.club/4_26_1.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/4_26_1.png" alt="爱生活爱语录"></a></p>
-<hr>
-<p>&nbsp;</p>
-<p>*<em>我将连接数据库，调用数据库和关闭资源分了三个方法，<br>*</em></p>
-<pre class="lang:java decode:true">/*
-* 连接数据库方法
- * */
-public Connection getCconnection() throws Exception {
-    //数据信息
-    String user = "root";
-    String password = "1579886070";
-    String jdbcUrl = "jdbc:mysql://127.0.0.1:3360/test";
-    String driverClass = "com.mysql.jdbc.Driver";
-
-    //加载驱动
-    Class.forName(driverClass);
-    Connection connection = DriverManager.getConnection(jdbcUrl, user, password);
-    return connection;
-}</pre>
-
-<hr>
-<p>&nbsp;</p>
-<p><strong>然后我们建立主方法，在其中调用</strong></p>
-<pre class="lang:java decode:true">
-public void testUpdate(){
-    Connection connection = null;
-    Statement statement = null;
-    try {
-        //连接数据库
-        connection = getCconnection();    
-        //调用 Connection 对象的 createStatement() 方法获取Statement 对象
-        statement = connection.createStatement();            
-        //准备SQL语句
-        String sql = "UPDATE student SET name = 'XiaoXin' WHERE id = 1";            
-        //4.发送SQL语句：调用Statement 对象的 executeUpdate(sql)方法
-        statement.executeUpdate(sql);        
-    } catch (Exception e) {
-        e.printStackTrace();
-    }finally {
-        //调用关闭资源方法
-        getRelease(null, statement, connection);
-    }    
-}</pre>
-
-<hr>
-<p>&nbsp;</p>
-<p><strong>在finally块中调用关闭资源的方法</strong></p>
-<pre class="lang:java decode:true">/*
-* 关闭资源方法
-* */
-public void getRelease(ResultSet resultSet,Statement statement,Connection connection){
-    if(resultSet != null){
-        try {
-            resultSet.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        <p><strong>前后端交互出现跨域错误</strong></p>
+<p>error</p>
+<pre><code>home:1 Access to XMLHttpRequest at &#39;http://127.0.0.1:8080/article/list?start=1&amp;limit=5&#39; from origin &#39;http://localhost:4200&#39; has been blocked by CORS policy: No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource.</code></pre><h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="一、-CrossOrigin"><a href="#一、-CrossOrigin" class="headerlink" title="一、@CrossOrigin"></a>一、@CrossOrigin</h2><p>该注解可使用在类或者方法上，针对性的解决部分接口的跨域问题。</p>
+<h2 id="二、拦截器（全局）"><a href="#二、拦截器（全局）" class="headerlink" title="二、拦截器（全局）"></a>二、拦截器（全局）</h2><pre><code>@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping(&quot;/**&quot;)
+                .allowedOrigins(&quot;*&quot;)
+                .allowedMethods(&quot;POST&quot;, &quot;GET&quot;, &quot;PUT&quot;, &quot;OPTIONS&quot;, &quot;DELETE&quot;)
+                .maxAge(3600)
+                .allowCredentials(true);
     }
-    if(statement != null){
-        try {
-            statement.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    if(connection != null){
-        try {
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}</pre>
+}</code></pre><h2 id="三、CorsFilter（全局）"><a href="#三、CorsFilter（全局）" class="headerlink" title="三、CorsFilter（全局）"></a>三、CorsFilter（全局）</h2><pre><code>@Configuration
+public class CrossDomainConfig {
+    @Bean
+    public CorsFilter corsFilter() {
+        //1.添加CORS配置信息
+        CorsConfiguration config = new CorsConfiguration();
+        //放行哪些原始域
+        config.addAllowedOrigin(&quot;*&quot;);
+        //是否发送Cookie信息
+        config.setAllowCredentials(true);
+        //放行哪些原始域(请求方式)
+        config.addAllowedMethod(&quot;*&quot;);
+        //放行哪些原始域(头部信息)
+        config.addAllowedHeader(&quot;*&quot;);
+        //暴露哪些头部信息（因为跨域访问默认不能获取全部头部信息）
+        config.addExposedHeader(&quot;content-type&quot;);
 
-<hr>
-<p>&nbsp;</p>
-<p><strong>运行，执行完后查看数据表</strong></p>
-<p><a href="http://image.xiaoxinyes.club/4_26_2.png" target="_blank" rel="noopener"><img src="http://image.xiaoxinyes.club/4_26_2.png" alt="爱生活爱语录"></a></p>
-<p>好啦，将原本NAME中的”Tom”修改为”XiaoXin”了。</p>
+        //2.添加映射路径
+        UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
+        configSource.registerCorsConfiguration(&quot;/**&quot;, config);
 
+        //3.返回新的CorsFilter.
+        return new CorsFilter(configSource);
+    }
+
+}</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -1135,12 +1092,12 @@ public void getRelease(ResultSet resultSet,Statement statement,Connection connec
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JAVA]修改数据库中数据</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">304</span></p>
+    <p><span class="copy-title">文章标题:</span>[JAVA]跨域解决方法</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">270</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-13, 22:56:07</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-13, 22:56:53</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/13/JAVA-修改数据库中数据/" title="[JAVA]修改数据库中数据">http://zx21.xyz/2019/10/13/JAVA-修改数据库中数据/</a>
+    <p><span class="copy-title">发布时间:</span>2020-04-01, 16:43:05</p>
+    <p><span class="copy-title">最后更新:</span>2020-04-01, 17:59:52</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/04/01/JAVA-跨域解决方法/" title="[JAVA]跨域解决方法">http://zx21.xyz/2020/04/01/JAVA-跨域解决方法/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
