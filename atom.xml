@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zx21.xyz/"/>
-  <updated>2021-03-17T08:10:12.570Z</updated>
+  <updated>2021-03-22T09:09:08.954Z</updated>
   <id>http://zx21.xyz/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[JAVA]-中文根据拼音首字母排序</title>
+    <link href="http://zx21.xyz/2021/03/22/JAVA-%E4%B8%AD%E6%96%87%E6%A0%B9%E6%8D%AE%E6%8B%BC%E9%9F%B3%E9%A6%96%E5%AD%97%E6%AF%8D%E6%8E%92%E5%BA%8F/"/>
+    <id>http://zx21.xyz/2021/03/22/JAVA-中文根据拼音首字母排序/</id>
+    <published>2021-03-22T09:05:14.000Z</published>
+    <updated>2021-03-22T09:09:08.954Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>有些用户列表/品种列表等，常用A,B,C作为名称的搜索条件。</strong></p><p>依赖</p><pre><code>&lt;dependency&gt;    &lt;groupId&gt;com.belerweb&lt;/groupId&gt;    &lt;artifactId&gt;pinyin4j&lt;/artifactId&gt;    &lt;version&gt;2.5.1&lt;/version&gt;&lt;/dependency&gt;</code></pre><p>工具类</p><pre><code>public class PinYinUtils {    /**     * 获取汉字对应的拼音     *     * @param chinese 汉字串     * @return     */    public static String getFullSpell(String chinese) {        StringBuffer bf = new StringBuffer();        char[] arr = chinese.toCharArray();        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();        defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);        for (int i = 0; i &lt; arr.length; i++) {            if (arr[i] &gt; 128) {                try {                    bf.append(PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat)[0]);                } catch (BadHanyuPinyinOutputFormatCombination e) {                    e.printStackTrace();                }            } else {                bf.append(arr[i]);            }        }        return bf.toString();    }}</code></pre><p>将查询的数据，重新进行处理</p><pre><code>    /**     * 封装根据拼音首字母的数据     *     * @param data     * @return     */    private List&lt;Map&lt;String, Object&gt;&gt; getPinYinData(List&lt;CpPetKind&gt; data) {        List&lt;Map&lt;String, Object&gt;&gt; list = new LinkedList&lt;&gt;();        for (int i = 1; i &lt;= 26; i++) {            // 大写            String big = String.valueOf((char) (96 + i)).toUpperCase();            // 小写            String little = big.toLowerCase();            List&lt;CpPetKind&gt; initialsList = new LinkedList&lt;&gt;();            for (int j = 0; j &lt; data.size() - 1; j++) {                CpPetKind petKind = data.get(j);                String initials = PinYinUtils.getFullSpell(petKind.getBreed()).substring(0, 1);                if (big.equals(initials) || little.equals(initials)) {                    initialsList.add(petKind);                }            }            Map&lt;String, Object&gt; tempMap = new HashMap&lt;&gt;();            tempMap.put(&quot;initials&quot;, big);            tempMap.put(&quot;kinds&quot;, initialsList);            list.add(tempMap);        }        return list;    }</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;strong&gt;有些用户列表/品种列表等，常用A,B,C作为名称的搜索条件。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;依赖&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;com.belerweb&amp;lt;/groupId&amp;g
+      
+    
+    </summary>
+    
+    
+      <category term="JAVA" scheme="http://zx21.xyz/categories/JAVA/"/>
+    
+    
+      <category term="java" scheme="http://zx21.xyz/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>[JAVA]-视频url获取指定帧数的图片</title>
@@ -523,32 +552,6 @@
 &lt;p&gt;css放在xxx.component.css中&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&quot;angular绑定数据&quot;&gt;&lt;a 
-      
-    
-    </summary>
-    
-    
-      <category term="Web" scheme="http://zx21.xyz/categories/Web/"/>
-    
-    
-      <category term="Angular" scheme="http://zx21.xyz/tags/Angular/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[Angular]入门之运行项目</title>
-    <link href="http://zx21.xyz/2020/02/04/Angular-%E5%85%A5%E9%97%A8%E4%B9%8B%E8%BF%90%E8%A1%8C%E9%A1%B9%E7%9B%AE/"/>
-    <id>http://zx21.xyz/2020/02/04/Angular-入门之运行项目/</id>
-    <published>2020-02-04T10:59:16.000Z</published>
-    <updated>2020-02-04T11:05:00.683Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、安装node-js"><a href="#1、安装node-js" class="headerlink" title="1、安装node.js"></a>1、安装node.js</h2><h2 id="2、安装cnpm"><a href="#2、安装cnpm" class="headerlink" title="2、安装cnpm"></a>2、安装cnpm</h2><pre><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h2 id="3、安装angular"><a href="#3、安装angular" class="headerlink" title="3、安装angular"></a>3、安装angular</h2><pre><code>cnpm install -g @angular/cli</code></pre><h3 id="查看是否安装成功"><a href="#查看是否安装成功" class="headerlink" title="查看是否安装成功"></a>查看是否安装成功</h3><pre><code>C:\Users\Administrator&gt;ng v     _                      _                 ____ _     ___    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|   / △ \ | &#39;_ \ / _` | | | | |/ _` | &#39;__|   | |   | |    | |  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | | /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|                |___/Angular CLI: 8.3.24Node: 10.16.3OS: win32 x64Angular:...Package                      Version------------------------------------------------------@angular-devkit/architect    0.803.24@angular-devkit/core         8.3.24@angular-devkit/schematics   8.3.24@schematics/angular          8.3.24@schematics/update           0.803.24rxjs                         6.5.4</code></pre><h2 id="4、创建安装angular项目"><a href="#4、创建安装angular项目" class="headerlink" title="4、创建安装angular项目"></a>4、创建安装angular项目</h2><p>打开命令提示符窗口</p><pre><code>ng new demo</code></pre><h2 id="5、运行项目"><a href="#5、运行项目" class="headerlink" title="5、运行项目"></a>5、运行项目</h2><p>进入到文件夹下</p><pre><code>cd demo</code></pre><p>运行</p><pre><code>ng serve --open</code></pre><h2 id="6、访问"><a href="#6、访问" class="headerlink" title="6、访问"></a>6、访问</h2><p> <a href="http://localhost:4200/" target="_blank" rel="noopener">http://localhost:4200/</a></p><hr><h2 id="跳过npm安装"><a href="#跳过npm安装" class="headerlink" title="跳过npm安装"></a>跳过npm安装</h2><pre><code>ng new demo2 --skip-install</code></pre><pre><code>cnpm install</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;1、安装node-js&quot;&gt;&lt;a href=&quot;#1、安装node-js&quot; class=&quot;headerlink&quot; title=&quot;1、安装node.js&quot;&gt;&lt;/a&gt;1、安装node.js&lt;/h2&gt;&lt;h2 id=&quot;2、安装cnpm&quot;&gt;&lt;a href=&quot;#2、安装cnpm&quot;
       
     
     </summary>

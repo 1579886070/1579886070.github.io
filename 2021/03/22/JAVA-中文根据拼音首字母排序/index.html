@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>[JS]语句结构 | 周信的博客</title>
-  <meta name="keywords" content=" js ">
-  <meta name="description" content="[JS]语句结构 | 周信的博客">
+  <title>[JAVA]-中文根据拼音首字母排序 | 周信的博客</title>
+  <meta name="keywords" content=" java ">
+  <meta name="description" content="[JAVA]-中文根据拼音首字母排序 | 周信的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="周信关于我   技术:Java开发从事者，头发长。努力学习中…初心: 人生短暂，做自己想做的事！！！    忠于艺术   爱于观察   喜于喝茶   向于安静   迷恋星空   向往自由   会为了日出或是日落再或是星空   独守一夜   **联系方式**  Github: 点击 Q    Q: 1579886070 邮  箱: xiaoxin1218@qq.com / 52zx1218@gmai">
 <meta name="keywords" content="周信的博客,编程,生活,学习,算法,java,golang,html,js。">
@@ -982,9 +982,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-JS-语句结构" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-JAVA-中文根据拼音首字母排序" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">[JS]语句结构</h1>
+        <h1 class="article-title">[JAVA]-中文根据拼音首字母排序</h1>
     
     <div class="article-meta">
         
@@ -992,26 +992,26 @@
         
         <span class="book">
             
-                <a href="javascript:" data-rel="Web">Web</a>
+                <a href="javascript:" data-rel="JAVA">JAVA</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a href="javascript:" class="color3">js</a>
+            <a href="javascript:" class="color5">java</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-02-04 19:13:04'>2019-10-07 21:50</time>
+        创建时间:<time class="date" title='更新时间: 2021-03-22 17:09:08'>2021-03-22 17:05</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:320</span>
+        <span>字数:289</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1057,89 +1057,77 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>讲讲JavaScript中的语句结构,接下来针对各语句举例说明，跟其他程序语言思想基本一致。<a id="more"></a></p>
-<p>语句：</p>
-<blockquote><span style="font-size: 10pt;">1，顺序结构。</span>
-<span style="font-size: 10pt;"> 2，判断结构。</span>
-<p style="padding-left: 30px;"><span style="font-size: 10pt;">代表语句：if
-else if</span></p>
-<span style="font-size: 10pt;">3，选择结构。</span>
-<p style="padding-left: 30px;"><span style="font-size: 10pt;">switch</span></p>
-<span style="font-size: 10pt;">4，循环结构。</span>
-<p style="padding-left: 30px;"><span style="font-size: 10pt;">while, do while, for</span></p>
-<span style="font-size: 10pt;">5，其他语句。</span>
-<p style="padding-left: 30px;"><span style="font-size: 10pt;">break:跳出选择,跳出循环</span></p>
-<p style="padding-left: 30px;"><span style="font-size: 10pt;">continue:用于循环语句，结束本次循环继续下次循环</span></p>
-</blockquote>
-&nbsp;
+        <p><strong>有些用户列表/品种列表等，常用A,B,C作为名称的搜索条件。</strong></p>
+<p>依赖</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.belerweb&lt;/groupId&gt;
+    &lt;artifactId&gt;pinyin4j&lt;/artifactId&gt;
+    &lt;version&gt;2.5.1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre><p>工具类</p>
+<pre><code>public class PinYinUtils {
 
-<p>说明：</p>
-<p><strong> 1，顺序结构</strong></p>
-<pre class="lang:c decode:true"><span style="font-size: 10pt;">alert("1"); 
-alert("2"); 
-alert("3");</span></pre>
-<p>按照顺序从上往下执行。</p>
-<hr>
+    /**
+     * 获取汉字对应的拼音
+     *
+     * @param chinese 汉字串
+     * @return
+     */
+    public static String getFullSpell(String chinese) {
+        StringBuffer bf = new StringBuffer();
 
-<p><strong>2,判断结构</strong></p>
-<pre class="lang:c decode:true"><span style="font-size: 10pt;">var x = 5;
-if (2==x) {        //建议将常量放左边。这样出现错误会报错
-    alert("yes");
-}
-else{
-    alert("no");
-}</span></pre>
-<p><strong>else if</strong></p>
-<pre class="lang:c decode:true"><span style="font-size: 10pt;">if(x&gt;1)
-    alert("a");
-else if(x&gt;2)
-    alert("b");
-else if(x&gt;5)
-    alert("c");
-else
-    alert("d");</span></pre>
+        char[] arr = chinese.toCharArray();
+        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
+        defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
+        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        for (int i = 0; i &lt; arr.length; i++) {
+            if (arr[i] &gt; 128) {
+                try {
+                    bf.append(PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat)[0]);
+                } catch (BadHanyuPinyinOutputFormatCombination e) {
+                    e.printStackTrace();
+                }
+            } else {
+                bf.append(arr[i]);
+            }
+        }
 
-<hr>
-
-<p><strong>3，选择结构 (都是先执行第一个case)</strong></p>
-<pre class="lang:c decode:true">var x = "abc";
-switch(x){
-    case "aa":
-        alert("a");
-        break;
-    case "abc":
-        alert("b");
-        break;
-    default:
-        alert("c");
-        break;
-}</pre>
-
-<hr>
-
-<p><strong>4，循环结构(这里do while就不举例了)</strong></p>
-<pre class="lang:c decode:true"><code class="javascript">var x = 1;
-document.write("&lt;font color='blue'&gt;");
-while(x&lt;10){
-    document.write("x="+x+"&lt;br/&gt;");//将数据直接写到当前得页面当中。
-    x++;
-}
-document.write("&lt;/font&gt;");</code></pre>
-<p><strong>for循环</strong></p>
-<pre class="lang:c decode:true">for(var x = 0;x &lt; 3;x++){
-    document.write("x="+x);
-}</pre>
-
-<hr>
-
-<p><strong>5，其他语句</strong></p>
-<pre class="lang:c decode:true">w:for (var x = 0; x&lt;3; x++) {
-    for(var y = 0;y&lt;4;y++){
-        document.write("x="+x);
-        continue w;    //跳出当前循环
+        return bf.toString();
     }
- }</pre>
+}</code></pre><p>将查询的数据，重新进行处理</p>
+<pre><code>    /**
+     * 封装根据拼音首字母的数据
+     *
+     * @param data
+     * @return
+     */
+    private List&lt;Map&lt;String, Object&gt;&gt; getPinYinData(List&lt;CpPetKind&gt; data) {
+        List&lt;Map&lt;String, Object&gt;&gt; list = new LinkedList&lt;&gt;();
+        for (int i = 1; i &lt;= 26; i++) {
 
+            // 大写
+            String big = String.valueOf((char) (96 + i)).toUpperCase();
+            // 小写
+            String little = big.toLowerCase();
+
+            List&lt;CpPetKind&gt; initialsList = new LinkedList&lt;&gt;();
+            for (int j = 0; j &lt; data.size() - 1; j++) {
+                CpPetKind petKind = data.get(j);
+
+                String initials = PinYinUtils.getFullSpell(petKind.getBreed()).substring(0, 1);
+                if (big.equals(initials) || little.equals(initials)) {
+                    initialsList.add(petKind);
+                }
+            }
+
+            Map&lt;String, Object&gt; tempMap = new HashMap&lt;&gt;();
+            tempMap.put(&quot;initials&quot;, big);
+            tempMap.put(&quot;kinds&quot;, initialsList);
+
+            list.add(tempMap);
+        }
+
+        return list;
+    }</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 xiaoxin1218@qq.com </span>
     </div>
@@ -1152,12 +1140,12 @@ document.write("&lt;/font&gt;");</code></pre>
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>[JS]语句结构</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">320</span></p>
+    <p><span class="copy-title">文章标题:</span>[JAVA]-中文根据拼音首字母排序</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">289</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="周信">周信</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-07, 21:50:25</p>
-    <p><span class="copy-title">最后更新:</span>2020-02-04, 19:13:04</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/07/JS-语句结构/" title="[JS]语句结构">http://zx21.xyz/2019/10/07/JS-语句结构/</a>
+    <p><span class="copy-title">发布时间:</span>2021-03-22, 17:05:14</p>
+    <p><span class="copy-title">最后更新:</span>2021-03-22, 17:09:08</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2021/03/22/JAVA-中文根据拼音首字母排序/" title="[JAVA]-中文根据拼音首字母排序">http://zx21.xyz/2021/03/22/JAVA-中文根据拼音首字母排序/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
