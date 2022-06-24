@@ -1,9 +1,10 @@
 ---
-title: '[Other-nginx个人常用配置整理]'
-date: 2022-06-24 11:06:43
+title: '[Other]Nginx个人常用命令整理'
+date: 2022-06-24 11:36:38
 categories: Other
 tags: nginx
 ---
+
 
 `
 nginx -t  检查配置是否正确 
